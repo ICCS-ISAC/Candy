@@ -1,0 +1,71 @@
+@startuml
+allow_mixing
+
+'Issuer components
+folder midp [ 
+    Mock Identity Service Provider 
+]
+
+folder meis [
+    Mock email Identity Service
+]
+
+node "Identity Provider Interface" as IPI #LightGreen
+
+class "Issuer Controller Frontend" as ICF #LightGreen {
+    {field} Browser Language (en-ca, fr-ca, juridictionDefault)
+    void buttonDigitalProof(language)
+}
+
+note left of ICF #LightGreen 
+    This demo shows how the different health juridiction 
+    can issue to a person a digital proof of vaccination
+    either online or by a one time password email 
+end note
+
+class "Issuer Controller Backend" as ICB #LightGreen {
+    interface DataInterface
+    string language
+    object[] schema_En-Ca
+    object[] schema_Fr-Ca
+    {method} schemaSelector(language)
+}
+
+object "Issuer Agent en-ca" as IAen #LightBlue {
+    string DID : juridictionPublicDID
+    string Label : Canada Proof of Vaccination
+}
+database "KMS en-ca" as KMSen #LightBlue
+
+object "Issuer Agent fr-ca" as IAfr #LightBlue {
+    string DID : juridictionPublicDID
+    string Label : Preuve de Vaccination Canadienne
+}
+database "KMS fr-ca" as KMSfr #LightBlue
+
+interface "Immunization API" as IMAPI #LightGreen
+
+database "Mock Vaccinations" as vaccinData
+
+folder wallet [
+    Mobile Wallet
+]
+
+'Issuer Flow
+midp --> IPI
+meis --> IPI
+
+IPI --> ICF
+ICF --> ICB
+ICB -left-> IMAPI
+IMAPI -down-> vaccinData
+
+ICB --> IAen
+ICB --> IAfr
+
+IAen --> KMSen
+IAfr --> KMSfr
+IAen --> wallet
+IAfr --> wallet
+
+@enduml
