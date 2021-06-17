@@ -35,50 +35,55 @@ InternetAlt2(internet, "Internet", "")
 
 'Observer Nodes
 'Validator Nodes
-'Tail Nodes
+'Tails Filess
 '   Initial Trustee (blockchain endpoint / genesis block)
 '   Initial Steward (validator node endpoint)
 '   Initial Endorsor (jurisdiction top level to create issuer)
 node "Trust Registry - Pancanadian Blockchain" as candydlt {
 
     node "Node CAN" as NodeCA #LightGreen {
+        ServerContents(agentServiceCA, "Agent Services", "Bastion")
         Blockchain(dltCA, "Validator Node", "Registre de confiance") #LightBlue
         database "KMS Blockhain Wallet" as kmsCA #LightBlue
         ServerContents(serverCA, "CLI and Steward Monitoring Tools", "Bastion")
         AzureNotificationHubs(snsCA, "Notification", "Alertage") 
-        ServerContents(TailCA, "Tail Node", "Registre de Révocation")
+        ServerContents(TailCA, "Tails Files", "Registre de Révocation")
     }
 
     node "Node ON" as NodeON #LightGreen {
+        ServerContents(agentServiceON, "Agent Services", "Bastion")
         Blockchain(dltON, "Validator Node", "Registre de confiance") #LightBlue
         database "KMS Blockhain Wallet" as kmsON #LightBlue
         ServerContents(serverON, "CLI and Steward Monitoring Tools", "Bastion")
         AzureNotificationHubs(snsON, "Notification", "Alertage") 
-        ServerContents(TailON, "Tail Node", "Registre de Révocation")
+        ServerContents(TailON, "Tails Files", "Registre de Révocation")
     }
 
-    node "Node QC" as NodeQC #LightGreen {
+    node "Node QC" as NodeQC #LightGreen {	
+        ServerContents(agentServiceQC, "Agent Services", "Bastion")
         Blockchain(dltQC, "Validator Node", "Registre de confiance") #LightBlue
         database "KMS Blockhain Wallet" as kmsQC #LightBlue
         ServerContents(serverQC, "CLI and Steward Monitoring Tools", "Bastion")
         AzureNotificationHubs(snsQC, "Notification", "Alertage") 
-        ServerContents(TailQC, "Tail Node", "Registre de Révocation")
+        ServerContents(TailQC, "Tails Files", "Registre de Révocation")
     }
 
     node "Node BC" as NodeBC #LightGreen {
+        ServerContents(agentServiceBC, "Agent Services", "Bastion")
         Blockchain(dltBC, "Validator Node", "Registre de confiance") #LightBlue
         database "KMS Blockhain Wallet" as kmsBC #LightBlue
         ServerContents(serverBC, "CLI and Steward Monitoring Tools", "Bastion")
         AzureNotificationHubs(snsBC, "Notification", "Alertage") 
-        ServerContents(TailBC, "Tail Node", "Registre de Révocation")
+        ServerContents(TailBC, "Tails Files", "Registre de Révocation")
     }
 
     node "Node NS" as NodeNS #LightGreen {
+        ServerContents(agentServiceNS, "Agent Services", "Bastion")
         Blockchain(dltNS, "Validator Node", "Registre de confiance") #LightBlue
         database "KMS Blockhain Wallet" as kmsNS #LightBlue
         ServerContents(serverNS, "CLI and Steward Monitoring Tools", "Bastion")
         AzureNotificationHubs(snsNS, "Notification", "Alertage") 
-        ServerContents(TailNS, "Tail Node", "Registre de Révocation")
+        ServerContents(TailNS, "Tails Files", "Registre de Révocation")
     }
 
 }
@@ -101,29 +106,47 @@ node "Gouvernance Opérationnelle - Pancanadian Blockchain" as Gov {
 }
 
 'DÉFINITION DES LIENS
-internet --> dltCA
-internet --> dltON
-internet --> dltQC
-internet --> dltBC
-internet --> dltNS
+internet --> agentServiceNS
+internet --> agentServiceCA
+internet --> agentServiceON
+internet --> agentServiceQC
+internet --> agentServiceBC
 
-dltCA -down- kmsCA
-dltON -down- kmsON
-dltQC -down- kmsQC
-dltBC -down- kmsBC
-dltNS -down- kmsNS
+agentServiceNS -- snsNS
+agentServiceBC -- snsBC
+agentServiceON -- snsON
+agentServiceQC -- snsQC
+agentServiceCA -- snsCA
 
-serverCA -left- dltCA
-serverON -left- dltON
-serverQC -left- dltQC
-serverBC -left- dltBC
-serverNS -left- dltNS
+agentServiceNS -- TailNS
+agentServiceBC -- TailBC
+agentServiceON -- TailON
+agentServiceQC -- TailQC
+agentServiceCA -- TailCA
 
-snsCA -left- serverCA
-snsON -left- serverON
-snsQC -left- serverQC
-snsBC -left- serverBC
-snsNS -left- serverNS
+agentServiceNS -- dltNS
+agentServiceBC -- dltBC
+agentServiceON -- dltON
+agentServiceQC -- dltQC
+agentServiceCA -- dltCA
+
+dltNS -- serverNS
+dltBC -- serverBC
+dltON -- serverON
+dltQC -- serverQC
+dltCA -- serverCA
+
+serverNS -- kmsNS
+serverBC -- kmsBC
+serverON -- kmsON
+serverQC -- kmsQC
+serverCA -- kmsCA
+
+kmsNS -- agentServiceNS
+kmsBC -- agentServiceBC
+kmsON -- agentServiceON
+kmsQC -- agentServiceQC
+kmsCA -- agentServiceCA
 
 'candydlt -down- Gov
 

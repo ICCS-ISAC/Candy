@@ -42,6 +42,7 @@ InternetAlt2(internet, "Internet", "")
 node "Trust Registry - Pancanadian Blockchain" as candydlt {
 
     node "Node CAN" as NodeCA #LightGreen {
+        ServerContents(agentServiceCA, "Agent Service", "Bastion")
         Blockchain(dltCA, "Validator Node", "Registre de confiance") #LightBlue
         database "KMS Blockhain Wallet" as kmsCA #LightBlue
         ServerContents(serverCA, "CLI and Steward Monitoring Tools", "Bastion")
@@ -57,10 +58,14 @@ node "Gouvernance Opérationnelle - Pancanadian Blockchain" as Gov {
 }
 
 'DÉFINITION DES LIENS
-internet --> dltCA
-dltCA -down- kmsCA
-serverCA -left- dltCA
-snsCA -left- serverCA
+
+internet --> agentServiceCA
+agentServiceCA -- snsCA
+agentServiceCA -- TailCA
+agentServiceCA -- dltCA
+dltCA -- serverCA
+serverCA -- kmsCA
+kmsCA -- agentServiceCA
 snsCA --> Gov
 cellCA --> EmployeCA
 @enduml
