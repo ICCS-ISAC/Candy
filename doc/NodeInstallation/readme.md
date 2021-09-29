@@ -22,6 +22,7 @@ The documents in this repo only for archive purpose. Use the links to be sure to
 - 8G RAM
 - 250G disk
 - 2 NICs with 2 Public IP addresses on separate subnets (1 per NIC)
+- Up to 5 Gigabit for network performance
 
 ## Staging Network machine sizing
 
