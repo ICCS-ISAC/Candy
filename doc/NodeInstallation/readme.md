@@ -15,3 +15,17 @@ And there is this reference document for what’s involved with setting up a new
 - [Create New Indy Network](https://can01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fdocs.google.com%2Fdocument%2Fd%2F1XE2QOiGWuRzWdlxiI9LrG9Am9dCfPXBXnv52wGHorNE%2Fedit&data=04%7C01%7CShakira.Kaleel%40ontario.ca%7C6d86686071834578918c08d97e902909%7Ccddc1229ac2a4b97b78a0e5cacb5865c%7C0%7C0%7C637679979913757344%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C1000&sdata=7tOO2rrt%2B4N6vKZnbflDuHqwlcs8G1yEcGl36g9ILWE%3D&reserved=0)
 
 The documents in this repo only for archive purpose. Use the links to be sure to access up to date documentation.
+
+## Dev Network machine sizing
+
+- 2 vCPUs cores
+- 8G RAM
+- 250G disk
+- 2 NICs with 2 Public IP addresses on separate subnets (1 per NIC)
+
+## Staging Network machine sizing
+
+- 8 vCPUs cores
+- 32G RAM
+- 250G disk
+- 2 NICs with 2 Public IP addresses on separate subnets (1 per NIC)
