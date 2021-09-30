@@ -24,9 +24,13 @@ The documents in this repo only for archive purpose. Use the links to be sure to
 - 2 NICs with 2 Public IP addresses on separate subnets (1 per NIC)
 - Up to 5 Gigabit for network performance
 
+For exemple on AWS this would be a t3.large machine.
+
 ## Staging Network machine sizing
 
 - 8 vCPUs cores
 - 32G RAM
 - 250G disk
 - 2 NICs with 2 Public IP addresses on separate subnets (1 per NIC)
+
+For example on AWS this would be a t3.2xlarge
