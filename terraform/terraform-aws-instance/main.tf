@@ -14,14 +14,28 @@ provider "aws" {
   region  = "ca-central-1"
 }
 
-resource "aws_instance" "app_server" {
-  ami                    = "ami-0d833a36f4aa82e6b"
+data "aws_ami" "ubuntu" {
+  most_recent = true
+  owners      = ["099720109477"]
+
+  filter {
+    name   = "name"
+    values = ["ubuntu/images/hvm-ssd/ubuntu-xenial-16.04-amd64-server-*"]
+  }
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+}
+
+resource "aws_instance" "validator_client_server" {
+  ami                    = data.aws_ami.ubuntu.id
   instance_type          = "t3.large"
   vpc_security_group_ids = ["sg-04ba791c39ddb8d52"]
   subnet_id              = "subnet-0d4b6d25ebd3bb0e1"
 
   tags = {
-    Name = "ExampleAppServerInstance"
+    Name = "ValidatorClientServerInstance"
   }
 }
-
