@@ -35,6 +35,14 @@ resource "aws_instance" "validator_client_server" {
   vpc_security_group_ids = ["sg-04ba791c39ddb8d52"]
   subnet_id              = "subnet-0d4b6d25ebd3bb0e1"
 
+  root_block_device {
+    volume_size           = "20"
+    volume_type           = "gp2"
+    encrypted             = true
+    kms_key_id            = "18205e1b-9b4f-4df0-ab4e-a5b2c9de07a4"      
+    delete_on_termination = true
+  }
+
   tags = {
     Name = "ValidatorClientServerInstance"
   }
