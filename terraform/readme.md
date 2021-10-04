@@ -25,6 +25,4 @@ Then setup Terraform.
 > To make the terraform file generic for every juridiction. When you configure you aws or azure CLI use the :
 >
 > - CLI profile name: CandyDevNetwork.
-> - TODO hot to make those two generic ?
->   - vpc_security_group_ids = ["sg-04ba791c39ddb8d52"]
->   - subnet_id = "subnet-0d4b6d25ebd3bb0e1"
+> - And use the variables for your specific installation.
