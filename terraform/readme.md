@@ -26,3 +26,21 @@ Then setup Terraform.
 >
 > - CLI profile name: CandyDevNetwork.
 > - And use the variables for your specific installation.
+
+## Cheat Sheet
+For the first boot of your terraform provisiong you need to at least "init" and "plan":
+```
+terraform init -var-file="environments/dev1/terraform.tfvars"
+terraform plan -var-file="environments/dev1/terraform.tfvars"
+```
+
+
+To perform the provisiong:
+```
+terraform apply -var-file="environments/dev1/terraform.tfvars"
+```
+
+Ultimately if you need to destroy what was provision:
+```
+terraform destroy -var-file="environments/dev1/terraform.tfvars"
+```
