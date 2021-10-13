@@ -17,7 +17,7 @@ data "aws_ami" "ubuntu" {
 }
 
 data "aws_vpc" "selected" {
-  # Allows dynamic lookup of information about the default VPC.
+  # Allows dynamic lookup of information about the selected VPC.
   # Specifically it's ID
   tags = {
     Name = "Dev_vpc"
@@ -25,17 +25,25 @@ data "aws_vpc" "selected" {
 }
 
 data "aws_subnet" "selected" {
-  # Allows dynamic lookup of information about the given default subnet.
+  # Allows dynamic lookup of information about the given selected subnet.
   # Specifically it's ID
   tags = { 
     Name = "Web_Dev_aza_net" 
     }
 }
 
+data "aws_security_group" "selected" {
+  # Allows dynamic lookup of information about the selected security group.
+  # Specifically it's ID
+  tags = {
+    Name = "Mgmt_sg"
+  }
+}
+
 resource "aws_instance" "validator_node_server" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = var.ec2_instance_type
-
+  #key_name      = "candy_key"
   # ===============================================================
   # Provinces Hosting in AWS will want to ensure their
   # nodes are in different availability zones
@@ -65,17 +73,23 @@ resource "aws_instance" "validator_node_server" {
       Environment = var.aws_environment
     }
   }
-
+  # ============================================================================
+  # Without eni
+  # security_groups    = [aws_security_group.validator_node_security_group.id]
+  # subnet_id          = data.aws_subnet.selected.id
+  
+  
   network_interface {
     network_interface_id = aws_network_interface.validator_node_node_interface.id
     device_index         = 0
   }
+  
 
    network_interface {
     network_interface_id = aws_network_interface.validator_node_client_interface.id
     device_index         = 1
   }
-
+ 
 
   tags = {
     Name        = var.ec2_instance_name
@@ -120,13 +134,15 @@ resource "aws_security_group" "validator_node_security_group" {
     Environment = var.aws_environment
   }
 }
+
+
 resource "aws_network_interface" "validator_node_node_interface" {
   description        = var.eni_node_description
   ipv6_address_count = "0"
   private_ip         = var.eni_node_ip
   private_ips        = [var.eni_node_ip]
   private_ips_count  = "0"
-  security_groups    = [aws_security_group.validator_node_security_group.id]
+  security_groups    = [aws_security_group.validator_node_security_group.id, data.aws_security_group.selected.id]
   source_dest_check  = "true"
   subnet_id          = data.aws_subnet.selected.id
 
@@ -137,13 +153,14 @@ resource "aws_network_interface" "validator_node_node_interface" {
   }
 }
 
+
 resource "aws_network_interface" "validator_node_client_interface" {
   description        = var.eni_client_description
   ipv6_address_count = "0"
   private_ip         = var.eni_client_ip
   private_ips        = [var.eni_client_ip]
   private_ips_count  = "0"
-  security_groups    = [aws_security_group.validator_node_security_group.id]
+  security_groups    = [aws_security_group.validator_node_security_group.id, data.aws_security_group.selected.id]
   source_dest_check  = "true"
   subnet_id          = data.aws_subnet.selected.id
 
