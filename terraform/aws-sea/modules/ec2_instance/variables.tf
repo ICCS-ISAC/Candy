@@ -18,6 +18,10 @@ variable "aws_environment" {
   description = "Environnement"
 }
 
+variable "aws_availability_zone" {
+  description = "Availability zone"
+}
+
 variable "ec2_instance_name" {
   description = "The value to use for the Name tag of the EC2 instance"
   type        = string
@@ -119,5 +123,27 @@ variable "sg_description" {
   description = "The description for the security group."
 }
 
+variable "tg_forwarding_port_client" {
+  description = "The value to use for the port and protocol of client interface."
+}
 
+variable "elb_client_name" {
+  description = "The value to use for the laod balancer name of the client interface."
+}
+
+variable "tg_client_name" {
+  description = "The value to use for the target groupe name of the client interface."
+}
+
+variable "elb_node_name" {
+  description = "The value to use for the laod balancer name of the node interface."
+}
+
+variable "tg_node_name" {
+  description = "The value to use for the target groupe name of the node interface."
+}
+
+variable "tg_port_node" {
+  description = "The value to use for the port of node interface."
+}
 
