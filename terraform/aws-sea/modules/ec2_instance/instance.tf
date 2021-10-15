@@ -1,3 +1,4 @@
+# Filter the image you want to use for the ec2 instance
 data "aws_ami" "ubuntu" {
   most_recent = true
   owners      = var.ec2_owners
@@ -20,7 +21,7 @@ data "aws_vpc" "selected" {
   # Allows dynamic lookup of information about the selected VPC.
   # Specifically it's ID
   tags = {
-    Name = "Dev_vpc"
+    Name = "Dev_vpc" //TODO change to variable
   }
 }
 
@@ -28,7 +29,7 @@ data "aws_subnet" "selected" {
   # Allows dynamic lookup of information about the given selected subnet.
   # Specifically it's ID
   tags = { 
-    Name = "Web_Dev_aza_net" 
+    Name = "Web_Dev_aza_net" //TODO change to variable
     }
 }
 
@@ -43,7 +44,8 @@ data "aws_security_group" "selected" {
 resource "aws_instance" "validator_node_server" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = var.ec2_instance_type
-  #key_name      = "candy_key"
+  #key_name      = "candy_key"//TODO add Create a new key pair OR Reuse an existing key pair AND combine with kms
+
   # ===============================================================
   # Provinces Hosting in AWS will want to ensure their
   # nodes are in different availability zones
@@ -55,6 +57,7 @@ resource "aws_instance" "validator_node_server" {
     volume_size = var.ebs_volume_size
     volume_type = var.ebs_volume_type
     encrypted   = var.ebs_encrypted
+
     # ===============================================================
     # This ID is specific to a specific account:
     #   - Encrypted volume required?
@@ -65,6 +68,7 @@ resource "aws_instance" "validator_node_server" {
     # ---------------------------------------------------------------
     kms_key_id            = var.ebs_kms_key_id
     # ===============================================================
+
     delete_on_termination = var.ebs_delete_on_termination
 
     tags = {
@@ -73,10 +77,13 @@ resource "aws_instance" "validator_node_server" {
       Environment = var.aws_environment
     }
   }
+
   # ============================================================================
-  # Without eni
+  # Without eni or resource "aws_network_interface" you have to declare these with your ec2
+  # ---------------------------------------------------------------
   # security_groups    = [aws_security_group.validator_node_security_group.id]
   # subnet_id          = data.aws_subnet.selected.id
+  # ============================================================================
   
   
   network_interface {
@@ -110,6 +117,11 @@ resource "aws_security_group" "validator_node_security_group" {
     to_port     = "0"
   }
 
+  # ===============================================================
+  # The IP address/port used for inter-node consensus must be configured 
+  # for exclusive use of inter-node consensus traffic. 
+  # Ideally, traffic to this address/port will be whitelisted in your firewall.
+  # ---------------------------------------------------------------
   ingress {
     cidr_blocks      = ["0.0.0.0/0"]
     from_port        = "9701"
@@ -118,15 +130,22 @@ resource "aws_security_group" "validator_node_security_group" {
     self             = "false"
     to_port          = "9709"
   }
+  # ===============================================================
 
+  # ===============================================================
+  # The SSH is used so that the CLI can access the nodes through it's
+  # Client IP address/port used for Steward Operations and Network Operations.
+  # Ideally, traffic to this address/port will be whitelisted in your firewall.
+  # ---------------------------------------------------------------
   ingress {
-    cidr_blocks      = ["0.0.0.0/0"] //TODO
+    cidr_blocks      = ["0.0.0.0/0"]//TODO restrict SSH access to Admins only, add IP addresses for all admin users of the system
     from_port        = "22"
     ipv6_cidr_blocks = ["::/0"]
     protocol         = "tcp"
     self             = "false"
     to_port          = "22"
   }
+  # ===============================================================
 
   tags = {
     Name        = var.sg_tag_name
