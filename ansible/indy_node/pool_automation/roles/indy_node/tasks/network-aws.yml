@@ -1,6 +1,6 @@
 ---
 - name: Get physical interfaces names
-  command: find /sys/class/net -type l -not -lname '*virtual*' -name '*eth*' -printf '%f\n'
+  command: find /sys/class/net -type l -not -lname '*virtual*' -name '*ens*' -printf '%f\n'
   register: network_interfaces
   tags:
     - configure
