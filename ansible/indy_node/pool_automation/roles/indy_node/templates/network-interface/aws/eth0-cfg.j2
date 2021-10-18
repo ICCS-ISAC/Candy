@@ -1,0 +1,6 @@
+auto {{ eth0 }}
+iface {{ eth0 }} inet dhcp
+   up ip route add default via {{ eth0_gw }} dev {{ eth0 }} tab 1
+   up ip rule add from {{ eth0_ip }}/32 tab 1
+   up ip rule add to {{ eth0_ip }}/32 tab 1
+   up ip route flush cache

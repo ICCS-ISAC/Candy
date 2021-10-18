@@ -44,6 +44,13 @@
     - install
     - service
 
+- name: Configure Network
+  include_tasks: network-{{ cloud }}.yml
+  when: network_configuration
+  tags:
+    - configure
+    - network
+
 # - name: Configuration tasks
 #   include_tasks: configure.yml
 #   when: indy_node_configuration

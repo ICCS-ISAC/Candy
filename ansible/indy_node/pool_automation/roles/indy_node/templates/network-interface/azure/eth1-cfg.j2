@@ -1,0 +1,11 @@
+auto {{ eth1 }}
+iface eth1 inet static
+address {{ eth1_ip }}
+netmask 255.255.255.0
+
+# Gateway configuration
+up ip route add default via {{ eth1_gw }} dev eth1 table 1000
+
+# Routes and rules
+up ip route add {{ eth1_ip }} dev eth1 table 1000
+up ip rule add from {{ eth1_ip }} lookup 1000
