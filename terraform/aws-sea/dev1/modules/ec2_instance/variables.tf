@@ -67,8 +67,8 @@ variable "ebs_kms_key_id" {
   description = "KMS key used to encrypt/decrypt EBS"
 }
 
-variable "ebs_delete_on_termination" {
-  description = "EBS delete on termination"
+variable "ec2_delete_on_termination" {
+  description = "EC2 delete on termination"
 }
 
 variable "eip_client_ip_name" {
