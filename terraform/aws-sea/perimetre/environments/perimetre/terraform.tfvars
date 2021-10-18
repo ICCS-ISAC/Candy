@@ -3,7 +3,6 @@ candy_region            = "ca-central-1"
 candy_profile           = "Perimetre"
 candy_application       = "candy"
 candy_environment       = "dev"
-candy_instance_name     = "Validator Node Instance"
 candy_availability_zone = "ca-central-1a"
 
 
