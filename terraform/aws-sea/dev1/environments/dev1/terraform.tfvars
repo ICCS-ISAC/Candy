@@ -52,10 +52,9 @@ candy_sg_description = "Validator Node Security Group"
 # elb + tg
 candy_elb_client_name           = "Candy-Validator9702-lb"
 candy_elb_node_name             = "Candy-Validator9701-lb"
-candy_tg_client_name            = "Candy-Validator9702-tg"
-candy_tg_node_name              = "Candy-Validator9701-tg"
+candy_tg_client_name            = "Candy-Validator-tg"
+candy_tg_node_name              = "Candy-Validator-tg-9701"
 candy_tg_port_node              = "9701"
 candy_tg_forwarding_port_client = {
-                                   tcp = 22
-                                   tcp = 9702
+                                   "key_1": 22, "key_2": 9702
                                    } 
