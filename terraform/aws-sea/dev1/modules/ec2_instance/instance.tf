@@ -44,7 +44,9 @@ data "aws_security_group" "selected" {
 resource "aws_instance" "validator_node_server" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = var.ec2_instance_type
-  #key_name      = "candy_key"//TODO add Create a new key pair OR Reuse an existing key pair AND combine with kms
+  // TODO add Create a new key pair OR Reuse an existing key pair AND combine with kms
+  // https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/key_pair
+  key_name      = "candy_key" 
 
   # ===============================================================
   # Provinces Hosting in AWS will want to ensure their
@@ -66,10 +68,11 @@ resource "aws_instance" "validator_node_server" {
     #   - Make dynamic if using an encrypted volume
     #   - Keys will need to be protected from accedental distruction
     # ---------------------------------------------------------------
+    //TODO create data to retreive the key created by aws-sea in the account
     kms_key_id            = var.ebs_kms_key_id
     # ===============================================================
 
-    delete_on_termination = var.ebs_delete_on_termination
+    delete_on_termination = var.ec2_delete_on_termination
 
     tags = {
       Name        = var.ebs_name
@@ -109,6 +112,8 @@ resource "aws_security_group" "validator_node_security_group" {
   name        = var.sg_name
   description = var.sg_description
   vpc_id      = data.aws_vpc.selected.id
+  
+  //TODO We could check for outbound on 9701 for inter-node the IP of the other nodes
   egress {
     cidr_blocks = ["0.0.0.0/0"]
     from_port   = "0"

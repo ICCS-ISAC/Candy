@@ -2,148 +2,148 @@
 # Global variables
 #-------------------------------------------------------------------------------
 
-variable "aws_region" {
+variable "candy_region" {
   description = "a specific AWS region"
 }
 
-variable "aws_application" {
+variable "candy_application" {
   description = "Name of application"
 }
 
-variable "aws_profile" {
+variable "candy_profile" {
   description = "Configuration profile of AWS"
 }
 
-variable "aws_environment" {
+variable "candy_environment" {
   description = "Environnement"
 }
 
-variable "aws_availability_zone" {
+variable "candy_availability_zone" {
   description = "Availability zone"
 }
 
-variable "ec2_instance_name" {
+variable "candy_instance_name" {
   description = "The value to use for the Name tag of the EC2 instance"
   type        = string
   default     = "ValidatorNodeInstance"
 }
 
-variable "ec2_owners" {
+variable "candy_ami_owners" {
   description = "List of AMI owners"
 }
 
-variable "ec2_filter_name" {
+variable "candy_ami_filter_name" {
   description = "Filter by name"
 }
 
-variable "ec2_root_device_type" {
+variable "candy_ami_filter_root_device_type" {
   description = "Filter by Root Device Type"
 }
 
-variable "ec2_filter_virtualization_type" {
+variable "candy_ami_filter_virtualization_type" {
   description = "Filter by virtualization type"
 }
 
-variable "ebs_name" {
+variable "candy_ebs_name" {
   description = "The name of the EBS volume."
 }
-variable "ec2_instance_type" {
+variable "candy_ec2_instance_type" {
   description = "Type of instance ec2"
 }
 
-variable "ebs_volume_size" {
+variable "candy_ebs_volume_size" {
   description = "EBS volume size"
 }
 
-variable "ebs_volume_type" {
+variable "candy_ebs_volume_type" {
   description = "EBS volume type"
 }
 
-variable "ebs_encrypted" {
+variable "candy_ebs_encrypted" {
   description = "EBS is encrypted"
 }
 
-variable "ebs_kms_key_id" {
+variable "candy_ebs_kms_key_id" {
   description = "KMS key used to encrypt/decrypt EBS"
 }
 
-variable "ebs_delete_on_termination" {
-  description = "EBS delete on termination"
+variable "candy_ec2_delete_on_termination" {
+  description = "EC2 delete on termination"
 }
 
-variable "eip_client_ip_name" {
+variable "candy_eip_client_ip_name" {
   description = "The name of the elastic IP for the client interface."
 }
 
-variable "eip_node_ip_name" {
+variable "candy_eip_node_ip_name" {
   description = "The name of the elastic IP for the node interface."
 }
 
-variable "eni_client_name" {
+variable "candy_eni_client_name" {
   description = "The name of the client interface card."
 }
 
-variable "eni_client_description" {
+variable "candy_eni_client_description" {
   description = "The description of the client interface card."
 }
 
-variable "eni_client_ip" {
+variable "candy_eni_client_ip" {
   description = "The private IP address to use for the client interface card."
 }
 
-variable "eni_node_name" {
+variable "candy_eni_node_name" {
   description = "The name of the node interface card."
 }
 
-variable "eni_node_description" {
+variable "candy_eni_node_description" {
   description = "The description of the node interface card."
 }
 
-variable "eni_node_ip" {
+variable "candy_eni_node_ip" {
   description = "The private IP address to use for the node interface card."
 }
 
-variable "subnet_client_name" {
+variable "candy_subnet_client_name" {
   description = "The name of the client subnet."
 }
 
-variable "subnet_client_cidr_block" {
+variable "candy_subnet_client_cidr_block" {
   description = "The cidr block to use for the client subnet."
 }
 
-variable "sg_name" {
+variable "candy_sg_name" {
   description = "The name of the security group."
 }
 
-variable "sg_tag_name" {
+variable "candy_sg_tag_name" {
   description = "The name to use for the security group's tag."
 }
 
-variable "sg_description" {
+variable "candy_sg_description" {
   description = "The description for the security group."
 }
 
-variable "tg_forwarding_port_client" {
+variable "candy_tg_forwarding_port_client" {
+  type = map(number)
   description = "The value to use for the port and protocol of client interface."
 }
 
-variable "elb_client_name" {
+variable "candy_elb_client_name" {
   description = "The value to use for the laod balancer name of the client interface."
 }
 
-variable "tg_client_name" {
+variable "candy_tg_client_name" {
   description = "The value to use for the target groupe name of the client interface."
 }
 
-variable "elb_node_name" {
+variable "candy_elb_node_name" {
   description = "The value to use for the laod balancer name of the node interface."
 }
 
-variable "tg_node_name" {
+variable "candy_tg_node_name" {
   description = "The value to use for the target groupe name of the node interface."
 }
 
-variable "tg_port_node" {
+variable "candy_tg_port_node" {
   description = "The value to use for the port of node interface."
 }
-
