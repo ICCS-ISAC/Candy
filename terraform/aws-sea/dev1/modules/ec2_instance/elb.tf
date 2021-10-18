@@ -35,9 +35,21 @@ resource "aws_lb_listener" "node_interface" {
   }
 }
 
-
+// TODO add healthcheck on target group
+/* here is an example
+  health_check {
+    interval            = 30
+    port                = 5000
+    protocol            = "HTTP"
+    timeout             = 10
+    healthy_threshold   = 3
+    unhealthy_threshold = 5
+    path                = "/health"
+    matcher             = 200
+  }
+*/
 resource "aws_lb_target_group" "client_interface" {
-  name        = var.tg_client_name
+  name        = "${var.tg_client_name}-${each.value}"
   for_each    = var.tg_forwarding_port_client
   target_type = "ip"
   port        = each.value
