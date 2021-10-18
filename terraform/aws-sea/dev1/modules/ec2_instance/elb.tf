@@ -37,7 +37,7 @@ resource "aws_lb_listener" "node_interface" {
 
 
 resource "aws_lb_target_group" "client_interface" {
-  name        = var.tg_client_name
+  name        = "${var.tg_client_name}-${each.value}"
   for_each    = var.tg_forwarding_port_client
   target_type = "ip"
   port        = each.value
