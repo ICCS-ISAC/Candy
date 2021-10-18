@@ -25,8 +25,8 @@ candy_ebs_volume_type           = "gp2"
 candy_ebs_encrypted             = true
 
 //TODO create data to retreive the key created by aws-sea in the account
-#candy_ebs_kms_key_id            = "8a631aa1-e26f-4ff6-85e0-4cf9b6784ee6"
-candy_ebs_kms_key_id            = "a3b421c9-08ba-4477-a771-a3b748ce0049"
+candy_ebs_kms_key_id            = "8a631aa1-e26f-4ff6-85e0-4cf9b6784ee6"
+#candy_ebs_kms_key_id            = "a3b421c9-08ba-4477-a771-a3b748ce0049"
 	
 # eip
 candy_eip_client_ip_name = "Validator Node - Public Client IP"

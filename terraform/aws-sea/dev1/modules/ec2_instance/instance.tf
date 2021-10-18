@@ -112,6 +112,8 @@ resource "aws_security_group" "validator_node_security_group" {
   name        = var.sg_name
   description = var.sg_description
   vpc_id      = data.aws_vpc.selected.id
+  
+  //TODO We could check for outbound on 9701 for inter-node the IP of the other nodes
   egress {
     cidr_blocks = ["0.0.0.0/0"]
     from_port   = "0"
