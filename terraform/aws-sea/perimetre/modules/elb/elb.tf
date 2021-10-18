@@ -1,5 +1,3 @@
-
-
 data "aws_vpc" "selected" {
   # Allows dynamic lookup of information about the selected VPC.
   # Specifically it's ID
@@ -52,10 +50,9 @@ resource "aws_lb_listener" "node_interface" {
   }
 }
 
-
 resource "aws_lb_target_group" "client_interface" {
-  name        = var.tg_client_name
   for_each    = var.tg_forwarding_port_client
+  name        = "${var.tg_client_name}-${each.value}"
   target_type = "ip"
   port        = each.value
   protocol    = "TCP"
@@ -87,8 +84,7 @@ resource "aws_lb_target_group" "node_interface" {
 }
 
 resource "aws_lb_target_group_attachment" "client_interface" {
-  for_each = var.tg_forwarding_port_client
-
+  for_each          = var.tg_forwarding_port_client
   target_group_arn  = "${aws_lb_target_group.client_interface[each.key].arn}"
   target_id         = var.eni_client_ip
   availability_zone = var.aws_availability_zone
