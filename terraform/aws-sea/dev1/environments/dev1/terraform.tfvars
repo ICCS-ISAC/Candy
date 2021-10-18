@@ -15,6 +15,7 @@ candy_ami_filter_virtualization_type = ["hvm"]
 # ec2
 #   - t3.large (for dev and test): 2CPU, 8GiB Memory
 candy_ec2_instance_type = "t3.large"
+candy_ec2_delete_on_termination = false
 
 # ebs
 candy_ebs_name = "Validator Node Volume"
@@ -22,11 +23,11 @@ candy_ebs_name = "Validator Node Volume"
 candy_ebs_volume_size           = "20"
 candy_ebs_volume_type           = "gp2"
 candy_ebs_encrypted             = true
+
+//TODO create data to retreive the key created by aws-sea in the account
 #candy_ebs_kms_key_id            = "8a631aa1-e26f-4ff6-85e0-4cf9b6784ee6"
 candy_ebs_kms_key_id            = "a3b421c9-08ba-4477-a771-a3b748ce0049"
 	
-candy_ebs_delete_on_termination = true
-
 # eip
 candy_eip_client_ip_name = "Validator Node - Public Client IP"
 candy_eip_node_ip_name   = "Validator Node - Public Node IP"
@@ -34,10 +35,10 @@ candy_eip_node_ip_name   = "Validator Node - Public Node IP"
 # eni
 candy_eni_client_name        = "Validator Node - Client Interface"
 candy_eni_client_description = "The network interface used for client communications."
-candy_eni_client_ip          = "10.2.32.253"
+candy_eni_client_ip          = "10.2.32.252"
 candy_eni_node_name          = "Validator Node - Node Interface"
 candy_eni_node_description   = "The network interface used for inter-node communications."
-candy_eni_node_ip            = "10.2.32.133"
+candy_eni_node_ip            = "10.2.32.132"
 
 # subnet
 candy_subnet_client_name       = "Validator Node - Client Subnet"
@@ -55,5 +56,10 @@ candy_tg_client_name            = "Candy-Validator-tg"
 candy_tg_node_name              = "Candy-Validator-tg-9701"
 candy_tg_port_node              = "9701"
 candy_tg_forwarding_port_client = {
+<<<<<<< HEAD
                                    "key_1": 22, "key_2": 9702
+=======
+                                   tcp = 22
+                                   tcp = 9702
+>>>>>>> 894143d2b5343acccc407e5ce11a6fd0eb89efa3
                                    } 

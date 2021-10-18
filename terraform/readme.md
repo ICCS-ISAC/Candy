@@ -30,7 +30,7 @@ Then setup Terraform.
 ## Cheat Sheet
 For the first boot of your terraform provisiong you need to at least "init" and "plan":
 ```
-terraform init -var-file="environments/dev1/terraform.tfvars"
+terraform init --upgrade
 terraform plan -var-file="environments/dev1/terraform.tfvars"
 ```
 

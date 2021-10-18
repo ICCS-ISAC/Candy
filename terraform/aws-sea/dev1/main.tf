@@ -7,12 +7,12 @@ module "ec2_instance" {
   ec2_filter_virtualization_type    = var.candy_ami_filter_virtualization_type
   ec2_root_device_type              = var.candy_ami_filter_root_device_type
   ec2_instance_type                 = var.candy_ec2_instance_type
+  ec2_delete_on_termination         = var.candy_ec2_delete_on_termination
   ebs_name                          = var.candy_ebs_name
   ebs_volume_size                   = var.candy_ebs_volume_size
   ebs_volume_type                   = var.candy_ebs_volume_type
   ebs_encrypted                     = var.candy_ebs_encrypted
   ebs_kms_key_id                    = var.candy_ebs_kms_key_id
-  ebs_delete_on_termination         = var.candy_ebs_delete_on_termination
   sg_name                           = var.candy_sg_name
   sg_tag_name                       = var.candy_sg_tag_name
   sg_description                    = var.candy_sg_description

@@ -67,8 +67,8 @@ variable "candy_ebs_kms_key_id" {
   description = "KMS key used to encrypt/decrypt EBS"
 }
 
-variable "candy_ebs_delete_on_termination" {
-  description = "EBS delete on termination"
+variable "candy_ec2_delete_on_termination" {
+  description = "EC2 delete on termination"
 }
 
 variable "candy_eip_client_ip_name" {
