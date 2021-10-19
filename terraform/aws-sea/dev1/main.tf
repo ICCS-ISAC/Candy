@@ -26,13 +26,7 @@ module "ec2_instance" {
   eni_node_ip                       = var.candy_eni_node_ip
   subnet_client_name                = var.candy_subnet_client_name
   subnet_client_cidr_block          = var.candy_subnet_client_cidr_block
-  elb_client_name                   = var.candy_elb_client_name
-  tg_client_name                    = var.candy_tg_client_name
-  elb_node_name                     = var.candy_elb_node_name
-  tg_node_name                      = var.candy_tg_node_name
-  tg_port_node                      = var.candy_tg_port_node
-  tg_forwarding_port_client         = var.candy_tg_forwarding_port_client
-  tg_listener_port_client           = var.candy_listener_port_client
+
   aws_application                   = var.candy_application
   aws_environment                   = var.candy_environment
   aws_profile                       = var.candy_profile
