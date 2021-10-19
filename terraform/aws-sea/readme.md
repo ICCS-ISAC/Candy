@@ -6,7 +6,7 @@
 > - AWS CLI profile name 2 :
 > - And use the variables for your specific installation.
 
-## Cheat Sheet
+## Deployment
 ### Deploy the validator node:
 ```
 terraform init --upgrade

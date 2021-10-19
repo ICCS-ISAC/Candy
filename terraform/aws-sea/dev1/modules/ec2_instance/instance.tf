@@ -68,7 +68,6 @@ resource "aws_instance" "validator_node_server" {
     #   - Make dynamic if using an encrypted volume
     #   - Keys will need to be protected from accedental distruction
     # ---------------------------------------------------------------
-    //TODO create data to retreive the key created by aws-sea in the account
     kms_key_id            = var.ebs_kms_key_id
     # ===============================================================
 

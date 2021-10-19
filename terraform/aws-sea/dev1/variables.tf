@@ -122,32 +122,3 @@ variable "candy_sg_tag_name" {
 variable "candy_sg_description" {
   description = "The description for the security group."
 }
-
-variable "candy_tg_forwarding_port_client" {
-  type = map(number)
-  description = "The value to use for the port and protocol of client interface."
-}
-variable "candy_listener_port_client" {
-  type = map(number)
-  description = "todo."
-}
-
-variable "candy_elb_client_name" {
-  description = "The value to use for the laod balancer name of the client interface."
-}
-
-variable "candy_tg_client_name" {
-  description = "The value to use for the target groupe name of the client interface."
-}
-
-variable "candy_elb_node_name" {
-  description = "The value to use for the laod balancer name of the node interface."
-}
-
-variable "candy_tg_node_name" {
-  description = "The value to use for the target groupe name of the node interface."
-}
-
-variable "candy_tg_port_node" {
-  description = "The value to use for the port of node interface."
-}
