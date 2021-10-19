@@ -58,3 +58,7 @@ candy_tg_port_node              = "9701"
 candy_tg_forwarding_port_client = {
                                    "key_1": 22, "key_2": 9702
                                    } 
+
+candy_listener_port_client = {
+                                   "key_1": 22, "key_2": 9702
+                                   } 

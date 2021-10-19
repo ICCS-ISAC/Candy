@@ -16,6 +16,9 @@ candy_elb_node_name             = "Candy-Validator9701-lb"
 candy_tg_client_name            = "Candy-Validator-tg"
 candy_tg_node_name              = "Candy-Validator-tg-9701"
 candy_tg_port_node              = "9701"
+candy_listener_port_client = {
+                                "key_1": 22, "key_2": 9702
+                             } 
 candy_tg_forwarding_port_client = {
-                                   "key_1": 22, "key_2": 9702
+                                   "key_1": 122, "key_2": 19702
                                    } 
