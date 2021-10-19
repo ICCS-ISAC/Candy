@@ -48,17 +48,3 @@ candy_subnet_client_cidr_block = "10.2.32.0/20"
 candy_sg_name        = "node-security-group"
 candy_sg_tag_name    = "Validator Node Security Group"
 candy_sg_description = "Validator Node Security Group"
-
-# elb + tg
-candy_elb_client_name           = "Candy-Validator9702-lb"
-candy_elb_node_name             = "Candy-Validator9701-lb"
-candy_tg_client_name            = "Candy-Validator-tg"
-candy_tg_node_name              = "Candy-Validator-tg-9701"
-candy_tg_port_node              = "9701"
-candy_tg_forwarding_port_client = {
-                                   "key_1": 22, "key_2": 9702
-                                   } 
-
-candy_listener_port_client = {
-                                   "key_1": 22, "key_2": 9702
-                                   } 

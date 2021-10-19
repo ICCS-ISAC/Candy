@@ -32,8 +32,8 @@ variable "eni_node_ip" {
 variable "tg_forwarding_port_client" {
   description = "The value to use for the port and protocol of client interface."
 }
-variable "tg_listener_port_client" {
-  description = "TODO."
+variable "elb_listener_port_client" {
+  description = "The port number the load balancer listen."
 }
 
 variable "elb_client_name" {
@@ -56,3 +56,6 @@ variable "tg_port_node" {
   description = "The value to use for the port of node interface."
 }
 
+variable "elb_listener_port_node" {
+  description = "The port number the load balancer listen."
+}

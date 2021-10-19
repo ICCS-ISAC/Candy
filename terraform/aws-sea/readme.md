@@ -2,11 +2,12 @@
 
 > To make the terraform file generic for every juridiction. When you configure you aws CLI use or configure both profile name :
 >
-> - AWS CLI profile name 1 : CandyDevNetwork for the dev node
-> - AWS CLI profile name 2 :
+> - AWS CLI profile name 1 : CandyDevNetwork for the dev node account
+> - AWS CLI profile name 2 : Perimetre for the perimeter account
 > - And use the variables for your specific installation.
 
-## Cheat Sheet
+## TODO ADD AWS-SEA SSO AUTHENTICATION WITH COMMAND LINE BEFORE LAUNCHING TERRAFORM
+## Deployment
 ### Deploy the validator node:
 ```
 terraform init --upgrade
