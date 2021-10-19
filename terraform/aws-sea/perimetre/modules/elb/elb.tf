@@ -30,7 +30,7 @@ resource "aws_lb" "node_interface" {
 }
 
 resource "aws_lb_listener" "client_interface" {
-  for_each            = var.tg_listener_port_client
+  for_each            = var.elb_listener_port_client
   load_balancer_arn   = aws_lb.client_interface.arn
   protocol            = "TCP"
   port                = each.value
@@ -43,7 +43,8 @@ resource "aws_lb_listener" "client_interface" {
 resource "aws_lb_listener" "node_interface" {
   load_balancer_arn   = aws_lb.node_interface.arn
   protocol            = "TCP"
-  port                = var.tg_port_node
+  port                = var.elb_listener_port_node
+  
   default_action {
     target_group_arn = aws_lb_target_group.node_interface.arn
     type             = "forward"
@@ -68,9 +69,9 @@ resource "aws_lb_target_group" "client_interface" {
 }
 
 resource "aws_lb_target_group" "node_interface" {
-  name        = var.tg_node_name
+  name        = "${var.tg_node_name}-${var.tg_port_node}"
   target_type = "ip"
-  port        = "9701"
+  port        = var.tg_port_node
   protocol    = "TCP"
   vpc_id      = data.aws_vpc.selected.id
 
