@@ -15,7 +15,7 @@ resource "aws_lb" "node_interface" {
 }
 
 resource "aws_lb_listener" "client_interface" {
-  for_each            = var.tg_forwarding_port_client
+  for_each            = var.tg_listener_port_client
   load_balancer_arn   = aws_lb.client_interface.arn
   protocol            = "TCP"
   port                = each.value
