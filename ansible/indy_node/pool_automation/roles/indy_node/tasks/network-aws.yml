@@ -15,12 +15,10 @@
 
 - name: Disable network management
   shell: >
-          #echo 'network: {config: disabled}' > /etc/cloud/cloud.cfg.d/99-disable-network-config.cfg
-          echo 'network: {config: disabled}' > /tmp/99-disable-network-config.cfg
+          echo 'network: {config: disabled}' > /etc/cloud/cloud.cfg.d/99-disable-network-config.cfg
   tags:
      - configure
      - network
-
 
 # Get NIC-1 details
 - name: Set eth0 variable
@@ -72,19 +70,10 @@
     - configure
     - network
 
-- name: Find eth1 ip address
-  shell: >
-          ip -o -f inet addr show |
-          awk '/scope global {{ eth1 }}/ {print $4}' |
-          sed "s/\/.*//"
-  register: eth1_ip_cmd
-  tags:
-     - configure
-     - network
-
+# Get the eth1_ip from terraform generated inventory, the server will not have access to it.
 - name: Set eth1_ip variable
   set_fact:
-     eth1_ip: "{{ eth1_ip_cmd.stdout_lines[0] }}"
+     eth1_ip: "{{ hostvars[inventory_hostname]['eth1_ip'] }}"
   tags:
     - configure
     - network
@@ -113,7 +102,6 @@
     - configure
     - network
 
-
 - name: Remove NIC-1 details
   copy:
     src: network-interface/aws/50-cloud-init.cfg
@@ -124,7 +112,6 @@
   tags:
      - configure
      - network
-
 
 - name: Create NIC-1 network config
   template:
