@@ -7,8 +7,8 @@ candy_availability_zone = "ca-central-1a"
 
 
 # eni
-candy_eni_client_ip          = "100.96.250.56" //TODO create elastic ip with terraform
-candy_eni_node_ip            = "100.96.250.56"
+candy_eni_client_ip          = "15.222.199.136" //TODO create elastic ip with terraform
+candy_eni_node_ip            = "99.79.120.239"
 
 # elb + tg
 candy_elb_client_name           = "Candy-Validator9702-lb"

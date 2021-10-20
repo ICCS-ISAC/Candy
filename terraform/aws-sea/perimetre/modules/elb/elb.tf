@@ -15,7 +15,7 @@ data "aws_subnet" "selected" {
 }
 resource "aws_lb" "client_interface" {
   name               = var.elb_client_name
-  internal           = true
+  internal           = false
   load_balancer_type = "network"
   subnets            = [data.aws_subnet.selected.id]
   enable_deletion_protection = false
@@ -23,7 +23,7 @@ resource "aws_lb" "client_interface" {
 
 resource "aws_lb" "node_interface" {
   name               = var.elb_node_name
-  internal           = true
+  internal           = false
   load_balancer_type = "network"
   subnets            = [data.aws_subnet.selected.id]
   enable_deletion_protection = false
