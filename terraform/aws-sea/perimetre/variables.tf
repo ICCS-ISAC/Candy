@@ -23,11 +23,11 @@ variable "candy_availability_zone" {
 }
 
 variable "candy_eip_client_allocation_id" {
-  description = "The elastic IP address to use for the client interface card."
+  description = "The allocation id of address to use for the client interface card."
 }
 
 variable "candy_eip_node_allocation_id" {
-  description = "The elastic IP address to use for the node interface card."
+  description = "The allocation id of address to use for the node interface card."
 }
 
 variable "candy_tg_forwarding_port_client" {

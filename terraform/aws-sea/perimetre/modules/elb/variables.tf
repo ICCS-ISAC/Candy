@@ -23,11 +23,11 @@ variable "aws_availability_zone" {
 }
 
 variable "eip_client_allocation_id" {
-  description = "The elastic IP address to use for the client interface card."
+  description = "The allocation id of elastic IP to use for the client interface card."
 }
 
 variable "eip_node_allocation_id" {
-  description = "The elastic IP address to use for the node interface card."
+  description = "The allocation id of elastic IP to use for the node interface card."
 }
 
 variable "tg_forwarding_port_client" {
