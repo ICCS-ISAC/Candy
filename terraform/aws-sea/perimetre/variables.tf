@@ -22,24 +22,19 @@ variable "candy_availability_zone" {
   description = "Availability zone"
 }
 
-
-
-
-
-
-variable "candy_eni_client_ip" {
-  description = "The private IP address to use for the client interface card."
+variable "candy_eip_client_allocation_id" {
+  description = "The elastic IP address to use for the client interface card."
 }
 
-
-variable "candy_eni_node_ip" {
-  description = "The private IP address to use for the node interface card."
+variable "candy_eip_node_allocation_id" {
+  description = "The elastic IP address to use for the node interface card."
 }
 
 variable "candy_tg_forwarding_port_client" {
   type = map(number)
   description = "The value to use for the port and protocol of client interface."
 }
+
 variable "candy_elb_listener_port_client" {
   type = map(number)
   description = "The port number the load balancer listen."
@@ -67,4 +62,8 @@ variable "candy_tg_port_node" {
 
 variable "candy_elb_listener_port_node" {
   description = "The port number the load balancer listen."
+}
+
+variable "candy_eni_firewall_ip" {
+  description = "The private IP address that use it in the client interface card of firewall ec2"
 }
