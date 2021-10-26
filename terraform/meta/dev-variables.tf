@@ -22,13 +22,6 @@ resource "tfe_variable" "dev_region" {
   workspace_id = data.tfe_workspace.dev.id
 }
 
-resource "tfe_variable" "dev_profile" {
-  key          = "candy_profile"
-  value        = "CandyDevNetwork"
-  category     = "terraform"
-  workspace_id = data.tfe_workspace.dev.id
-}
-
 resource "tfe_variable" "dev_application_name" {
   key          = "candy_application_name"
   value        = "candy"
