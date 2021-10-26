@@ -17,7 +17,10 @@ resource "aws_lb" "client_interface" {
   name               = var.elb_client_name
   internal           = false
   load_balancer_type = "network"
-  subnets            = [data.aws_subnet.selected.id]
+  subnet_mapping {
+       subnet_id = data.aws_subnet.selected.id
+       allocation_id = var.eip_client_allocation_id
+  }
   enable_deletion_protection = false
 }
 
@@ -25,7 +28,10 @@ resource "aws_lb" "node_interface" {
   name               = var.elb_node_name
   internal           = false
   load_balancer_type = "network"
-  subnets            = [data.aws_subnet.selected.id]
+  subnet_mapping {
+       subnet_id = data.aws_subnet.selected.id
+       allocation_id = var.eip_node_allocation_id
+  }
   enable_deletion_protection = false
 }
 
@@ -87,14 +93,14 @@ resource "aws_lb_target_group" "node_interface" {
 resource "aws_lb_target_group_attachment" "client_interface" {
   for_each          = var.tg_forwarding_port_client
   target_group_arn  = "${aws_lb_target_group.client_interface[each.key].arn}"
-  target_id         = var.eni_client_ip
+  target_id         = var.eni_firewall_ip
   availability_zone = var.aws_availability_zone
   port              = each.value
 }
 
 resource "aws_lb_target_group_attachment" "node_interface" {
   target_group_arn  = aws_lb_target_group.node_interface.arn
-  target_id         = var.eni_node_ip
+  target_id         = var.eni_firewall_ip
   availability_zone = var.aws_availability_zone
   port              = var.tg_port_node
 }
