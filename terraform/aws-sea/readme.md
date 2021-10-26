@@ -54,3 +54,8 @@ Ultimately if you need to destroy what was provision:
 ```
 terraform destroy -var-file="environments/perimetre/terraform.tfvars"
 ```
+
+terraform init --upgrade
+terraform plan -var-file="environments/terraform.tfvars"
+terraform apply -var-file="environments/terraform.tfvars"
+terraform destroy -var-file="environments/terraform.tfvars"
