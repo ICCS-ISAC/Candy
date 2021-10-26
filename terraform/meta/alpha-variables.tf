@@ -22,13 +22,6 @@ resource "tfe_variable" "alpha_region" {
   workspace_id = data.tfe_workspace.alpha.id
 }
 
-resource "tfe_variable" "alpha_profile" {
-  key          = "candy_profile"
-  value        = "CandyDevNetwork"
-  category     = "terraform"
-  workspace_id = data.tfe_workspace.alpha.id
-}
-
 resource "tfe_variable" "alpha_application_name" {
   key          = "candy_application_name"
   value        = "candy"

@@ -22,13 +22,6 @@ resource "tfe_variable" "beta_region" {
   workspace_id = data.tfe_workspace.beta.id
 }
 
-resource "tfe_variable" "beta_profile" {
-  key          = "candy_profile"
-  value        = "CandyDevNetwork"
-  category     = "terraform"
-  workspace_id = data.tfe_workspace.beta.id
-}
-
 resource "tfe_variable" "beta_application_name" {
   key          = "candy_application_name"
   value        = "candy"
