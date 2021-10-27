@@ -6,7 +6,7 @@ candy_profile_node      = "CandyDevNetwork"
 candy_profile_perimeter = "Perimeter"
 candy_application       = "candy"
 candy_environment       = "dev"
-candy_instance_name     = "Validator Node Instance"
+candy_instance_name     = "Candy-Dev"
 candy_availability_zone = "ca-central-1a"
 # ===================================================
 
@@ -37,33 +37,31 @@ candy_ebs_volume_size = "20"
 candy_ebs_volume_type = "gp2"
 candy_ebs_encrypted   = true
 candy_ebs_kms_key_id  = "8a631aa1-e26f-4ff6-85e0-4cf9b6784ee6"
-#candy_ebs_kms_key_id            = "a3b421c9-08ba-4477-a771-a3b748ce0049"
+#candy_ebs_kms_key_id = "a3b421c9-08ba-4477-a771-a3b748ce0049"
 # ===================================================
 
 # ===================================================
 # EIP
 # ---------------------------------------------------
-candy_eip_client_ip_name = "Validator Node - Public Client IP"
-candy_eip_node_ip_name   = "Validator Node - Public Node IP"
+candy_eip_client_allocation_id          = "eipalloc-048857b1bba29edb8"
+candy_eip_node_allocation_id            = "eipalloc-0e08424ec957a95c1"
 # ===================================================
 
 # ===================================================
 # ENI
 # ---------------------------------------------------
-candy_eni_client_name        = "Validator Node - Client Interface"
 candy_eni_client_description = "The network interface used for client communications."
 candy_eni_client_ip          = "10.2.32.252"
 
-candy_eni_node_name        = "Validator Node - Node Interface"
-candy_eni_node_description = "The network interface used for inter-node communications."
-candy_eni_node_ip          = "10.2.32.132"
+candy_eni_node_description   = "The network interface used for inter-node communications."
+candy_eni_node_ip            = "10.2.32.132"
 # ===================================================
 
 # ===================================================
 # Subnet
 # ---------------------------------------------------
-candy_subnet_client_name       = "Validator Node - Client Subnet"
-candy_subnet_client_cidr_block = "10.2.32.0/20"
+# candy_subnet_client_name       = "Validator Node - Client Subnet"
+# candy_subnet_client_cidr_block = "10.2.32.0/20"
 # ===================================================
 
 # ===================================================
@@ -77,15 +75,15 @@ candy_sg_description = "Validator Node Security Group"
 # ===================================================
 # ELB + TG
 # ---------------------------------------------------
-candy_elb_node_name          = "Candy-Validator9701-lb"
-candy_tg_node_name           = "Candy-Validator-tg-Node"
-candy_elb_node_ip       = "100.96.250.56"
-candy_tg_port_node           = "19701"
-candy_elb_listener_port_node = "9701"
+candy_elb_node_name            = "Node-nlb"
+candy_tg_node_name             = "Node-tg"
+candy_elb_node_ip              = "100.96.250.56"
+candy_tg_port_node             = "19701"
+candy_elb_listener_port_node   = "9701"
 
-candy_elb_client_name        = "Candy-Validator9702-lb"
-candy_tg_client_name         = "Candy-Validator-tg-Client"
-candy_elb_client_ip       = "100.96.250.56"
+candy_elb_client_name          = "Client-nlb"
+candy_tg_client_name           = "Client-tg"
+candy_eni_firewall_ip          = "100.96.250.56"
 candy_elb_listener_port_client = {
   "key_1" : 22, "key_2" : 9702
 }

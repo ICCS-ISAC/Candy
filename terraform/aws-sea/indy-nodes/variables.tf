@@ -78,18 +78,6 @@ variable "candy_ec2_delete_on_termination" {
   description = "EC2 delete on termination"
 }
 
-variable "candy_eip_client_ip_name" {
-  description = "The name of the elastic IP for the client interface."
-}
-
-variable "candy_eip_node_ip_name" {
-  description = "The name of the elastic IP for the node interface."
-}
-
-variable "candy_eni_client_name" {
-  description = "The name of the client interface card."
-}
-
 variable "candy_eni_client_description" {
   description = "The description of the client interface card."
 }
@@ -98,24 +86,12 @@ variable "candy_eni_client_ip" {
   description = "The private IP address to use for the client interface card."
 }
 
-variable "candy_eni_node_name" {
-  description = "The name of the node interface card."
-}
-
 variable "candy_eni_node_description" {
   description = "The description of the node interface card."
 }
 
 variable "candy_eni_node_ip" {
   description = "The private IP address to use for the node interface card."
-}
-
-variable "candy_subnet_client_name" {
-  description = "The name of the client subnet."
-}
-
-variable "candy_subnet_client_cidr_block" {
-  description = "The cidr block to use for the client subnet."
 }
 
 variable "candy_sg_name" {
@@ -134,10 +110,9 @@ variable "candy_sg_description" {
 # ===================================================
 # Global variables for load balancer
 # ---------------------------------------------------
-variable "candy_elb_client_ip" {
+variable "candy_eni_firewall_ip" {
   description = "The private IP address to use for the client interface card."
 }
-
 
 variable "candy_elb_node_ip" {
   description = "The private IP address to use for the node interface card."
@@ -174,4 +149,12 @@ variable "candy_tg_port_node" {
 
 variable "candy_elb_listener_port_node" {
   description = "The port number the load balancer listen."
+}
+
+variable "candy_eip_client_allocation_id" {
+  description = "The allocation id of address to use for the client interface card."
+}
+
+variable "candy_eip_node_allocation_id" {
+  description = "The allocation id of address to use for the node interface card."
 }
