@@ -25,7 +25,7 @@ variable "aws_availability_zone" {
 # ===================================================
 # Global variables for instance module
 # ---------------------------------------------------
-variable "ec2_instance_name" {
+variable "aws_instance_name" {
   description = "The value to use for the Name tag of the EC2 instance"
   type        = string
   default     = "ValidatorNodeInstance"
@@ -47,9 +47,6 @@ variable "ami_filter_virtualization_type" {
   description = "Filter by virtualization type"
 }
 
-variable "ebs_name" {
-  description = "The name of the EBS volume."
-}
 variable "ec2_instance_type" {
   description = "Type of instance ec2"
 }
@@ -74,18 +71,6 @@ variable "ec2_delete_on_termination" {
   description = "EC2 delete on termination"
 }
 
-variable "eip_client_ip_name" {
-  description = "The name of the elastic IP for the client interface."
-}
-
-variable "eip_node_ip_name" {
-  description = "The name of the elastic IP for the node interface."
-}
-
-variable "eni_client_name" {
-  description = "The name of the client interface card."
-}
-
 variable "eni_client_description" {
   description = "The description of the client interface card."
 }
@@ -94,24 +79,12 @@ variable "eni_client_ip" {
   description = "The private IP address to use for the client interface card."
 }
 
-variable "eni_node_name" {
-  description = "The name of the node interface card."
-}
-
 variable "eni_node_description" {
   description = "The description of the node interface card."
 }
 
 variable "eni_node_ip" {
   description = "The private IP address to use for the node interface card."
-}
-
-variable "subnet_client_name" {
-  description = "The name of the client subnet."
-}
-
-variable "subnet_client_cidr_block" {
-  description = "The cidr block to use for the client subnet."
 }
 
 variable "sg_name" {

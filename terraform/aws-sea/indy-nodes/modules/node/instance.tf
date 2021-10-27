@@ -1,17 +1,3 @@
-# ===================================================
-# Configure the aws provider
-# ---------------------------------------------------
-provider "aws" {
-  region  = var.aws_region
-  profile = var.aws_profile_node
-  default_tags {
-    tags = {
-      system      = var.aws_application
-      environment = var.aws_environment
-    }
-  }
-}
-# ===================================================
 
 
 resource "aws_instance" "indy_node" {
@@ -46,11 +32,10 @@ resource "aws_instance" "indy_node" {
     # ===============================================================
 
     delete_on_termination = var.ec2_delete_on_termination
-
+    
+    // Tags added to default tags in provider.tf
     tags = {
-      Name        = var.ebs_name
-      Application = var.aws_application
-      Environment = var.aws_environment
+      Name        = "${var.aws_instance_name}-Volume"
     }
   }
 
@@ -64,77 +49,23 @@ resource "aws_instance" "indy_node" {
   
   # Default (primary) network interfaces can only be attached here.
   network_interface {
-    network_interface_id = aws_network_interface.validator_node_node_interface.id
+    network_interface_id = aws_network_interface.node_nic.id
     device_index         = 0
   }
-  
-
-   network_interface {
-    network_interface_id = aws_network_interface.validator_node_client_interface.id
-    device_index         = 1
-  }
  
-
+  // Tags added to default tags in provider.tf
   tags = {
-    Name        = var.ec2_instance_name
-    Application = var.aws_application
-    Environment = var.aws_environment
+    Name        = "${var.aws_instance_name}-ec2"
   }
 }
 
-resource "aws_security_group" "validator_node_security_group" {
-  name        = var.sg_name
-  description = var.sg_description
-  vpc_id      = data.aws_vpc.selected_dev.id
-  
-  //TODO We could check for outbound on 9701 for inter-node the IP of the other nodes
-  egress {
-    cidr_blocks = ["0.0.0.0/0"]
-    from_port   = "0"
-    protocol    = "-1"
-    self        = "false"
-    to_port     = "0"
-  }
-
-  # ===============================================================
-  # The IP address/port used for inter-node consensus must be configured 
-  # for exclusive use of inter-node consensus traffic. 
-  # Ideally, traffic to this address/port will be whitelisted in your firewall.
-  # ---------------------------------------------------------------
-  ingress {
-    cidr_blocks      = ["0.0.0.0/0"]
-    from_port        = "9701"
-    ipv6_cidr_blocks = ["::/0"]
-    protocol         = "tcp"
-    self             = "false"
-    to_port          = "9709"
-  }
-  # ===============================================================
-
-  # ===============================================================
-  # The SSH is used so that the CLI can access the nodes through it's
-  # Client IP address/port used for Steward Operations and Network Operations.
-  # Ideally, traffic to this address/port will be whitelisted in your firewall.
-  # ---------------------------------------------------------------
-  ingress {
-    cidr_blocks      = ["0.0.0.0/0"]//TODO restrict SSH access to Admins only, add IP addresses for all admin users of the system
-    from_port        = "22"
-    ipv6_cidr_blocks = ["::/0"]
-    protocol         = "tcp"
-    self             = "false"
-    to_port          = "22"
-  }
-  # ===============================================================
-
-  tags = {
-    Name        = var.sg_tag_name
-    Application = var.aws_application
-    Environment = var.aws_environment
-  }
+resource "aws_network_interface_attachment" "client_interface_attachment" {
+  instance_id          = aws_instance.indy_node.id
+  network_interface_id = aws_network_interface.client_nic.id
+  device_index         = 1
 }
 
-
-resource "aws_network_interface" "validator_node_node_interface" {
+resource "aws_network_interface" "node_nic" {
   description        = var.eni_node_description
   ipv6_address_count = "0"
   private_ip         = var.eni_node_ip
@@ -143,16 +74,15 @@ resource "aws_network_interface" "validator_node_node_interface" {
   security_groups    = [aws_security_group.validator_node_security_group.id, data.aws_security_group.selected_dev.id]
   source_dest_check  = "true"
   subnet_id          = data.aws_subnet.selected_dev.id
-
+  
+  // Tags added to default tags in provider.tf
   tags = {
-    Name        = var.eni_node_name
-    Application = var.aws_application
-    Environment = var.aws_environment
+    Name        = "${var.aws_instance_name}-NodeInterface"
   }
 }
 
 
-resource "aws_network_interface" "validator_node_client_interface" {
+resource "aws_network_interface" "client_nic" {
   description        = var.eni_client_description
   ipv6_address_count = "0"
   private_ip         = var.eni_client_ip
@@ -161,10 +91,9 @@ resource "aws_network_interface" "validator_node_client_interface" {
   security_groups    = [aws_security_group.validator_node_security_group.id, data.aws_security_group.selected_dev.id]
   source_dest_check  = "true"
   subnet_id          = data.aws_subnet.selected_dev.id
-
+  
+  // Tags added to default tags in provider.tf
   tags = {
-    Name        = var.eni_client_name
-    Application = var.aws_application
-    Environment = var.aws_environment
+    Name        = "${var.aws_instance_name}-ClientInterface"
   }
 }
