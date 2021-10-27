@@ -13,58 +13,11 @@ provider "aws" {
 }
 # ===================================================
 
-# ===================================================
-# Filter the image you want to use for the ec2 instance
-# ---------------------------------------------------
-data "aws_ami" "ubuntu" {
-  most_recent = true
-  owners      = var.ami_owners
 
-  filter {
-    name   = "name"
-    values = var.ami_filter_name
-  }
-
-  filter {
-    name   = "root-device-type"
-    values = var.ami_root_device_type
-  }
-
-  filter {
-    name   = "virtualization-type"
-    values = var.ami_filter_virtualization_type
-  }
-}
-# ===================================================
-
-
-data "aws_vpc" "selected_dev" {
-  # Allows dynamic lookup of information about the selected VPC.
-  # Specifically it's ID
-  tags = {
-    Name = "Dev_vpc" //TODO change to variable
-  }
-}
-
-data "aws_subnet" "selected_dev" {
-  # Allows dynamic lookup of information about the given selected subnet.
-  # Specifically it's ID
-  tags = { 
-    Name = "Web_Dev_aza_net" //TODO change to variable
-    }
-}
-
-data "aws_security_group" "selected_dev" {
-  # Allows dynamic lookup of information about the selected security group.
-  # Specifically it's ID
-  tags = {
-    Name = "Mgmt_sg"
-  }
-}
-
-resource "aws_instance" "validator_node_server" {
+resource "aws_instance" "indy_node" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = var.ec2_instance_type
+  
   // TODO add Create a new key pair OR Reuse an existing key pair AND combine with kms
   // https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/key_pair
   key_name      = "candy_key" 
@@ -109,6 +62,7 @@ resource "aws_instance" "validator_node_server" {
   # ============================================================================
   
   
+  # Default (primary) network interfaces can only be attached here.
   network_interface {
     network_interface_id = aws_network_interface.validator_node_node_interface.id
     device_index         = 0
