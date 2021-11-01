@@ -7,7 +7,7 @@
     - network
 
 - name: Fail when two network interfaces are not found
-  fail: msg="Two NICs are required. but found {{ network_interfaces.stdout_lines|sort|count }}"
+  fail: msg="Two NICs are required, but found {{ network_interfaces.stdout_lines|sort|count }}"
   when: network_interfaces.stdout_lines|count != 2
   tags:
     - configure
@@ -15,14 +15,25 @@
 
 - name: Disable network management
   shell: >
-          #echo 'network: {config: disabled}' > /etc/cloud/cloud.cfg.d/99-disable-network-config.cfg
-          echo 'network: {config: disabled}' > /tmp/99-disable-network-config.cfg
+          echo 'network: {config: disabled}' > /etc/cloud/cloud.cfg.d/99-disable-network-config.cfg
   tags:
      - configure
      - network
 
+- name: Remove NIC-1 auto config
+  copy:
+    src: network-interface/aws/50-cloud-init.cfg
+    dest: /etc/network/interfaces.d/50-cloud-init.cfg
+    owner: root
+    group: root
+  become: true
+  tags:
+     - configure
+     - network
 
+# =================================================================================
 # Get NIC-1 details
+# ---------------------------------------------------------------------------------
 - name: Set eth0 variable
   set_fact:
      eth0: "{{ (network_interfaces.stdout_lines|sort)[0] }}"
@@ -30,11 +41,22 @@
     - configure
     - network
 
+- name: Find eth0 mac
+  shell: cat /sys/class/net/{{ eth0 }}/address
+  register: eth0_mac_cmd
+  tags:
+     - configure
+     - network
+
+- name: Set eth0_mac variable
+  set_fact:
+     eth0_mac: "{{ eth0_mac_cmd.stdout_lines[0] }}"
+  tags:
+    - configure
+    - network
+
 - name: Find eth0 ip address
-  shell: >
-          ip -o -f inet addr show |
-          awk '/scope global {{ eth0 }}/ {print $4}' |
-          sed "s/\/.*//"
+  shell: curl http://169.254.169.254/latest/meta-data/network/interfaces/macs/{{ eth0_mac }}/local-ipv4s
   register: eth0_ip_cmd
   tags:
      - configure
@@ -47,7 +69,7 @@
     - configure
     - network
 
-- name: Find gateway address
+- name: Find eth0 gateway address
   shell: >
           route -n |
           grep ^0.0.0.0 |
@@ -63,8 +85,11 @@
   tags:
     - configure
     - network
+# =================================================================================
 
+# =================================================================================
 # Get NIC-2 details
+# ---------------------------------------------------------------------------------
 - name: Set eth1 variable
   set_fact:
      eth1: "{{ (network_interfaces.stdout_lines|sort)[-1] }}"
@@ -72,11 +97,22 @@
     - configure
     - network
 
+- name: Find eth1 mac
+  shell: cat /sys/class/net/{{ eth1 }}/address
+  register: eth1_mac_cmd
+  tags:
+     - configure
+     - network
+
+- name: Set eth1_mac variable
+  set_fact:
+     eth1_mac: "{{ eth1_mac_cmd.stdout_lines[0] }}"
+  tags:
+    - configure
+    - network
+
 - name: Find eth1 ip address
-  shell: >
-          ip -o -f inet addr show |
-          awk '/scope global {{ eth1 }}/ {print $4}' |
-          sed "s/\/.*//"
+  shell: curl http://169.254.169.254/latest/meta-data/network/interfaces/macs/{{ eth1_mac }}/local-ipv4s
   register: eth1_ip_cmd
   tags:
      - configure
@@ -104,27 +140,14 @@
   tags:
     - configure
     - network
+# =================================================================================
 
-# Print NICs details
-- name: print NICs details
+- name: Print NICs details
   debug:
     msg:  "NIC1: {{ eth0 }} IP: {{ eth0_ip }} GW: {{ eth0_gw }}; NIC2: {{ eth1 }} IP: {{ eth1_ip }} GW: {{ eth1_gw }}"
   tags:
     - configure
     - network
-
-
-- name: Remove NIC-1 details
-  copy:
-    src: network-interface/aws/50-cloud-init.cfg
-    dest: /etc/network/interfaces.d/50-cloud-init.cfg
-    owner: root
-    group: root
-  become: true
-  tags:
-     - configure
-     - network
-
 
 - name: Create NIC-1 network config
   template:
@@ -137,7 +160,7 @@
     - configure
     - network
 
-- name: Create NIC-1 network config
+- name: Create NIC-2 network config
   template:
     src: network-interface/aws/eth1-cfg.j2
     dest: /etc/network/interfaces.d/{{ eth1 }}.cfg
