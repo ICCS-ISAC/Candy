@@ -1,0 +1,10 @@
+---
+- name: Configure pool
+  hosts: '{{ host }}'
+  gather_facts: false
+  vars:
+    env: lab
+  remote_user: devops
+  roles:
+    - indy_node
+  tags: [ 'pool', 'nodes' ]

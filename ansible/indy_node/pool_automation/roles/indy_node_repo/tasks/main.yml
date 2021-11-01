@@ -1,0 +1,23 @@
+- name: Common installation steps
+  block:
+    - name: Install HTTPS support for apt
+      apt:
+        name:
+          - apt-transport-https
+          - ca-certificates
+        update_cache: true
+      become: true
+
+    - name: Add indy repo key
+      apt_key:
+        keyserver: keyserver.ubuntu.com
+        id: CE7709D068DB5E88
+      become: true
+  when: indy_repo_node_channels|d(False, True)
+
+- name: Add repository for indy node
+  apt_repository:
+    repo: "deb https://repo.sovrin.org/deb xenial {{ indy_repo_node_channels }}"
+    state: present
+  become: true
+  when: indy_repo_node_channels|d(False, True)

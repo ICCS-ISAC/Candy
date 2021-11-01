@@ -1,0 +1,58 @@
+---
+- name: Check that required variables are specified
+  assert:
+    that:
+      - lookup('vars', item, default='')
+    msg: "{{ lookup('vars', item, default='undefined')|string }}"
+  loop:
+    # - indy_node_build_dir
+     - indy_node_channel
+     - sovrin_ver
+     # - indy_plenum_ver
+    # - network_name
+    # - indy_node_pool_dir_name
+    # - indy_node_pool_genesis_txns_name
+    # - indy_node_pool_genesis_txns_path
+  tags:
+    - always
+
+- name: Install indy node repo
+  import_role:
+    name: indy_node_repo
+  vars:
+    indy_repo_node_channels: "{{ indy_node_channel }}"
+  tags:
+    - install
+    - repo
+
+- name: Install indy node
+  apt:
+    name:
+      - "sovrin={{ sovrin_ver }}"
+    update_cache: true
+  become: true
+  tags:
+    - install
+    - package
+
+- name: Enable node service
+  service:
+    name: indy-node
+    enabled: true
+  become: true
+  tags:
+    - install
+    - service
+
+- name: Configure Network
+  include_tasks: network-{{ cloud }}.yml
+  when: network_configuration
+  tags:
+    - configure
+    - network
+
+# - name: Configuration tasks
+#   include_tasks: configure.yml
+#   when: indy_node_configuration
+#   tags:
+#     - configure
