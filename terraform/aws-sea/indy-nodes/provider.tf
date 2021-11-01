@@ -13,7 +13,7 @@ terraform {
 # Configure the aws provider
 provider "aws" {
   region  = var.candy_region
-  profile = var.candy_profile
+  profile = var.candy_profile_node
   default_tags {
     tags = {
       system      = var.candy_application

@@ -1,20 +1,5 @@
-data "aws_vpc" "selected" {
-  # Allows dynamic lookup of information about the selected VPC.
-  # Specifically it's ID
-  tags = {
-    Name = "Perimeter_vpc" //TODO change to variable
-  }
-}
-
-data "aws_subnet" "selected" {
-  # Allows dynamic lookup of information about the given selected subnet.
-  # Specifically it's ID
-  tags = { 
-    Name = "Public_Perimeter_aza_net" //TODO change to variable
-    }
-}
-resource "aws_lb" "client_interface" {
-  name               = var.elb_client_name
+resource "aws_lb" "client_lb" {
+  name               = "${var.aws_instance_name}-${var.elb_client_name}"
   internal           = false
   load_balancer_type = "network"
   subnet_mapping {
@@ -24,8 +9,8 @@ resource "aws_lb" "client_interface" {
   enable_deletion_protection = false
 }
 
-resource "aws_lb" "node_interface" {
-  name               = var.elb_node_name
+resource "aws_lb" "node_lb" {
+  name               = "${var.aws_instance_name}-${var.elb_node_name}"
   internal           = false
   load_balancer_type = "network"
   subnet_mapping {
@@ -35,38 +20,38 @@ resource "aws_lb" "node_interface" {
   enable_deletion_protection = false
 }
 
-resource "aws_lb_listener" "client_interface" {
+resource "aws_lb_listener" "client_lb_listener" {
   for_each            = var.elb_listener_port_client
-  load_balancer_arn   = aws_lb.client_interface.arn
+  load_balancer_arn   = aws_lb.client_lb.arn
   protocol            = "TCP"
   port                = each.value
   default_action {
-    target_group_arn = "${aws_lb_target_group.client_interface[each.key].arn}"
+    target_group_arn = "${aws_lb_target_group.client_tg[each.key].arn}"
     type             = "forward"
   }
 }
 
-resource "aws_lb_listener" "node_interface" {
-  load_balancer_arn   = aws_lb.node_interface.arn
+resource "aws_lb_listener" "node_lb_listener" {
+  load_balancer_arn   = aws_lb.node_lb.arn
   protocol            = "TCP"
   port                = var.elb_listener_port_node
   
   default_action {
-    target_group_arn = aws_lb_target_group.node_interface.arn
+    target_group_arn = aws_lb_target_group.node_tg.arn
     type             = "forward"
   }
 }
 
-resource "aws_lb_target_group" "client_interface" {
+resource "aws_lb_target_group" "client_tg" {
   for_each    = var.tg_forwarding_port_client
-  name        = "${var.tg_client_name}-${each.value}"
+  name        = "${var.aws_instance_name}-${var.tg_client_name}-${each.value}"
   target_type = "ip"
   port        = each.value
   protocol    = "TCP"
   vpc_id      = data.aws_vpc.selected.id
 
   depends_on  = [
-    aws_lb.client_interface
+    aws_lb.client_lb
   ]
 
   lifecycle {
@@ -74,15 +59,15 @@ resource "aws_lb_target_group" "client_interface" {
   }
 }
 
-resource "aws_lb_target_group" "node_interface" {
-  name        = "${var.tg_node_name}-${var.tg_port_node}"
+resource "aws_lb_target_group" "node_tg" {
+  name        = "${var.aws_instance_name}-${var.tg_node_name}-${var.tg_port_node}"
   target_type = "ip"
   port        = var.tg_port_node
   protocol    = "TCP"
   vpc_id      = data.aws_vpc.selected.id
 
   depends_on  = [
-    aws_lb.node_interface
+    aws_lb.node_lb
   ]
 
   lifecycle {
@@ -90,16 +75,16 @@ resource "aws_lb_target_group" "node_interface" {
   }
 }
 
-resource "aws_lb_target_group_attachment" "client_interface" {
+resource "aws_lb_target_group_attachment" "client_tg_attachment" {
   for_each          = var.tg_forwarding_port_client
-  target_group_arn  = "${aws_lb_target_group.client_interface[each.key].arn}"
+  target_group_arn  = "${aws_lb_target_group.client_tg[each.key].arn}"
   target_id         = var.eni_firewall_ip
   availability_zone = var.aws_availability_zone
   port              = each.value
 }
 
-resource "aws_lb_target_group_attachment" "node_interface" {
-  target_group_arn  = aws_lb_target_group.node_interface.arn
+resource "aws_lb_target_group_attachment" "node_tg_attachment" {
+  target_group_arn  = aws_lb_target_group.node_tg.arn
   target_id         = var.eni_firewall_ip
   availability_zone = var.aws_availability_zone
   port              = var.tg_port_node
