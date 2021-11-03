@@ -19,4 +19,4 @@ lab_nodes:
 ## Running on AWS
 
 Update `remote_user` from `devops` to `ubuntu` in all files the define it.
-Switch `cloud` from `azure` to `aws` in `main.yml`.
+Switch `cloud` from `azure` to `aws` in `indy_node/pool_automation/roles/indy_node/defaults/main.yml`.
