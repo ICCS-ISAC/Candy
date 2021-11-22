@@ -15,6 +15,10 @@ lab_nodes:
       eth0_ip: <eth0_ip_address_from_terraform>
       eth1_ip: <eth1_ip_address_from_terraform>
 ```
+### You can use Ansible in a docker
+```
+$ docker run -it -v //c/Users/Wade.BARNES-DESIGNS/.ssh/:/root/.ssh -v //c/Candy/ansible/:/root/ansible ansible
+```
 
 ## Running on AWS
 
