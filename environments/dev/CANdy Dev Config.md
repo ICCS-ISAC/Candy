@@ -89,3 +89,21 @@ sudo systemctl disable indy-node.service
 
 sudo validator-info
 ```
+
+IP Addresses:
+
+dev-bc-1
+- node_ip: 3.98.254.147:9701
+- client_ip: 3.99.10.96:9702
+
+dev-qc-1
+- node_ip: 3.97.25.250:9701
+- client_ip: 3.96.89.59:9702
+
+CandyDevOntNode01
+- node_ip: 20.151.226.136:9701
+- client_ip: 20.200.95.22:9702
+
+CandyDevOntNode02
+- node_ip: 20.104.69.119:9701
+- client_ip: 20.200.77.108:9702
