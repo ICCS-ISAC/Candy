@@ -36,7 +36,47 @@ This document provides a condensed set of steps to follow when initializing the 
 
 9. Run `sudo chown indy:indy *` in `/var/lib/indy/candy-dev`
 
-10. Start the network
+10. Verify the configuration 
+
+    ```
+    cat /etc/indy/indy_config.py
+    - Ensure network configuration is correct.
+    cat /etc/indy/indy.env
+    - Verify node alias and IPs
+    cat /var/lib/indy/candy-dev/domain_transactions_genesis
+    - Verify the correct content.
+    cat /var/lib/indy/candy-dev/pool_transactions_genesis
+    - Verify the correct content.
+    ```
+
+11. Verify the software versions
+
+    ```
+    dpkg -l | grep indy
+    dpkg -l | grep sovrin
+    ```
+
+12. Start the network
+
+    `sudo systemctl start indy-node`
+
+13. Verify it's functioning
+
+    ```
+    sudo systemctl status indy-node.service
+    ```
+
+14. Enable service 
+
+    ```
+    sudo systemctl enable indy-node.service
+    ```
+
+15.  Monitor Sync
+
+        ```
+        sudo validator-info
+        ```
 
 Misc. Admin commands:
 ```
