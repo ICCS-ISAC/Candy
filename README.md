@@ -6,3 +6,4 @@ What can be found in this repo:
 - Code to provision IaaS indy node with [terraform](terraform/)
 - Code to install and configure the indy node with [ansible](ansible/indy_node)
 - Informations nécessaires pour connecter les différents utilisateurs pan-canadiens
+- Test
