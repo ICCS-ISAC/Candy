@@ -1,0 +1,11 @@
+{"reqSignature":{},"txn":{"data":{"alias":"Wade Barnes","dest":"AoEgzLqgqk9h8uywfSKMW6","role":"0","verkey":"6Li4Y6f7z3kLBcctXxCW13hgBuxr74tyY2o4rMhHNHD9"},"metadata":{},"type":"1"},"txnMetadata":{"seqNo":1},"ver":"1"}
+{"reqSignature":{},"txn":{"data":{"alias":"Clecio Varjao","dest":"JGjkDLhg6NjvB4AribDfuq","role":"0","verkey":"~ULfmksfC7hHGFphMBWgtyb"},"metadata":{},"type":"1"},"txnMetadata":{"seqNo":2},"ver":"1"}
+{"reqSignature":{},"txn":{"data":{"alias":"Philippe Foucault","dest":"SLbxcYhGSG253sSqZ9vqJ","role":"0","verkey":"~GdHb24hGD5E4UxminRYtX7"},"metadata":{},"type":"1"},"txnMetadata":{"seqNo":3},"ver":"1"}
+{"reqSignature":{},"txn":{"data":{"alias":"Pierre Jiji","dest":"2wwfivDgNM9bt2iR3GvkZ9","role":"0","verkey":"~3J83x97u58EDCE672KEgrx"},"metadata":{},"type":"1"},"txnMetadata":{"seqNo":4},"ver":"1"}
+{"reqSignature":{},"txn":{"data":{"alias":"Gary Leung","dest":"Jzo6dWXc1cyfQrBLJQq9tv","role":"0","verkey":"~Kp2YUsjznvWzrRzyk8HQpC"},"metadata":{},"type":"1"},"txnMetadata":{"seqNo":5},"ver":"1"}
+{"reqSignature":{},"txn":{"data":{"alias":"Ivan Wei ","dest":"3ycCz6hWggeLUcuPc5GB5m","role":"0","verkey":"~8NCDYT2jq3EaU7tVdy8JnC"},"metadata":{},"type":"1"},"txnMetadata":{"seqNo":6},"ver":"1"}
+{"reqSignature":{},"txn":{"data":{"alias":"Peter Watkins","dest":"EyBiWKv8Vu2ufFmGn698vv","role":"0","verkey":"~VbNwLkjfnLLdVy9qfZuiPi"},"metadata":{},"type":"1"},"txnMetadata":{"seqNo":7},"ver":"1"}
+{"reqSignature":{},"txn":{"data":{"dest":"7iLf2c7weDopmBLyPPGLHz","role":"2","verkey":"4fCmeqCcNaun2G9cnYktHvugyMToEeLgS949kkEr7bi2"},"metadata":{"from":"EyBiWKv8Vu2ufFmGn698vv"},"type":"1"},"txnMetadata":{"seqNo":8},"ver":"1"}
+{"reqSignature":{},"txn":{"data":{"dest":"XdVFchbXSMC898NjWCymXD","role":"2","verkey":"HhFG3tL4NG5CYzZ2cufpe889T7YiS3WuDT44FMmpDRXU"},"metadata":{"from":"EyBiWKv8Vu2ufFmGn698vv"},"type":"1"},"txnMetadata":{"seqNo":9},"ver":"1"}
+{"reqSignature":{},"txn":{"data":{"dest":"SmQ4y56g72C3ESKVgJTsBL","role":"2","verkey":"F3VrnMSSeszEKpMgJjrXAgzwJPgcXzr6eptCBGuiTUPa"},"metadata":{"from":"EyBiWKv8Vu2ufFmGn698vv"},"type":"1"},"txnMetadata":{"seqNo":10},"ver":"1"}
+{"reqSignature":{},"txn":{"data":{"dest":"5KwZGBgmVhjAUmc3Ur8wGZ","role":"2","verkey":"3MmjDVPhyqioiRszwHV8ZxwCqRCPKLYjNHtRiEUWY4wE"},"metadata":{"from":"EyBiWKv8Vu2ufFmGn698vv"},"type":"1"},"txnMetadata":{"seqNo":11},"ver":"1"}
