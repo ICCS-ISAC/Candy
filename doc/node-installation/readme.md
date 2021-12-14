@@ -1,5 +1,8 @@
 # Installing a node on a Indy blockchain - Steward Validator
 
+---
+[Version Française](README_fr-ca.md)
+
 To provide a quick start, here are the documents you want to start with:
 
 The following is a set of documents from the Sovrin Foundation for onboarding stewards onto the Sovrin Network. Great reference material for setting up a network:
