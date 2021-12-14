@@ -1,4 +1,6 @@
 # Installer un nœud sur une blockchain Indy - Steward Validator
+---
+[Version Anglaise](readme.md)
 
 Pour vous aider à démarrer rapidement, voici les documents avec lesquels vous souhaitez commencer :
 
