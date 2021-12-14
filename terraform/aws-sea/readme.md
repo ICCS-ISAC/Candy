@@ -31,31 +31,13 @@ aws sts decode-authorization-message --profile CandyDevNetwork --encoded-message
 You won't have to search for the encoded message, if you have an error it will automatically show as an encoded one.
 
 ## Deployment
-### Deploy the validator node:
 ```
-terraform init --upgrade
-terraform plan -var-file="environments/dev1/terraform.tfvars"
-terraform apply -var-file="environments/dev1/terraform.tfvars"
-```
-
-Ultimately if you need to destroy what was provision:
-```
-terraform destroy -var-file="environments/dev1/terraform.tfvars"
-```
-
-### Deploy the perimeter load balancer:
-```
-terraform init --upgrade
-terraform plan -var-file="environments/perimetre/terraform.tfvars"
-terraform apply -var-file="environments/perimetre/terraform.tfvars"
-```
-
-Ultimately if you need to destroy what was provision:
-```
-terraform destroy -var-file="environments/perimetre/terraform.tfvars"
-```
-
 terraform init --upgrade
 terraform plan -var-file="environments/terraform.tfvars"
 terraform apply -var-file="environments/terraform.tfvars"
+```
+
+Ultimately if you need to destroy what was provision:
+```
 terraform destroy -var-file="environments/terraform.tfvars"
+```
