@@ -158,3 +158,22 @@ variable "candy_eip_client_allocation_id" {
 variable "candy_eip_node_allocation_id" {
   description = "The allocation id of address to use for the node interface card."
 }
+# ===================================================
+
+# ===================================================
+# Global variables for fortinet
+# ---------------------------------------------------
+
+variable "candy_fortios_hostname" {
+  description = "The public ip or hostname of the firewall"
+}
+
+variable "candy_fortios_token" {
+  description = "The token of the service account in the fortinet"
+}
+
+variable "candy_fortios_vip" {
+  type = map
+  description = "The firewall vip"
+}
+# ===================================================

@@ -62,3 +62,33 @@ module "elb" {
   aws_availability_zone     = var.candy_availability_zone
 }
 # ===================================================
+
+# ===================================================
+# Configure the fortinet for the firewall of ASEA
+# ---------------------------------------------------
+module "fortinet" {
+  source                    = "./modules/fortinet"
+  elb_node_ip               = var.candy_elb_node_ip
+  elb_listener_port_node    = var.candy_elb_listener_port_node
+  elb_listener_port_client  = var.candy_elb_listener_port_client
+
+  tg_port_node              = var.candy_tg_port_node
+  tg_forwarding_port_client = var.candy_tg_forwarding_port_client
+    
+  eip_client_allocation_id  = var.candy_eip_client_allocation_id
+  eip_node_allocation_id    = var.candy_eip_node_allocation_id
+
+  eni_client_ip             = var.candy_eni_client_ip
+  eni_node_ip               = var.candy_eni_node_ip
+
+  eni_firewall_ip           = var.candy_eni_firewall_ip
+
+  fortios_hostname          = var.candy_fortios_hostname
+  fortios_token             = var.candy_fortios_token
+  fortios_vip               = var.candy_fortios_vip
+
+  aws_application           = var.candy_application
+  aws_environment           = var.candy_environment
+  aws_instance_name         = var.candy_instance_name
+}
+# ===================================================
