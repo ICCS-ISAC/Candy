@@ -1,3 +1,51 @@
+English version below
+## Conditions préalables
+
+### Configuration AWS
+
+Vous devrez configurer l'AWS CLI.
+
+- [Bases de la configuration de l'AWS CLI] (https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html)
+
+OU si vous utilisez AWS SSO
+
+- [Configuration de l'AWS CLI pour utiliser AWS Single Sign-On](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-sso.html)
+
+Configurez ensuite Terraform.
+
+- [Cours Terraform AWS - 40 min](https://learn.hashicorp.com/collections/terraform/aws-get-started)
+
+### OU Configuration Azure
+
+Vous devrez configurer Azure CLI.
+
+Configurez ensuite Terraform.
+
+- [Cours Terraform Azure - 40 min](https://learn.hashicorp.com/collections/terraform/azure-get-started)
+
+> Rendre le fichier terraform générique pour chaque juridiction. Lorsque vous configurez aws ou Azure CLI, utilisez :
+>
+> - Nom du profil CLI : CandyDevNetwork.
+> - Et utilisez les variables pour votre installation spécifique.
+
+## Aide-mémoire
+Pour le premier démarrage de votre configuration terraform, vous devez au moins "init" et "plan":
+```
+terraform init --upgrade
+plan terraform -var-file="environments/dev1/terraform.tfvars"
+```
+
+
+Pour effectuer le provisionnement :
+```
+terraform applique -var-file="environments/dev1/terraform.tfvars"
+```
+
+En fin de compte, si vous devez détruire ce qui était prévu :
+```
+terraform destroy -var-file="environments/dev1/terraform.tfvars"
+```
+
 ## Prerequisites
 
 ### AWS Setup
