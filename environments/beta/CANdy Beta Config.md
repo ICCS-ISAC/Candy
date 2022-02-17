@@ -1,4 +1,7 @@
-Steps to complete after `indy-node` installation
+## Notice - The CANdy Beta network has been Decommissioned
+- The configuration files are being retained for historical purposes.
+
+### Steps to complete after `indy-node` installation
 
 1. Set Network Name in config.py
 `sudo sed -i -re "s/(NETWORK_NAME = ')\w+/\1candy-beta/" /etc/indy/indy_config.py`
