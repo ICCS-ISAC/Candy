@@ -1,0 +1,160 @@
+# Configure networking:
+# - Ubuntu 16.04 Azure VM
+---
+- name: Get physical interfaces names
+  command: find /sys/class/net -type l -not -lname '*virtual*' -name '*eth*' -printf '%f\n'
+  register: network_interfaces
+  tags:
+    - configure
+    - network
+
+- name: Fail when two network interfaces are not found
+  fail: msg="Two NICs are required. but found {{ network_interfaces.stdout_lines|sort|count }}"
+  when: network_interfaces.stdout_lines|count != 2
+  tags:
+    - configure
+    - network
+
+# =================================================================================
+# Get Client NIC (NIC-1) details
+# ---------------------------------------------------------------------------------
+- name: Set eth0 variable
+  set_fact:
+     eth0: "{{ (network_interfaces.stdout_lines|sort)[0] }}"
+  tags:
+    - configure
+    - network
+
+- name: Find eth0 ip address
+  shell: >
+          ip -o -f inet addr show |
+          awk '/scope global {{ eth0 }}/ {print $4}' |
+          sed "s/\/.*//"
+  register: eth0_ip_cmd
+  tags:
+     - configure
+     - network
+
+- name: Set eth0_ip variable
+  set_fact:
+     eth0_ip: "{{ eth0_ip_cmd.stdout_lines[0] }}"
+  tags:
+    - configure
+    - network
+
+- name: Find eth0 gateway address
+  shell: >
+          echo "{{ eth0_ip }}" |
+          awk -F"." '{print $1"."$2"."$3".1"}'
+  register: eth0_gw_cmd
+  tags:
+     - configure
+     - network
+
+- name: Set eth0_gw variable
+  set_fact:
+     eth0_gw: "{{ eth0_gw_cmd.stdout_lines[0] }}"
+  tags:
+    - configure
+    - network
+# =================================================================================
+
+# =================================================================================
+# Get Node NIC (NIC-2) details
+# ---------------------------------------------------------------------------------
+- name: Set eth1 variable
+  set_fact:
+     eth1: "{{ (network_interfaces.stdout_lines|sort)[-1] }}"
+  tags:
+    - configure
+    - network
+
+- name: Find eth1 ip address
+  shell: >
+          ip -o -f inet addr show |
+          awk '/scope global {{ eth1 }}/ {print $4}' |
+          sed "s/\/.*//"
+  register: eth1_ip_cmd
+  tags:
+     - configure
+     - network
+
+- name: Set eth1_ip variable
+  set_fact:
+     eth1_ip: "{{ eth1_ip_cmd.stdout_lines[0] }}"
+  tags:
+    - configure
+    - network
+
+- name: Find eth1 gateway address
+  shell: >
+          echo "{{ eth1_ip }}" |
+          awk -F"." '{print $1"."$2"."$3".1"}'
+  register: eth1_gw_cmd
+  tags:
+     - configure
+     - network
+
+- name: Set eth1_gw variable
+  set_fact:
+     eth1_gw: "{{ eth1_gw_cmd.stdout_lines[0] }}"
+  tags:
+    - configure
+    - network
+# =================================================================================
+
+# =================================================================================
+# Set Client and Node IP Address Variables
+# ---------------------------------------------------------------------------------
+- name: Set client_ip variable
+  set_fact:
+     client_ip: "{{ eth0_ip }}"
+  tags:
+    - configure
+    - network
+
+- name: Set node_ip variable
+  set_fact:
+     node_ip: "{{ eth1_ip }}"
+  tags:
+    - configure
+    - network
+# =================================================================================
+
+- name: Print NICs details
+  debug:
+    msg:  "Client IP: {{ client_ip }}; Node IP {{ node_ip }}; NIC1: {{ eth0 }} IP: {{ eth0_ip }} GW: {{ eth0_gw }}; NIC2: {{ eth1 }} IP: {{ eth1_ip }} GW: {{ eth1_gw }}"
+  tags:
+    - configure
+    - network
+
+- name: Create network config to allow traffic to NIC-2
+  template:
+    src: network-interface/{{ cloud }}/eth1-cfg.j2
+    dest: /etc/network/interfaces.d/51-eth1.cfg
+    owner: root
+    group: root
+  become: true
+  tags:
+    - configure
+    - network
+
+- name: Update network gateway config
+  copy:
+    src: network-interface/{{ cloud }}/restrict-default-gw
+    dest: /etc/dhcp/dhclient-enter-hooks.d/restrict-default-gw
+    owner: root
+    group: root
+  become: true
+  tags:
+    - configure
+    - network
+
+- name: Restarting Network
+  service:
+    name: networking
+    state: restarted
+  become: yes
+  tags:
+    - configure
+    - network

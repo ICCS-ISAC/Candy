@@ -1,14 +1,14 @@
 # ====================================================================================================
 # Notes:
 # ----------------------------------------------------------------------------------------------------
-# The module supports creating node instances with or without elastic IPs, 
+# The module supports creating node instances with or without elastic IPs,
 # by setting the 'use_elastic_ips' variable to 'true' or 'false'.
 # This supports the scenario where you want to create a network of nodes in the same region.
 # AWS only supports 5 elastic IPs per region, which is not enough to support
 # the minimum of four nodes for the network.
 # When 'use_elastic_ips' is set to false a public IP address is assigned to the instance by default
 # and only a single interface and subnet are created.  Meaning the node will need to share the one
-# interface for both node and client communications.  Otherwise, separate interfaces and subnets 
+# interface for both node and client communications.  Otherwise, separate interfaces and subnets
 # are created for node and client communication and each interface is assigned an elastic IP.
 # ====================================================================================================
 
@@ -16,6 +16,11 @@ resource "aws_instance" "indy_node" {
   ami                  = var.ami_id
   instance_type        = var.ec2_instance_type
   iam_instance_profile = var.iam_profile
+
+  # Set the hostname
+  # This will be used by the Ansible scripts as the alias for the node.
+  user_data = "#!/usr/bin/env bash\nsudo hostnamectl set-hostname --static ${var.instance_name}"
+  key_name = aws_key_pair.ansible.key_name
 
   # ===============================================================
   # Provinces Hosting in AWS will want to ensure their

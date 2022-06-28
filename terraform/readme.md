@@ -45,6 +45,7 @@ En fin de compte, si vous devez détruire ce qui était prévu :
 ```
 terraform destroy -var-file="environments/dev1/terraform.tfvars"
 ```
+___
 
 ## Prerequisites
 
@@ -92,3 +93,6 @@ Ultimately if you need to destroy what was provision:
 ```
 terraform destroy -var-file="environments/dev1/terraform.tfvars"
 ```
+
+## Recommendations:
+It is highly recommended to manage your environments using workspaces and to manage you workspaces and their credentials and variables using a Terraform Cloud account.  This eliminates the use of having to manage `*.tfvars` files locally and allows teams to share and utilize the same workspaces and therefore the same variables for each managed environment.
