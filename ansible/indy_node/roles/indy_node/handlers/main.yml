@@ -1,0 +1,8 @@
+---
+# handlers file for indy_node_install
+
+- name: Apply Netplan
+  shell: netplan apply
+  async: 45
+  poll: 0
+  become: true
