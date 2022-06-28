@@ -1,0 +1,163 @@
+---
+- name: Install indy node repos
+  import_role:
+    name: indy_node_repo
+  vars:
+    indy_repo_node_channels: "{{ indy_node_channel }}"
+  tags:
+    - install
+    - repo
+
+- name: Install dependencies
+  block:
+
+  # =============================
+  # RocksDb and Dependenaces
+  #------------------------------
+  - name: rocksdb
+    apt:
+      name:
+        - "rocksdb=5.8.8"
+      update_cache: true
+    become: true
+    tags:
+      - install
+      - package
+
+  - name: libgflags-dev
+    apt:
+      name:
+        - "libgflags-dev"
+      update_cache: true
+    become: true
+    tags:
+      - install
+      - package
+
+  - name: libsnappy-dev
+    apt:
+      name:
+        - "libsnappy-dev"
+      update_cache: true
+    become: true
+    tags:
+      - install
+      - package
+
+  - name: zlib1g-dev
+    apt:
+      name:
+        - "zlib1g-dev"
+      update_cache: true
+    become: true
+    tags:
+      - install
+      - package
+
+  - name: libbz2-dev
+    apt:
+      name:
+        - "libbz2-dev"
+      update_cache: true
+    become: true
+    tags:
+      - install
+      - package
+
+  - name: liblz4-dev
+    apt:
+      name:
+        - "liblz4-dev"
+      update_cache: true
+    become: true
+    tags:
+      - install
+      - package
+  # =============================
+
+  - name: libssl1.0.0
+    apt:
+      name:
+        - "libssl1.0.0"
+      update_cache: true
+    become: true
+    tags:
+      - install
+      - package
+
+  # =============================
+  # Ursa
+  # -----------------------------
+  - name: ursa
+    apt:
+      name:
+        - "ursa=0.3.2-1"
+      update_cache: true
+    become: true
+    tags:
+      - install
+      - package
+
+  - name:  Move libursa.so to parent dirirectory
+    shell: >
+      if [ -d /usr/lib/ursa ]; then
+        mv /usr/lib/ursa/* /usr/lib && rm -rf /usr/lib/ursa
+      fi
+    become: true
+    tags:
+      - install
+      - package
+  # =============================
+
+  - name: python3-libnacl
+    apt:
+      name:
+        - "python3-libnacl=1.6.1"
+      update_cache: true
+    become: true
+    tags:
+      - install
+      - package
+
+  - name: python3-ujson
+    apt:
+      name:
+        - "python3-ujson=1.33"
+      update_cache: true
+    become: true
+    tags:
+      - install
+      - package
+
+  - name: python3-sortedcontainers
+    apt:
+      name:
+        - "python3-sortedcontainers=1.5.7"
+      update_cache: true
+    become: true
+    tags:
+      - install
+      - package
+
+  - name: indy-plenum
+    apt:
+      name:
+        - "indy-plenum={{ indy_node_pkg_version }}"
+      update_cache: true
+    become: true
+    tags:
+      - install
+      - package
+  when:
+    - indy_node_channel == "rc"
+    - distribution_codename == "focal"
+
+- name: Install indy-node package
+  apt:
+    name:
+      - "{{ indy_node_pkg }}={{ indy_node_pkg_version }}"
+    update_cache: true
+  become: true
+  tags:
+    - install
+    - package

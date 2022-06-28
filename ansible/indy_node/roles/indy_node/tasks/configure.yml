@@ -1,0 +1,167 @@
+---
+# ============================================================
+# Auto detect the hostname for use as the node_alias
+# ------------------------------------------------------------
+- name: Get hostname
+  shell: hostname
+  register: hostname
+
+- name: Set node_alias variable
+  set_fact:
+     node_alias: "{{ hostname.stdout }}"
+
+- name: Print node_alias
+  debug:
+    var:  node_alias
+# ============================================================
+
+- name: Check that required variables are specified
+  assert:
+    that:
+      - lookup('vars', item, default='')
+    msg: "{{ lookup('vars', item, default='undefined')|string }}"
+  loop:
+    - node_alias
+
+    # Ensure the user specified network name has been defined.
+    - network_name
+
+    # Port numbers have defaults.
+    # IP Addresses are dynamically detected by the network configuration.
+    - client_ip
+    - client_port
+    - node_ip
+    - node_port
+
+# =========================================================================================
+# Node Configuration
+# -----------------------------------------------------------------------------------------
+- name: Configure indy_config.py
+  template:
+    src: indy_config.j2
+    dest: /etc/indy/indy_config.py
+    owner: indy
+    group: indy
+  become: true
+
+# Note: The '/var/log/indy/{{ network_name }}' folder gets created automatically when indy is started
+- name: Ensure network folder exists
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: indy
+    group: indy
+  become: true
+  with_items:
+    - "/var/lib/indy/{{ network_name }}"
+# =========================================================================================
+
+# =========================================================================================
+# Genesis Files
+# - Only download genesis files if they don't already exist
+# - The user must supply the URLs to the files in the following variables.
+#   i.e. Add the variables to their list of `--extra-vars`
+#   - domain_transactions_genesis_url
+#   - pool_transactions_genesis_url
+# -----------------------------------------------------------------------------------------
+- name: "Check if domain_transactions_genesis exists"
+  stat:
+    path: "/var/lib/indy/{{ network_name }}/domain_transactions_genesis"
+  register: domain_transactions_genesis
+
+- name: "Check if pool_transactions_genesis exists"
+  stat:
+    path: "/var/lib/indy/{{ network_name }}/pool_transactions_genesis"
+  register: pool_transactions_genesis
+
+- name: Download domain_transactions_genesis file
+  get_url:
+    url: "{{ domain_transactions_genesis_url }}"
+    dest: "/var/lib/indy/{{ network_name }}/domain_transactions_genesis"
+    owner: indy
+    group: indy
+  when: not domain_transactions_genesis.stat.exists and domain_transactions_genesis_url != None
+
+- name: Download pool_transactions_genesis file
+  get_url:
+    url: "{{ pool_transactions_genesis_url }}"
+    dest: "/var/lib/indy/{{ network_name }}/pool_transactions_genesis"
+    owner: indy
+    group: indy
+  when: not pool_transactions_genesis.stat.exists and pool_transactions_genesis_url != None
+# =========================================================================================
+
+# ==========================================================================================================================================================
+# Node Initialization
+# - The new node can be initialized using an existing seed by supplying the seed via the node_seed variable in the list of `--extra-vars`
+# ----------------------------------------------------------------------------------------------------------------------------------------------------------
+- name: Generate init_indy_node command
+  set_fact:
+    init_indy_node_cmd:  "sudo -i -u indy init_indy_node {{ node_alias }} {{ node_ip }} {{ node_port }} {{ client_ip }} {{ client_port }}"
+  when: node_seed is undefined
+
+- name: Generate init_indy_node command with provided seed
+  set_fact:
+    init_indy_node_cmd:  "sudo -i -u indy init_indy_node {{ node_alias }} {{ node_ip }} {{ node_port }} {{ client_ip }} {{ client_port }} {{ node_seed }}"
+  when: node_seed is defined
+
+- name: Print init_indy_node command
+  debug:
+    var:  init_indy_node_cmd
+
+- name: Initialize Indy Node
+  shell: "{{ init_indy_node_cmd }}"
+  args:
+    # Ensure the init_indy_node command is only ever run once.
+    creates: /var/lib/indy/{{ network_name }}/keys
+  register: init_indy_node_result
+
+- name: Get /etc/indy/indy.env
+  shell: cat /etc/indy/indy.env
+  register: indy_env
+# ==========================================================================================================================================================
+
+# =================================================================================================
+# Service management
+# - Only start the node if the genesis files exist.
+# -------------------------------------------------------------------------------------------------
+- name: "Check if domain_transactions_genesis exists"
+  stat:
+    path: "/var/lib/indy/{{ network_name }}/domain_transactions_genesis"
+  register: domain_transactions_genesis
+
+- name: "Check if pool_transactions_genesis exists"
+  stat:
+    path: "/var/lib/indy/{{ network_name }}/pool_transactions_genesis"
+  register: pool_transactions_genesis
+
+- name: Enable indy-node service
+  service:
+    name: indy-node
+    enabled: true
+  become: true
+  when: domain_transactions_genesis.stat.exists and pool_transactions_genesis.stat.exists
+
+- name: Start indy-node service
+  service:
+    name: indy-node
+    state: started
+  become: true
+  when: domain_transactions_genesis.stat.exists and pool_transactions_genesis.stat.exists
+# =================================================================================================
+
+# ===============================================
+# Display initialization results
+# -----------------------------------------------
+- name: A note about the initialization results
+  debug:
+    msg: "ENSUE YOU RECORD THE FOLLOWING INITIALIZATION OUTPUT IN A SAFE LOCATION!"
+
+- name: Print init_indy_node result
+  debug:
+    var: init_indy_node_result.stdout_lines
+
+- name: Print /etc/indy/indy.env
+  debug:
+    var: indy_env.stdout_lines
+# ===============================================
