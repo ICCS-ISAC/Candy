@@ -1,6 +1,15 @@
 # Created by https://www.toptal.com/developers/gitignore/api/macos,terraform,visualstudiocode
 # Edit at https://www.toptal.com/developers/gitignore?templates=macos,terraform,visualstudiocode
 
+# Ignore all SSH keys - public and private
+*.pem
+*.openssh
+*.pub
+
+# Ignore Ansible inventory files
+inventory.yml
+inventory.yaml
+
 ### macOS ###
 # General
 .DS_Store

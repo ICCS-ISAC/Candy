@@ -1,0 +1,9 @@
+---
+- name: Configure pool
+  hosts: "{{ host | default('nodes') }}"
+  gather_facts: false
+  vars:
+    env: lab
+  roles:
+    - indy_node
+  tags: [ 'pool', 'nodes' ]
