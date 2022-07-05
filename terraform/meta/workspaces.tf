@@ -13,12 +13,22 @@ data "tfe_workspace" "dev" {
   organization = "bcgov"
 }
 
-data "tfe_workspace" "test" {
-  name         = "candy-test"
+data "tfe_workspace" "test-aws" {
+  name         = "candy-test-aws"
   organization = "bcgov"
 }
 
-data "tfe_workspace" "prod" {
-  name         = "candy-prod"
+data "tfe_workspace" "test-azure" {
+  name         = "candy-test-azure"
+  organization = "bcgov"
+}
+
+data "tfe_workspace" "prod-aws" {
+  name         = "candy-prod-aws"
+  organization = "bcgov"
+}
+
+data "tfe_workspace" "prod-azure" {
+  name         = "candy-prod-azure"
   organization = "bcgov"
 }
