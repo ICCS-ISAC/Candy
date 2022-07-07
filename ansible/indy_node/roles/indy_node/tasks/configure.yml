@@ -89,6 +89,36 @@
     owner: indy
     group: indy
   when: not pool_transactions_genesis.stat.exists and pool_transactions_genesis_url != None
+
+- name: Check if domain_transactions_genesis exists locally in the ansible folder
+  delegate_to: localhost
+  stat:
+    path: "{{ playbook_dir }}/../domain_transactions_genesis"
+  register: local_domain_transactions_genesis
+
+- name: Check if pool_transactions_genesis exists locally in the ansible folder
+  delegate_to: localhost
+  stat:
+    path: "{{ playbook_dir }}/../pool_transactions_genesis"
+  register: local_pool_transactions_genesis
+
+- name: Copy domain_transactions_genesis from local machine
+  copy:
+    src: "{{ playbook_dir }}/../domain_transactions_genesis"
+    dest: "/var/lib/indy/{{ network_name }}/domain_transactions_genesis"
+    owner: indy
+    group: indy
+  become: true
+  when: local_domain_transactions_genesis.stat.exists and not domain_transactions_genesis.stat.exists
+
+- name: Copy pool_transactions_genesis from local machine
+  copy:
+    src: "{{ playbook_dir }}/../pool_transactions_genesis"
+    dest: "/var/lib/indy/{{ network_name }}/pool_transactions_genesis"
+    owner: indy
+    group: indy
+  become: true
+  when: local_pool_transactions_genesis.stat.exists and not pool_transactions_genesis.stat.exists
 # =========================================================================================
 
 # ==========================================================================================================================================================
