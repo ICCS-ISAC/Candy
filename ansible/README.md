@@ -64,8 +64,25 @@ The following steps assume:
 1. Run the playbook.  Ensure you include the correct ssh username for your environment(s) with the `--user` parameter.
     - For example:
       ```
-      ansible-playbook --user validatornode -i azure-inventory.yml --extra-vars "cloud=azure network_name=candy-test indy_node_channel: rc indy_node_pkg: indy-node indy_node_pkg_version: 1.13.1~rc2" indy_node/deploy.yml
+      ansible-playbook --user validatornode -i azure-inventory.yml --extra-vars "cloud=azure network_name=candy-test indy_node_channel=rc indy_node_pkg=indy-node indy_node_pkg_version=1.13.1~rc2" indy_node/deploy.yml
       ```
+    - To have better control over the groups of tasks that get run:
+      ```
+      ansible-playbook --user validatornode -i azure-inventory.yml --extra-vars "cloud=azure network_name=candy-test indy_node_channel=rc indy_node_pkg=indy-node indy_node_pkg_version=1.13.1~rc2 network_configuration=true install_packages=true indy_node_configuration=false" indy_node/deploy.yml
+      ```
+    - When establishing the initial ssh connection to the servers you can disable all task groups:
+      ```
+    - To have better control over the groups of tasks that get run:
+      ```
+      ansible-playbook --user validatornode -i azure-inventory.yml --extra-vars "cloud=azure network_name=candy-test indy_node_channel=rc indy_node_pkg=indy-node indy_node_pkg_version=1.13.1~rc2 network_configuration=false install_packages=false indy_node_configuration=false" indy_node/deploy.yml
+      ```
+1. Generate Genesis files using tools in [von-network](https://github.com/bcgov/von-network)
+, for example:
+
+    `./manage generategenesisfiles "./tmp/CANdy Dev Genesis File Node info - Trustees.csv" "./tmp/CANdy Dev Genesis File Node info - Stewards.csv"`
+
+1. Once you've initialized your node(s) and have generated the `domain_transactions_genesis` and `pool_transactions_genesis` files, you can copy them along side the ansible inventory files and run the configuration again.  The files will be copied to the servers and the indy-node servce will be enabled and started.
+
 ## Playbook behaviour
 
 The playbook will setup and configure `indy-node` on a newly provisioned Ubuntu 16.04 or 20.04 VM hosted in either AWS or Azure.
@@ -145,3 +162,6 @@ The following variables can be used to control various settings and behaviours o
 `indy_node_configuration` - **_optional_** (default=`true`)
   - Boolean value indicating whether or not the node configuration tasks should be run.
   - The node configuration tasks depend on the network configuration tasks.  If the node configuration tasks are selected the network configuration tasks will also be run.
+
+## ToDo:
+- Automate the collection of the information needed to fill out the Steward Genesis spreadsheet.

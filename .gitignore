@@ -6,6 +6,11 @@
 *.openssh
 *.pub
 
+# Temp Ansible files
+/ansible/*inventory.yml
+/ansible/*inventory.yaml
+/ansible/*transactions_genesis
+
 # Ignore Ansible inventory files
 inventory.yml
 inventory.yaml
