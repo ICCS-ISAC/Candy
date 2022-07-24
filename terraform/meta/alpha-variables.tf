@@ -10,7 +10,7 @@ resource "tfe_variable" "alpha_instance_count" {
 
 resource "tfe_variable" "alpha_use_elastic_ips" {
   key          = "candy_use_elastic_ips"
-  value        = false
+  value        = true
   category     = "terraform"
   workspace_id = data.tfe_workspace.alpha.id
 }
@@ -57,7 +57,7 @@ resource "tfe_variable" "alpha_ami_owners" {
 
 resource "tfe_variable" "alpha_ami_filter_name" {
   key          = "candy_ami_filter_name"
-  value        = "[\"*ubuntu-xenial-16.04-amd64-server-*\"]"
+  value        = "[\"ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*\"]"
   hcl          = true
   category     = "terraform"
   workspace_id = data.tfe_workspace.alpha.id
@@ -151,11 +151,18 @@ resource "tfe_variable" "alpha_subnet_cidr_starting_address" {
 # ===================================================
 
 # ===================================================
-# SG
+# Networking
 # ---------------------------------------------------
-resource "tfe_variable" "alpha_sg_description" {
-  key          = "candy_sg_description"
-  value        = "Validator Node Security Group"
+resource "tfe_variable" "alpha_client_port" {
+  key          = "candy_client_port"
+  value        = "9702"
+  category     = "terraform"
+  workspace_id = data.tfe_workspace.alpha.id
+}
+
+resource "tfe_variable" "alpha_node_port" {
+  key          = "candy_node_port"
+  value        = "9701"
   category     = "terraform"
   workspace_id = data.tfe_workspace.alpha.id
 }
