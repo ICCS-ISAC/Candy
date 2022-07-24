@@ -15,7 +15,12 @@
 resource "aws_instance" "indy_node" {
   ami                  = var.ami_id
   instance_type        = var.ec2_instance_type
-  iam_instance_profile = var.iam_profile
+  
+  
+  # ToDo:
+  #   - Has Not Been Setup in Test yet
+  #   - Uncomment as son as possible
+  #iam_instance_profile = var.iam_profile
 
   # Set the hostname
   # This will be used by the Ansible scripts as the alias for the node.
@@ -62,98 +67,6 @@ resource "aws_instance" "indy_node" {
 
   tags = {
     Name     = var.instance_name
-    Instance = var.instance_name
-  }
-}
-
-# This allows the second network interface to be detached, modified, re-attached if needed.
-resource "aws_network_interface_attachment" "client_interface_attachment" {
-  count = var.use_elastic_ips ? 1 : 0
-
-  instance_id          = aws_instance.indy_node.id
-  network_interface_id = aws_network_interface.client_nic[count.index].id
-  device_index         = 1
-}
-
-resource "aws_subnet" "node_subnet" {
-  assign_ipv6_address_on_creation = false
-  cidr_block                      = var.subnet_node_cidr_block
-  map_public_ip_on_launch         = var.use_elastic_ips ? false : true
-  # availability_zone               = aws_instance.indy_node.availability_zone
-  vpc_id                          = var.default_vpc_id
-
-  tags = {
-    Name     = "${var.instance_name} - Node Subnet"
-    Instance = var.instance_name
-  }
-}
-
-resource "aws_subnet" "client_subnet" {
-  count = var.use_elastic_ips ? 1 : 0
-
-  assign_ipv6_address_on_creation = false
-  cidr_block                      = var.subnet_client_cidr_block
-  map_public_ip_on_launch         = var.use_elastic_ips ? false : true
-  availability_zone               = aws_instance.indy_node.availability_zone
-  vpc_id                          = var.default_vpc_id
-
-  tags = {
-    Name     = "${var.instance_name} - Client Subnet"
-    Instance = var.instance_name
-  }
-}
-
-resource "aws_network_interface" "node_nic" {
-  description        = "The network interface used for inter-node communications."
-  ipv6_address_count = 0
-  private_ips_count  = 0
-  security_groups    = var.security_groups
-  source_dest_check  = true
-  subnet_id          = aws_subnet.node_subnet.id
-
-  tags = {
-    Name     = "${var.instance_name} - Node Interface"
-    Instance = var.instance_name
-  }
-}
-
-resource "aws_network_interface" "client_nic" {
-  count = var.use_elastic_ips ? 1 : 0
-
-  description        = "The network interface used for client communications."
-  ipv6_address_count = 0
-  private_ips_count  = 0
-  security_groups    = var.security_groups
-  source_dest_check  = true
-  subnet_id          = aws_subnet.client_subnet[count.index].id
-
-  tags = {
-    Name     = "${var.instance_name} - Client Interface"
-    Instance = var.instance_name
-  }
-}
-
-resource "aws_eip" "public_node_ip" {
-  count = var.use_elastic_ips ? 1 : 0
-
-  vpc                       = true
-  network_interface         = aws_network_interface.node_nic.id
-  associate_with_private_ip = aws_network_interface.node_nic.private_ip
-
-  tags = {
-    Name     = "${var.instance_name} - Node IP"
-    Instance = var.instance_name
-  }
-}
-
-resource "aws_eip" "public_client_ip" {
-  count = var.use_elastic_ips ? 1 : 0
-
-  vpc                       = true
-  network_interface         = aws_network_interface.client_nic[count.index].id
-  associate_with_private_ip = aws_network_interface.client_nic[count.index].private_ip
-  tags = {
-    Name     = "${var.instance_name} - Client IP"
     Instance = var.instance_name
   }
 }

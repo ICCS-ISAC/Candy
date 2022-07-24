@@ -22,9 +22,12 @@ variable "ec2_instance_type" {
   description = "Type of instance ec2"
 }
 
-variable "iam_profile" {
-  description = "The IAM profile to attach to the ec2 instance."
-}
+# ToDo:
+#   - Has Not Been Setup in Test yet
+#   - Uncomment as son as possible
+# variable "iam_profile" {
+#   description = "The IAM profile to attach to the ec2 instance."
+# }
 
 variable "ebs_volume_size" {
   description = "EBS volume size"
@@ -59,6 +62,19 @@ variable "use_elastic_ips" {
   type = bool
 }
 
-variable "security_groups" {
-  description = "The list of security groups for the network interfaces."
+variable "ssh_source_address" {
+  description = "The source IP address for SSH connections, in CIDR notation."
+}
+variable "public_ssh_key" {
+  description = "The public SSH key to associate with the instance."
+}
+
+variable "client_port" {
+  description = "The port, within the indy range of 9700 to 9799, on which the client interface will listen."
+  default     = "9702"
+}
+
+variable "node_port" {
+  description = "The port, within the indy range of 9700 to 9799, on which the node interface will listen."
+  default     = "9701"
 }
