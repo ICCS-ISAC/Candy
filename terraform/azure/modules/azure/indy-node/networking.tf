@@ -36,6 +36,9 @@ resource "azurerm_network_security_group" "client_nsg" {
   }, var.default_tags)
 }
 
+# ToDo:
+#   - Configure this so it can be turned on and off.
+#     - Since it's only needed to configure the node for the most part.
 resource "azurerm_network_security_rule" "client_nsr_ssh" {
   name                        = "${var.instance_name}_SSH"
   priority                    = 1001
@@ -57,7 +60,7 @@ resource "azurerm_network_security_rule" "client_nsr_indy" {
   access                      = "Allow"
   protocol                    = "Tcp"
   source_port_range           = "*"
-  destination_port_range      = "9702"
+  destination_port_range      = var.client_port
   source_address_prefix       = "*"
   destination_address_prefix  = "*"
   resource_group_name         = var.resource_group.name
@@ -82,7 +85,7 @@ resource "azurerm_network_security_rule" "node_nsr_indy" {
   access                      = "Allow"
   protocol                    = "Tcp"
   source_port_range           = "*"
-  destination_port_range      = "9701"
+  destination_port_range      = var.node_port
   source_address_prefix       = "*"
   destination_address_prefix  = "*"
   resource_group_name         = var.resource_group.name
@@ -99,7 +102,7 @@ resource "azurerm_network_interface" "client_nic" {
     name                          = "${var.instance_name}_client_ip_conf"
     subnet_id                     = azurerm_subnet.client_subnet.id
     private_ip_address_allocation = "Static"
-    private_ip_address = "10.0.1.5"
+    private_ip_address            = var.private_client_ip
     public_ip_address_id          = azurerm_public_ip.client_public_ip.id
   }
 
@@ -119,7 +122,7 @@ resource "azurerm_network_interface" "node_nic" {
     name                          = "${var.instance_name}_node_ip_conf"
     subnet_id                     = azurerm_subnet.node_subnet.id
     private_ip_address_allocation = "Static"
-    private_ip_address = "10.0.2.5"
+    private_ip_address            = var.private_node_ip
     public_ip_address_id          = azurerm_public_ip.node_public_ip.id
   }
 

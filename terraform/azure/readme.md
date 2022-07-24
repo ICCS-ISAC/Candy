@@ -1,4 +1,4 @@
-# Terraform AWS
+# Terraform Azure
 
 Terraform scripts for managing the resources associated with an indy node within a given Azure account.
 
