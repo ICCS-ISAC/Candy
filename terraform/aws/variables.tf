@@ -38,7 +38,7 @@ variable "candy_ami_owners" {
 }
 
 variable "candy_ami_filter_name" {
-  description = "Filter by name"
+  description = "Filter AMIs by name.  Use 'ubuntu-xenial-16.04-amd64-server-*' to find the correct Ubuntu 16.04 image, and 'ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*' to find the correct Ubuntu 20.04 image."
 }
 
 variable "candy_ami_filter_root_device_type" {
@@ -73,6 +73,14 @@ variable "candy_ebs_delete_on_termination" {
   description = "EBS delete on termination"
 }
 
+variable "candy_public_ssh_key" {
+  description = "The public ssh key to register with the servers for use with Ansible."
+}
+
+variable "candy_ssh_source_address" {
+  description = "The source IP address for Ansible SSH connections, in CIDR notation."
+}
+
 variable "candy_subnet_cidr_block_prefix" {
   description = "The prefix for the subnet CIDR blocks."
 }
@@ -81,7 +89,10 @@ variable "candy_subnet_cidr_starting_address" {
   description = "The starting address for the subnet CIDR blocks."
 }
 
-variable "candy_sg_description" {
-  description = "The description for the security group."
+variable "candy_client_port" {
+  description = "The port, within the indy range of 9700 to 9799, on which the client interface will listen."
 }
 
+variable "candy_node_port" {
+  description = "The port, within the indy range of 9700 to 9799, on which the node interface will listen."
+}
