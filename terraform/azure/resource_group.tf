@@ -1,6 +1,6 @@
 resource "azurerm_resource_group" "resource_group" {
   name     = var.candy_instance_name
-  location = var.location
+  location = var.candy_region
 
   tags = {
     Name     = var.candy_instance_name

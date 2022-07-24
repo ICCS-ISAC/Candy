@@ -17,12 +17,12 @@ resource "tfe_variable" "test_azure_instance_count" {
 #   workspace_id = data.tfe_workspace.test-azure.id
 # }
 
-# resource "tfe_variable" "test_azure_region" {
-#   key          = "candy_region"
-#   value        = "ca-central-1"
-#   category     = "terraform"
-#   workspace_id = data.tfe_workspace.test-azure.id
-# }
+resource "tfe_variable" "test_azure_region" {
+  key          = "candy_region"
+  value        = "canadacentral"
+  category     = "terraform"
+  workspace_id = data.tfe_workspace.test-azure.id
+}
 
 resource "tfe_variable" "test_azure_application_name" {
   key          = "candy_application_name"
@@ -41,6 +41,55 @@ resource "tfe_variable" "test_azure_environment" {
 resource "tfe_variable" "test_azure_instance_name" {
   key          = "candy_instance_name"
   value        = "test-bc-azure"
+  category     = "terraform"
+  workspace_id = data.tfe_workspace.test-azure.id
+}
+
+resource "tfe_variable" "test_azure_instance_size" {
+  key          = "candy_instance_size"
+  value        = "Standard_D2as_v4"
+  category     = "terraform"
+  workspace_id = data.tfe_workspace.test-azure.id
+}
+
+resource "tfe_variable" "test_azure_os_disk" {
+  key = "candy_os_disk"
+  value = jsonencode({
+    caching              = "ReadWrite"
+    storage_account_type = "Premium_LRS"
+  })
+  hcl          = true
+  category     = "terraform"
+  workspace_id = data.tfe_workspace.test-azure.id
+}
+
+resource "tfe_variable" "test_azure_source_image_reference" {
+  key = "candy_source_image_reference"
+  value = jsonencode({
+    publisher = "Canonical"
+    offer     = "0001-com-ubuntu-server-focal"
+    sku       = "20_04-lts-gen2"
+    version   = "latest"
+  })
+  hcl          = true
+  category     = "terraform"
+  workspace_id = data.tfe_workspace.test-azure.id
+}
+
+resource "tfe_variable" "test_azure_storage_account" {
+  key = "candy_storage_account"
+  value = jsonencode({
+    account_tier             = "Standard"
+    account_replication_type = "LRS"
+  })
+  hcl          = true
+  category     = "terraform"
+  workspace_id = data.tfe_workspace.test-azure.id
+}
+
+resource "tfe_variable" "test_azure_admin_username" {
+  key          = "candy_admin_username"
+  value        = "validatornode"
   category     = "terraform"
   workspace_id = data.tfe_workspace.test-azure.id
 }
@@ -162,3 +211,59 @@ resource "tfe_variable" "test_azure_instance_name" {
 #   workspace_id = data.tfe_workspace.test-azure.id
 # }
 # # ===================================================
+
+# ===================================================
+# Networking
+# ---------------------------------------------------
+resource "tfe_variable" "test_azure_vnet_address_range" {
+  key          = "candy_vnet_address_range"
+  value        = "[\"10.0.0.0/16\"]"
+  hcl          = true
+  category     = "terraform"
+  workspace_id = data.tfe_workspace.test-azure.id
+}
+
+resource "tfe_variable" "test_azure_client_subnet_range" {
+  key          = "candy_client_subnet_range"
+  value        = "[\"10.0.1.0/24\"]"
+  hcl          = true
+  category     = "terraform"
+  workspace_id = data.tfe_workspace.test-azure.id
+}
+
+resource "tfe_variable" "test_azure_node_subnet_range" {
+  key          = "candy_node_subnet_range"
+  value        = "[\"10.0.2.0/24\"]"
+  hcl          = true
+  category     = "terraform"
+  workspace_id = data.tfe_workspace.test-azure.id
+}
+
+resource "tfe_variable" "test_azure_private_client_ip" {
+  key          = "candy_private_client_ip"
+  value        = "10.0.1.5"
+  category     = "terraform"
+  workspace_id = data.tfe_workspace.test-azure.id
+}
+
+resource "tfe_variable" "test_azure_client_port" {
+  key          = "candy_client_port"
+  value        = "9702"
+  category     = "terraform"
+  workspace_id = data.tfe_workspace.test-azure.id
+}
+
+resource "tfe_variable" "test_azure_private_node_ip" {
+  key          = "candy_private_node_ip"
+  value        = "10.0.2.5"
+  category     = "terraform"
+  workspace_id = data.tfe_workspace.test-azure.id
+}
+
+resource "tfe_variable" "test_azure_node_port" {
+  key          = "candy_node_port"
+  value        = "9701"
+  category     = "terraform"
+  workspace_id = data.tfe_workspace.test-azure.id
+}
+# ===================================================

@@ -1,31 +1,34 @@
 # Create virtual machine
+# ToDo:
+#   - Add disk encryption?
+#   - Set availability zone?
 resource "azurerm_linux_virtual_machine" "indy_node" {
   name                  = var.instance_name
   location              = var.resource_group.location
   resource_group_name   = var.resource_group.name
   network_interface_ids = [azurerm_network_interface.client_nic.id, azurerm_network_interface.node_nic.id]
-  size                  = "Standard_D2as_v4"
+  size                  = var.instance_size
 
   os_disk {
     name                 = "${var.instance_name}_osdisk"
-    caching              = "ReadWrite"
-    storage_account_type = "Premium_LRS"
+    caching              = var.os_disk.caching
+    storage_account_type = var.os_disk.storage_account_type
   }
 
   source_image_reference {
-    publisher = "Canonical"
-    offer     = "0001-com-ubuntu-server-focal"
-    sku       = "20_04-lts-gen2"
-    version   = "latest"
+    publisher = var.source_image_reference.publisher
+    offer     = var.source_image_reference.offer
+    sku       = var.source_image_reference.sku
+    version   = var.source_image_reference.version
   }
 
   computer_name                   = var.instance_name
-  admin_username                  = "validatornode"
+  admin_username                  = var.admin_username
   disable_password_authentication = true
 
   admin_ssh_key {
-    username   = "validatornode"
-    public_key = var.public_ssh_key.content
+    username   = var.admin_username
+    public_key = var.public_ssh_key
   }
 
   boot_diagnostics {
@@ -53,8 +56,8 @@ resource "azurerm_storage_account" "storage" {
   name                     = replace("${var.instance_name}-${random_id.randomId.hex}", "-", "")
   resource_group_name      = var.resource_group.name
   location                 = var.resource_group.location
-  account_tier             = "Standard"
-  account_replication_type = "LRS"
+  account_tier             = var.storage_account.account_tier
+  account_replication_type = var.storage_account.account_replication_type
 
   tags = merge({
     Name     = "${var.instance_name}-${random_id.randomId.hex}"
