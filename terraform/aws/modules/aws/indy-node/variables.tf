@@ -24,7 +24,7 @@ variable "ec2_instance_type" {
 
 # ToDo:
 #   - Has Not Been Setup in Test yet
-#   - Uncomment as son as possible
+#   - Uncomment as soon as possible
 # variable "iam_profile" {
 #   description = "The IAM profile to attach to the ec2 instance."
 # }
