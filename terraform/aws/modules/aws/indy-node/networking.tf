@@ -29,8 +29,7 @@ resource "aws_eip" "public_node_ip" {
 }
 
 resource "aws_security_group" "client_security_group" {
-  # description = var.candy_sg_description
-
+  name = "${var.instance_name} - Client Security Group"
   tags = {
     Name     = "${var.instance_name} - Client Security Group"
     Instance = var.instance_name
@@ -38,6 +37,7 @@ resource "aws_security_group" "client_security_group" {
 }
 
 resource "aws_security_group_rule" "client_security_group_rule_indy" {
+  description       = "Allow client connections on port ${var.client_port}"
   type              = "ingress"
   cidr_blocks      = ["0.0.0.0/0"]
   from_port         = var.client_port
@@ -47,8 +47,7 @@ resource "aws_security_group_rule" "client_security_group_rule_indy" {
 }
 
 resource "aws_security_group" "node_security_group" {
-  # description = var.candy_sg_description
-
+  name = "${var.instance_name} - Node Security Group"
   tags = {
     Name     = "${var.instance_name} - Node Security Group"
     Instance = var.instance_name
@@ -57,6 +56,7 @@ resource "aws_security_group" "node_security_group" {
 
 resource "aws_security_group_rule" "node_security_group_rule_ssh" {
   type              = "ingress"
+  description       = "Allow ssh - intended of use with Ansible."
   cidr_blocks      = [var.ssh_source_address]
   from_port         = 22
   to_port           = 22
@@ -65,6 +65,7 @@ resource "aws_security_group_rule" "node_security_group_rule_ssh" {
 }
 
 resource "aws_security_group_rule" "node_security_group_rule_indy" {
+  description       = "Allow node connections on port ${var.node_port}"
   type              = "ingress"
   cidr_blocks      = ["0.0.0.0/0"]
   from_port         = var.node_port

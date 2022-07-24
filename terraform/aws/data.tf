@@ -26,7 +26,7 @@ data "aws_vpc" "default" {
 
 # ToDo:
 #   - Has Not Been Setup in Test yet
-#   - Uncomment as son as possible
+#   - Uncomment as soon as possible
 # data "aws_iam_role" "ssm_role" {
 #   name = "AmazonSSMRoleForInstancesQuickSetup"
 # }

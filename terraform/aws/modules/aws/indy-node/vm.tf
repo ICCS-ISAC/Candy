@@ -19,7 +19,7 @@ resource "aws_instance" "indy_node" {
   
   # ToDo:
   #   - Has Not Been Setup in Test yet
-  #   - Uncomment as son as possible
+  #   - Uncomment as soon as possible
   #iam_instance_profile = var.iam_profile
 
   # Set the hostname
