@@ -9,28 +9,25 @@ module "indy-node" {
   application_name = var.candy_application_name
   environment      = var.candy_environment
 
-  resource_group   = azurerm_resource_group.resource_group
+  source_image_reference = var.candy_source_image_reference
+  instance_size = var.candy_instance_size
+  os_disk = var.candy_os_disk
+  storage_account = var.candy_storage_account
 
-  public_ssh_key = data.local_file.public_ssh_key
+  resource_group = azurerm_resource_group.resource_group
+
+  admin_username     = var.candy_admin_username
+  public_ssh_key     = var.candy_public_ssh_key
   ssh_source_address = var.candy_ssh_source_address
 
-  # ami_id            = data.aws_ami.ubuntu.id
-  # ec2_instance_type = var.candy_ec2_instance_type
-  # iam_profile       = data.aws_iam_role.ssm_role.id
+  vnet_address_range  = var.candy_vnet_address_range
+  client_subnet_range = var.candy_client_subnet_range
+  node_subnet_range   = var.candy_node_subnet_range
 
-  # default_vpc_id = data.aws_vpc.default.id
-
-  # ebs_volume_size           = var.candy_ebs_volume_size
-  # ebs_volume_type           = var.candy_ebs_volume_type
-  # ebs_encrypted             = var.candy_ebs_encrypted
-  # ebs_kms_key_id            = var.candy_ebs_kms_key_id
-  # ebs_delete_on_termination = var.candy_ebs_delete_on_termination
-
-
-  # subnet_node_cidr_block   = "${var.candy_subnet_cidr_block_prefix}${var.candy_subnet_cidr_starting_address + count.index + (count.index % (var.candy_subnet_cidr_starting_address + count.index))}.0/24"
-  # subnet_client_cidr_block = "${var.candy_subnet_cidr_block_prefix}${var.candy_subnet_cidr_starting_address + count.index + 1 + (count.index % (var.candy_subnet_cidr_starting_address + count.index + 1))}.0/24"
-
-  # security_groups = [aws_security_group.validator_node_security_group.id]
+  private_client_ip = var.candy_private_client_ip
+  client_port       = var.candy_client_port
+  private_node_ip   = var.candy_private_node_ip
+  node_port         = var.candy_node_port
 
   default_tags = {
     Application = var.candy_application_name
