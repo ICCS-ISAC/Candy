@@ -18,12 +18,6 @@ data "aws_ami" "ubuntu" {
   }
 }
 
-data "aws_vpc" "default" {
-  # Allows dynamic lookup of information about the default VPC.
-  # Specifically it's ID
-  default = true
-}
-
 # ToDo:
 #   - Has Not Been Setup in Test yet
 #   - Uncomment as soon as possible
