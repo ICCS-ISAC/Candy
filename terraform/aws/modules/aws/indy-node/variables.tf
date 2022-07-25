@@ -14,10 +14,6 @@ variable "ami_id" {
   description = "AMI to use for the instance."
 }
 
-variable "default_vpc_id" {
-  description = "The ID of the default VPC."
-}
-
 variable "ec2_instance_type" {
   description = "Type of instance ec2"
 }
@@ -59,7 +55,7 @@ variable "subnet_client_cidr_block" {
 
 variable "use_elastic_ips" {
   description = "The cidr block to use for the client subnet."
-  type = bool
+  type        = bool
 }
 
 variable "ssh_source_address" {
