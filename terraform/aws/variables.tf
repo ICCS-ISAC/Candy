@@ -4,13 +4,13 @@
 
 variable "candy_instance_count" {
   description = "The number of instances to create."
-  default = 1
+  default     = 1
 }
 
 variable "candy_use_elastic_ips" {
   description = "Flag to indicate whether or not to provision the instances with elastic IPs."
-  type = bool
-  default = true
+  type        = bool
+  default     = true
 }
 
 variable "candy_region" {

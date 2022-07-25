@@ -13,10 +13,9 @@
 # ====================================================================================================
 
 resource "aws_instance" "indy_node" {
-  ami                  = var.ami_id
-  instance_type        = var.ec2_instance_type
-  
-  
+  ami           = var.ami_id
+  instance_type = var.ec2_instance_type
+
   # ToDo:
   #   - Has Not Been Setup in Test yet
   #   - Uncomment as soon as possible
@@ -25,7 +24,7 @@ resource "aws_instance" "indy_node" {
   # Set the hostname
   # This will be used by the Ansible scripts as the alias for the node.
   user_data = "#!/usr/bin/env bash\nsudo hostnamectl set-hostname --static ${var.instance_name}"
-  key_name = aws_key_pair.ansible.key_name
+  key_name  = aws_key_pair.ansible.key_name
 
   # ===============================================================
   # Provinces Hosting in AWS will want to ensure their
@@ -64,6 +63,10 @@ resource "aws_instance" "indy_node" {
     network_interface_id = aws_network_interface.node_nic.id
     device_index         = 0
   }
+
+  depends_on = [
+    aws_internet_gateway.node_gateway
+  ]
 
   tags = {
     Name     = var.instance_name
