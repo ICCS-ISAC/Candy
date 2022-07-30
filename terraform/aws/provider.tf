@@ -1,6 +1,6 @@
 terraform {
   backend "remote" {
-    organization = "bcgov"
+    organization = ""
     workspaces {
       prefix = "candy-"
     }
@@ -9,11 +9,11 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 3.61.0"
+      version = "~> 4.0"
     }
   }
 
-  required_version = ">= 1.0.9"
+  required_version = "~> 1.0"
 }
 
 provider "aws" {

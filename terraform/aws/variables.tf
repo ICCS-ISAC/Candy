@@ -86,13 +86,27 @@ variable "candy_subnet_cidr_block_prefix" {
 }
 
 variable "candy_subnet_cidr_starting_address" {
-  description = "The starting address for the subnet CIDR blocks."
+  description = "The starting address for the subnet CIDR blocks. ex: 10.0."
 }
 
 variable "candy_client_port" {
   description = "The port, within the indy range of 9700 to 9799, on which the client interface will listen."
+  default     = 9702
 }
 
 variable "candy_node_port" {
   description = "The port, within the indy range of 9700 to 9799, on which the node interface will listen."
+  default     = 9701
 }
+
+variable "iam_role" {
+  description = "Role IAM to assign to the VM, if required"
+  default     = null
+}
+
+variable "candy_vpc_node_cidr_block" {
+  description = "VPC IP CIDR"
+
+}
+
+

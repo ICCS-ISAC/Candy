@@ -1,7 +1,3 @@
-resource "aws_key_pair" "ansible" {
-  key_name   = "ansible-key"
-  public_key = var.public_ssh_key
-}
 
 resource "aws_eip" "public_client_ip" {
   count = var.use_elastic_ips ? 1 : 0
@@ -132,6 +128,7 @@ resource "aws_network_interface" "node_nic" {
   tags = {
     Name     = "${var.instance_name} - Node Interface"
     Instance = var.instance_name
+    Zone     = var.zone
   }
 }
 
