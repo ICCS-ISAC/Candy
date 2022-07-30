@@ -18,12 +18,11 @@ variable "ec2_instance_type" {
   description = "Type of instance ec2"
 }
 
-# ToDo:
-#   - Has Not Been Setup in Test yet
-#   - Uncomment as soon as possible
-# variable "iam_profile" {
-#   description = "The IAM profile to attach to the ec2 instance."
-# }
+
+variable "iam_profile" {
+  description = "The IAM profile to attach to the ec2 instance."
+  default     = null
+}
 
 variable "ebs_volume_size" {
   description = "EBS volume size"
