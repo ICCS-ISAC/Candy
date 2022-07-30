@@ -61,9 +61,7 @@ variable "use_elastic_ips" {
 variable "ssh_source_address" {
   description = "The source IP address for SSH connections, in CIDR notation."
 }
-variable "public_ssh_key" {
-  description = "The public SSH key to associate with the instance."
-}
+
 
 variable "client_port" {
   description = "The port, within the indy range of 9700 to 9799, on which the client interface will listen."
@@ -73,4 +71,19 @@ variable "client_port" {
 variable "node_port" {
   description = "The port, within the indy range of 9700 to 9799, on which the node interface will listen."
   default     = "9701"
+}
+
+variable "vpc_node_cidr_block" {
+  description = "VPC IP CIDR"
+
+}
+
+variable "ssh_key_name" {
+  description = "Name of the EC2 ssh public key to use to ssh in"
+
+}
+
+variable "zone" {
+  description = "Availability zone where to deploy the VM"
+
 }
