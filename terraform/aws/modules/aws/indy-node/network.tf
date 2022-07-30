@@ -1,5 +1,5 @@
 resource "aws_vpc" "node_vpc" {
-  cidr_block = "172.31.0.0/16"
+  cidr_block = var.vpc_node_cidr_block
 
   tags = {
     Name     = "${var.instance_name} - VPC"
@@ -28,7 +28,7 @@ resource "aws_subnet" "client_subnet" {
   assign_ipv6_address_on_creation = false
   cidr_block                      = var.subnet_client_cidr_block
   map_public_ip_on_launch         = var.use_elastic_ips ? false : true
-  availability_zone               = aws_instance.indy_node.availability_zone
+  availability_zone               = var.zone
   vpc_id                          = aws_vpc.node_vpc.id
 
   tags = {
@@ -41,8 +41,8 @@ resource "aws_subnet" "node_subnet" {
   assign_ipv6_address_on_creation = false
   cidr_block                      = var.subnet_node_cidr_block
   map_public_ip_on_launch         = var.use_elastic_ips ? false : true
-  # availability_zone               = aws_instance.indy_node.availability_zone
-  vpc_id = aws_vpc.node_vpc.id
+  availability_zone               = var.zone
+  vpc_id                          = aws_vpc.node_vpc.id
 
   tags = {
     Name     = "${var.instance_name} - Node Subnet"
