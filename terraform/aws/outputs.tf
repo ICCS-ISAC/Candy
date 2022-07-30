@@ -5,7 +5,3 @@ output "ansible_inventory" {
     }
   )
 }
-
-output "zones" {
-  value = data.aws_availability_zones.available
-}
