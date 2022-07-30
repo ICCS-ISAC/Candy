@@ -18,10 +18,9 @@ data "aws_ami" "ubuntu" {
   }
 }
 
-data "aws_iam_role" "ssm_role" {
-  count = var.iam_role != null ? 1 : 0
-  name  = var.iam_role
-}
+# data "aws_iam_role" "ssm_role" {
+#   name  = var.iam_role
+# }
 
 data "aws_availability_zones" "available" {
   state = "available"

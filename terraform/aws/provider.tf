@@ -1,8 +1,8 @@
 terraform {
   backend "remote" {
-    organization = "qcgouv"
+    organization = "YourOrg"
     workspaces {
-      name = "pr-37-validation"
+      prefix = "candy-"
     }
   }
 
