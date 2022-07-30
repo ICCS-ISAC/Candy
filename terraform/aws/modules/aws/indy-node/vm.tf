@@ -6,6 +6,10 @@
 # This supports the scenario where you want to create a network of nodes in the same region.
 # AWS only supports 5 elastic IPs per region, which is not enough to support
 # the minimum of four nodes for the network.
+
+# You can request more elastic IP by contaccting AWS support though.  
+# The same applies for VPC, which have a "soft" limit of 5, but can be extended by contacting support
+
 # When 'use_elastic_ips' is set to false a public IP address is assigned to the instance by default
 # and only a single interface and subnet are created.  Meaning the node will need to share the one
 # interface for both node and client communications.  Otherwise, separate interfaces and subnets
