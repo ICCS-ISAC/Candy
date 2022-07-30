@@ -24,14 +24,21 @@ resource "aws_instance" "indy_node" {
   # Set the hostname
   # This will be used by the Ansible scripts as the alias for the node.
   user_data = "#!/usr/bin/env bash\nsudo hostnamectl set-hostname --static ${var.instance_name}"
-  key_name  = aws_key_pair.ansible.key_name
+  key_name  = var.ssh_key_name
 
   # ===============================================================
   # Provinces Hosting in AWS will want to ensure their
   # nodes are in different availability zones
   # ---------------------------------------------------------------
-  # availability_zone           = "ca-central-1d"
+  availability_zone = var.zone
   # ===============================================================
+
+  #this lifecycle is to prevent a rebuilt of the VM when the original AMI used changes, which happens often and quickly. 
+  lifecycle {
+    ignore_changes = [
+      ami,
+    ]
+  }
 
   root_block_device {
     volume_size = var.ebs_volume_size
@@ -55,7 +62,9 @@ resource "aws_instance" "indy_node" {
       Application = var.application_name
       Environment = var.environment
       Instance    = var.instance_name
+      Zone        = var.zone
     }
+
   }
 
   # Default (primary) network interfaces can only be attached here.

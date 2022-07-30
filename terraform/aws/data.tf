@@ -18,9 +18,11 @@ data "aws_ami" "ubuntu" {
   }
 }
 
-# ToDo:
-#   - Has Not Been Setup in Test yet
-#   - Uncomment as soon as possible
-# data "aws_iam_role" "ssm_role" {
-#   name = "AmazonSSMRoleForInstancesQuickSetup"
-# }
+data "aws_iam_role" "ssm_role" {
+  count = var.iam_role != null ? 1 : 0
+  name  = var.iam_role
+}
+
+data "aws_availability_zones" "available" {
+  state = "available"
+}
