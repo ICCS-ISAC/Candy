@@ -14,16 +14,14 @@ variable "ami_id" {
   description = "AMI to use for the instance."
 }
 
-variable "default_vpc_id" {
-  description = "The ID of the default VPC."
-}
-
 variable "ec2_instance_type" {
   description = "Type of instance ec2"
 }
 
+
 variable "iam_profile" {
   description = "The IAM profile to attach to the ec2 instance."
+  default     = null
 }
 
 variable "ebs_volume_size" {
@@ -56,9 +54,35 @@ variable "subnet_client_cidr_block" {
 
 variable "use_elastic_ips" {
   description = "The cidr block to use for the client subnet."
-  type = bool
+  type        = bool
 }
 
-variable "security_groups" {
-  description = "The list of security groups for the network interfaces."
+variable "ssh_source_address" {
+  description = "The source IP address for SSH connections, in CIDR notation."
+}
+
+
+variable "client_port" {
+  description = "The port, within the indy range of 9700 to 9799, on which the client interface will listen."
+  default     = "9702"
+}
+
+variable "node_port" {
+  description = "The port, within the indy range of 9700 to 9799, on which the node interface will listen."
+  default     = "9701"
+}
+
+variable "vpc_node_cidr_block" {
+  description = "VPC IP CIDR"
+
+}
+
+variable "ssh_key_name" {
+  description = "Name of the EC2 ssh public key to use to ssh in"
+
+}
+
+variable "zone" {
+  description = "Availability zone where to deploy the VM"
+
 }

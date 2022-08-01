@@ -1,0 +1,65 @@
+- name: Common installation steps
+  block:
+    - name: Install HTTPS support for apt
+      apt:
+        name:
+          - apt-transport-https
+          - ca-certificates
+        update_cache: true
+      become: true
+
+    - name: Add Sovrin repo key
+      apt_key:
+        keyserver: keyserver.ubuntu.com
+        id: CE7709D068DB5E88
+      become: true
+
+    - name: Add Hyperledger repo key
+      apt_key:
+        keyserver: keyserver.ubuntu.com
+        id: 9692C00E657DDE61
+      become: true
+  when: indy_repo_node_channels|d(False, True)
+
+# ==============================================================================================================
+# For releases <= 1.12.4 on Ubuntu 16.04
+# --------------------------------------------------------------------------------------------------------------
+- name: Add Sovrin repository for indy node
+  apt_repository:
+    repo: "deb https://repo.sovrin.org/deb {{ distribution_codename }} {{ indy_repo_node_channels }}"
+    state: present
+  become: true
+  when:
+    - distribution_codename == "xenial"
+    - indy_repo_node_channels|d(False, True)
+# ==============================================================================================================
+
+# ==============================================================================================================
+# For releases > 1.12.4 on Ubuntu 20.04
+# --------------------------------------------------------------------------------------------------------------
+- name: Add Ubuntu - Focal repositories
+  block:
+    # For Indy packages and dependencies
+    - name: Add Hyperledger repository for indy node
+      apt_repository:
+        repo: "deb  https://hyperledger.jfrog.io/artifactory/indy {{ distribution_codename }} {{ indy_repo_node_channels }}"
+        state: present
+      become: true
+
+    # For libssl1.0.0
+    - name: Add Ubuntu bionic-security repository
+      apt_repository:
+        repo: "deb http://security.ubuntu.com/ubuntu bionic-security main"
+        state: present
+      become: true
+
+    # For ursa 0.3.2-1
+    - name: Add Sovrin repository for indy node
+      apt_repository:
+        repo: "deb https://repo.sovrin.org/deb bionic master"
+        state: present
+      become: true
+  when:
+    - distribution_codename == "focal"
+    - indy_repo_node_channels|d(False, True)
+# ==============================================================================================================
