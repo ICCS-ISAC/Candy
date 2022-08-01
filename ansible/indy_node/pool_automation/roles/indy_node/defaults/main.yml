@@ -1,8 +1,0 @@
----
-indy_node_channel: stable
-sovrin_ver: 1.1.89
-# configuration parameters
-indy_node_configuration: false
-network_configuration: true
-cloud: azure
-network_name: dilab

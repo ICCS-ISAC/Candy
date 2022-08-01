@@ -18,12 +18,10 @@ data "aws_ami" "ubuntu" {
   }
 }
 
-data "aws_vpc" "default" {
-  # Allows dynamic lookup of information about the default VPC.
-  # Specifically it's ID
-  default = true
-}
+# data "aws_iam_role" "ssm_role" {
+#   name  = var.iam_role
+# }
 
-data "aws_iam_role" "ssm_role" {
-  name = "AmazonSSMRoleForInstancesQuickSetup"
+data "aws_availability_zones" "available" {
+  state = "available"
 }

@@ -1,0 +1,19 @@
+---
+indy_node_channel: rc
+indy_node_pkg: indy-node
+indy_node_pkg_version: 1.13.1~rc2
+
+# Configuration Parameters
+cloud: azure
+network_name: candy-dev
+node_port: 9701
+client_port: 9702
+domain_transactions_genesis_url: null
+pool_transactions_genesis_url: null
+
+network_configuration: true
+install_packages: true
+indy_node_configuration: true
+
+# Don't set this, it is auto-detected
+distribution_codename: null

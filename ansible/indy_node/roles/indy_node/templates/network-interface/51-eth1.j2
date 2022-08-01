@@ -1,0 +1,24 @@
+# Working Example of:
+# https://aws.amazon.com/premiumsupport/knowledge-center/ec2-ubuntu-secondary-network-interface/
+# /etc/netplan/51-eth1.yaml
+# No need to update the /etc/iproute2/rt_tables file.
+# Survives reboot without having to  disable automatic network configuration via /etc/cloud/cloud.cfg.d/99-disable-network-config.cfg
+network:
+  version: 2
+  ethernets:
+    {{ eth1 }}:
+      addresses:
+        - {{ eth1_ip }}/24
+      dhcp4: false
+      dhcp6: false
+      routes:
+        - to: 0.0.0.0/0
+          via: {{ eth1_gw }}
+          table: 1000
+        - to: {{ eth1_ip }}
+          via: 0.0.0.0
+          scope: link
+          table: 1000
+      routing-policy:
+        - from: {{ eth1_ip }}
+          table: 1000
