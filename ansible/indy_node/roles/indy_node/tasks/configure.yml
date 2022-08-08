@@ -36,21 +36,8 @@
 # =========================================================================================
 # Node Configuration
 # -----------------------------------------------------------------------------------------
-
-- name: "Check if indy_config.py exists"
-  stat:
-    path: /etc/indy/indy_config.py
-  register: indy_config
-
-
 - name: Configure indy_config.py
-  template:
-    src: indy_config.j2
-    dest: /etc/indy/indy_config.py
-    owner: indy
-    group: indy
-  become: true
-  when: not indy_config.stat.exists
+  shell: sudo sed -i -re "s/(^NETWORK_NAME =).*$/\1 '{{ network_name }}'/" /etc/indy/indy_config.py
 
 # Note: The '/var/log/indy/{{ network_name }}' folder gets created automatically when indy is started
 - name: Ensure network folder exists
