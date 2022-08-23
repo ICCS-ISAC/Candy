@@ -139,7 +139,7 @@ ledger auth-rule txn_type=NYM action=EDIT field=role old_value=101 new_value=201
 
 # Edit DID - Change Role from Endorser to non-privileged
 #  - Require 2 Trustee signatures
-ledger auth-rule txn_type=NYM action=EDIT field=role old_value=101 constraint="{"sig_count":1,"role":"0","constraint_id":"ROLE","need_to_be_owner":false}"
+ledger auth-rule txn_type=NYM action=EDIT field=role old_value=101 constraint="{"sig_count":2,"role":"0","constraint_id":"ROLE","need_to_be_owner":false}"
 
 # Edit DID - Change Role from Network_Monitor to Trustee
 #  - Require 2 Trustee signatures
@@ -209,8 +209,8 @@ ledger auth-rule txn_type=SCHEMA action=EDIT field=* old_value=* new_value=* con
 # -----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 # Add Rich Schema
-#  - Require 1 Endorser signature
-ledger auth-rule txn_type=SET_RICH_SCHEMA action=ADD field=* old_value=* new_value=* constraint="{"sig_count":1,"role":"101","constraint_id":"ROLE","need_to_be_owner":false}"
+#  - Forbidden
+ledger auth-rule txn_type=SET_RICH_SCHEMA action=ADD field=* old_value=* new_value=* constraint="{"constraint_id":"FORBIDDEN"}"
 
 # Edit Rich Schema
 #  - Forbidden
@@ -311,7 +311,7 @@ ledger auth-rule txn_type=GET_VALIDATOR_INFO action=ADD field=* old_value=* new_
 
 # Add Revocation Registry Definition
 #  - Require 1 Endorser signature
-ledger auth-rule txn_type=REVOC_REG_DEF action=ADD field=* old_value=* new_value=* constraint="{"constraint_id":"OR","auth_constraints":[{"sig_count":1,"role":"101","constraint_id":"ROLE","need_to_be_owner":false}]}"
+ledger auth-rule txn_type=REVOC_REG_DEF action=ADD field=* old_value=* new_value=* constraint="{"sig_count":1,"role":"101","constraint_id":"ROLE","need_to_be_owner":false}"
 
 # Edit Revocation Registry Definition
 #  - Require 1 Owner signature
