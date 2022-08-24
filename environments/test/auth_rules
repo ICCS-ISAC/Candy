@@ -229,29 +229,16 @@ ledger auth-rule txn_type=SCHEMA action=EDIT field=* old_value=* new_value=* con
 # =================================================================================================================================================================
 
 # =================================================================================================================================================================
-# Add/Edit Rich Schema
+# Add/Edit SET_CONTEXT (200) [aka Rich Schema]
 # -----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-# Add Rich Schema
-#  - Forbidden
-ledger auth-rule txn_type=SET_RICH_SCHEMA action=ADD field=* old_value=* new_value=* constraint="{"constraint_id":"FORBIDDEN"}"
-
-# Edit Rich Schema
-#  - Forbidden
-ledger auth-rule txn_type=SET_RICH_SCHEMA action=EDIT field=* old_value=* new_value=* constraint="{"constraint_id":"FORBIDDEN"}"
-# =================================================================================================================================================================
-
-# =================================================================================================================================================================
-# Add/Edit Context
-# -----------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-# Add Context
+# Add Set Context
 #  - Require 2 Trustee signatures
-ledger auth-rule txn_type=SET_CONTEXT action=ADD field=* old_value=* new_value=* constraint="{"sig_count":2,"role":"0","constraint_id":"ROLE","need_to_be_owner":false}"
+ledger auth-rule txn_type=200 action=ADD field=* old_value=* new_value=* constraint="{"constraint_id":"FORBIDDEN"}"
 
-# Edit Context
+# Edit Set Context
 #  - Forbidden
-ledger auth-rule txn_type=SET_CONTEXT action=EDIT field=* old_value=* new_value=* constraint="{"constraint_id":"FORBIDDEN"}"
+ledger auth-rule txn_type=200 action=EDIT field=* old_value=* new_value=* constraint="{"constraint_id":"FORBIDDEN"}"
 # =================================================================================================================================================================
 
 # =================================================================================================================================================================
@@ -353,7 +340,7 @@ ledger auth-rule txn_type=REVOC_REG_DEF action=ADD field=* old_value=* new_value
 
 # Edit Revocation Registry Definition
 #  - Require 1 Owner signature
-ledger auth-rule txn_type=REVOC_REG_DEF action=EDIT field=* txn_type=REVOC_REG_DEF old_value=* new_value=* constraint="{"sig_count":1,"role":"*","constraint_id":"ROLE","need_to_be_owner":true}"
+ledger auth-rule txn_type=REVOC_REG_DEF action=EDIT field=* old_value=* new_value=* constraint="{"sig_count":1,"role":"*","constraint_id":"ROLE","need_to_be_owner":true}"
 # =================================================================================================================================================================
 
 
@@ -380,9 +367,9 @@ ledger auth-rule txn_type=REVOC_REG_ENTRY action=EDIT field=* old_value=* new_va
 #    This ensures rules can be updated or the batch file corrected and rerun before that ability to edit the rules is finally secured.
 # -----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-# Batch Edit Auth Rules
+# Batch Edit Auth Rules (AUTH_RULES = 122)
 #  - Require 2 Trustee signatures
-ledger auth-rule txn_type=AUTH_RULES action=EDIT field=* old_value=* new_value=* constraint="{"sig_count":2,"role":"0","constraint_id":"ROLE","need_to_be_owner":false}"
+ledger auth-rule txn_type=122 action=EDIT field=* old_value=* new_value=* constraint="{"sig_count":2,"role":"0","constraint_id":"ROLE","need_to_be_owner":false}"
 
 # Edit Auth Rules
 #  - Require 2 Trustee signatures
@@ -392,14 +379,24 @@ ledger auth-rule txn_type=AUTH_RULES action=EDIT field=* old_value=* new_value=*
 # =================================================================================================================================================================
 
 # =================================================================================================================================================================
-# Add AML/TAA
+# Add/Edit AML/TAA
 # -----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 # Add AML
 #  - Require 2 Trustee signatures
-ledger auth-rule txn_type=TRANSACTION_AUTHOR_AGREEMENT_AML action=ADD field=* old_value=* new_value=* constraint="{"sig_count":2,"role":"0","constraint_id":"ROLE","need_to_be_owner":false}"
+ledger auth-rule txn_type=TXN_AUTHR_AGRMT_AML action=ADD field=* old_value=* new_value=* constraint="{"sig_count":2,"role":"0","constraint_id":"ROLE","need_to_be_owner":false}"
 
 # Add TAA
 #  - Require 2 Trustee signatures
-ledger auth-rule txn_type=TRANSACTION_AUTHOR_AGREEMENT action=ADD field=* old_value=* new_value=* constraint="{"sig_count":2,"role":"0","constraint_id":"ROLE","need_to_be_owner":false}"
+ledger auth-rule txn_type=TXN_AUTHR_AGRMT action=ADD field=* old_value=* new_value=* constraint="{"sig_count":2,"role":"0","constraint_id":"ROLE","need_to_be_owner":false}"
+
+# Edit TAA
+#  - Require 2 Trustee signatures
+ledger auth-rule txn_type=TXN_AUTHR_AGRMT action=EDIT field=* old_value=* new_value=* constraint="{"sig_count":2,"role":"0","constraint_id":"ROLE","need_to_be_owner":false}"
+# =================================================================================================================================================================
+
+# =================================================================================================================================================================
+# Add DISABLE_ALL_TXN_AUTHR_AGRMTS (8)
+# -----------------------------------------------------------------------------------------------------------------------------------------------------------------
+ledger auth-rule txn_type=8 action=ADD field=* old_value=* new_value=* constraint="{"sig_count":2,"role":"0","constraint_id":"ROLE","need_to_be_owner":false}"
 # =================================================================================================================================================================
