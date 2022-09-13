@@ -142,7 +142,7 @@
   - name: indy-plenum
     apt:
       name:
-        - "indy-plenum={{ indy_node_pkg_version }}"
+        - "indy-plenum={{ indy_plenum_pkg_version | default(indy_node_pkg_version) }}"
       update_cache: true
     become: true
     tags:

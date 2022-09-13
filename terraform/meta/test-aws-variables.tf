@@ -3,7 +3,7 @@
 # ---------------------------------------------------
 resource "tfe_variable" "test_aws_instance_count" {
   key          = "candy_instance_count"
-  value        = 2
+  value        = 4
   category     = "terraform"
   workspace_id = data.tfe_workspace.test-aws.id
 }
@@ -39,6 +39,13 @@ resource "tfe_variable" "test_aws_environment" {
 resource "tfe_variable" "test_aws_instance_name" {
   key          = "candy_instance_name"
   value        = "test-bc-aws"
+  category     = "terraform"
+  workspace_id = data.tfe_workspace.test-aws.id
+}
+
+resource "tfe_variable" "test_aws_iam_role" {
+  key          = "iam_role"
+  value        = "AmazonSSMRoleForInstancesQuickSetup"
   category     = "terraform"
   workspace_id = data.tfe_workspace.test-aws.id
 }
@@ -133,8 +140,15 @@ resource "tfe_variable" "test_aws_ebs_delete_on_termination" {
 # ===================================================
 
 # ===================================================
-# Subnet
+# Network
 # ---------------------------------------------------
+resource "tfe_variable" "test_aws_vpc_node_cidr_block" {
+  key          = "candy_vpc_node_cidr_block"
+  value        = "172.31.0.0/16"
+  category     = "terraform"
+  workspace_id = data.tfe_workspace.test-aws.id
+}
+
 resource "tfe_variable" "test_aws_subnet_cidr_block_prefix" {
   key          = "candy_subnet_cidr_block_prefix"
   value        = "172.31."
@@ -145,17 +159,6 @@ resource "tfe_variable" "test_aws_subnet_cidr_block_prefix" {
 resource "tfe_variable" "test_aws_subnet_cidr_starting_address" {
   key          = "candy_subnet_cidr_starting_address"
   value        = 100
-  category     = "terraform"
-  workspace_id = data.tfe_workspace.test-aws.id
-}
-# ===================================================
-
-# ===================================================
-# SG
-# ---------------------------------------------------
-resource "tfe_variable" "test_aws_sg_description" {
-  key          = "candy_sg_description"
-  value        = "Validator Node Security Group"
   category     = "terraform"
   workspace_id = data.tfe_workspace.test-aws.id
 }
