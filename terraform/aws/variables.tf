@@ -106,7 +106,4 @@ variable "iam_role" {
 
 variable "candy_vpc_node_cidr_block" {
   description = "VPC IP CIDR"
-
 }
-
-

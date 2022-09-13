@@ -7,7 +7,7 @@
 # AWS only supports 5 elastic IPs per region, which is not enough to support
 # the minimum of four nodes for the network.
 
-# You can request more elastic IP by contaccting AWS support though.  
+# You can request more elastic IP by contacting AWS support though.  
 # The same applies for VPC, which have a "soft" limit of 5, but can be extended by contacting support
 
 # When 'use_elastic_ips' is set to false a public IP address is assigned to the instance by default
@@ -20,10 +20,7 @@ resource "aws_instance" "indy_node" {
   ami           = var.ami_id
   instance_type = var.ec2_instance_type
 
-  # ToDo:
-  #   - Has Not Been Setup in Test yet
-  #   - Uncomment as soon as possible
-  #iam_instance_profile = var.iam_profile
+  iam_instance_profile = var.iam_profile
 
   # Set the hostname
   # This will be used by the Ansible scripts as the alias for the node.

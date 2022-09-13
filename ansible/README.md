@@ -39,7 +39,7 @@ The following steps assume:
 1. Export the ansible inventory from your Terraform project.
     - From your Terraform project run (for example):
       ```
-      vscode ➜ /workspaces/Candy/terraform/azure $ terraform output -raw ansible_inventory > ../../ansible/azure-inventory.yml
+      vscode ➜ /workspaces/Candy/terraform/aws $ terraform output -raw ansible_inventory > ../../ansible/aws-inventory.yml
       ```
     - This will output an inventory file that will look something like this.  The number of hosts listed in the file will depend on the number of nodes you have provisioned.
       ```
@@ -61,18 +61,18 @@ The following steps assume:
       ssh-add ./<private-ssh-key-filename-here>
       ```
     - Enter your passphrase when prompted.
-1. Run the playbook.  Ensure you include the correct ssh username for your environment(s) with the `--user` parameter.
+1. Run the playbook.  Ensure you include the correct ssh username for your environment(s) with the `--user` parameter; `validatornode` for azure environments and `ubuntu` for aws environments.
     - For example:
       ```
-      ansible-playbook --user validatornode -i azure-inventory.yml --extra-vars "cloud=azure network_name=candy-test indy_node_channel=rc indy_node_pkg=indy-node indy_node_pkg_version=1.13.1~rc2" indy_node/deploy.yml
+      ansible-playbook --user ubuntu -i aws-inventory.yml --extra-vars "cloud=aws network_name=candy-test indy_node_channel=rc indy_node_pkg=indy-node indy_node_pkg_version=1.13.2~rc2" indy_node/deploy.yml
       ```
     - To have better control over the groups of tasks that get run:
       ```
-      ansible-playbook --user validatornode -i azure-inventory.yml --extra-vars "cloud=azure network_name=candy-test indy_node_channel=rc indy_node_pkg=indy-node indy_node_pkg_version=1.13.1~rc2 network_configuration=true install_packages=true indy_node_configuration=false" indy_node/deploy.yml
+      ansible-playbook --user ubuntu -i aws-inventory.yml --extra-vars "cloud=aws network_name=candy-test indy_node_channel=rc indy_node_pkg=indy-node indy_node_pkg_version=1.13.2~rc2 network_configuration=true install_packages=true indy_node_configuration=false" indy_node/deploy.yml
       ```
     - When establishing the initial ssh connection to the servers you can disable all task groups:
       ```
-      ansible-playbook --user validatornode -i azure-inventory.yml --extra-vars "cloud=azure network_name=candy-test indy_node_channel=rc indy_node_pkg=indy-node indy_node_pkg_version=1.13.1~rc2 network_configuration=false install_packages=false indy_node_configuration=false" indy_node/deploy.yml
+      ansible-playbook --user ubuntu -i aws-inventory.yml --extra-vars "cloud=aws network_name=candy-test indy_node_channel=rc indy_node_pkg=indy-node indy_node_pkg_version=1.13.2~rc2 network_configuration=false install_packages=false indy_node_configuration=false" indy_node/deploy.yml
       ```
 1. Generate Genesis files using tools in [von-network](https://github.com/bcgov/von-network)
 , for example:
@@ -130,11 +130,15 @@ The following variables can be used to control various settings and behaviours o
   - Defines the name of the indy-node package to install.
   - Options include `indy-node` (for generic `indy-node` installations), `sovrin` (for `sovrin` installations).
 
-`indy_node_pkg_version` - **_required_** (default=`1.13.1~rc2`)
+`indy_node_pkg_version` - **_required_** (default=`1.13.2~rc2`)
   - Defines the version of `indy-node` to be installed.
   - **_Note_**:
     - `indy-node` and `sovrin` versions <=1.12.x only support Ubuntu 16.04.
     - `indy-node` and `sovrin` versions >=1.13.x only support Ubuntu 20.04.
+
+`indy_plenum_pkg_version` - **_optional_** (default=`indy_node_pkg_version`)
+  - Defines the version of `indy-plenum` to be installed.
+  - You only need to define this when the version of `indy-plenum` to be installed is different than the version of `indy-node`.
 
 `domain_transactions_genesis_url` - **_optional_** (default=`null`)
   - Defines the URL endpoint for downloading the domain_transactions_genesis needed to connect the node(s) to an existing network.
