@@ -1,7 +1,7 @@
 ---
 indy_node_channel: rc
 indy_node_pkg: indy-node
-indy_node_pkg_version: 1.13.2~rc2
+indy_node_pkg_version: 1.13.2~rc3
 
 # Configuration Parameters
 cloud: azure

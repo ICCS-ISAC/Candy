@@ -64,15 +64,15 @@ The following steps assume:
 1. Run the playbook.  Ensure you include the correct ssh username for your environment(s) with the `--user` parameter; `validatornode` for azure environments and `ubuntu` for aws environments.
     - For example:
       ```
-      ansible-playbook --user ubuntu -i aws-inventory.yml --extra-vars "cloud=aws network_name=candy-test indy_node_channel=rc indy_node_pkg=indy-node indy_node_pkg_version=1.13.2~rc2" indy_node/deploy.yml
+      ansible-playbook --user ubuntu -i aws-inventory.yml --extra-vars "cloud=aws network_name=candy-test indy_node_channel=rc indy_node_pkg=indy-node indy_node_pkg_version=1.13.2~rc3 indy_plenum_pkg_version=1.13.1~rc2" indy_node/deploy.yml
       ```
     - To have better control over the groups of tasks that get run:
       ```
-      ansible-playbook --user ubuntu -i aws-inventory.yml --extra-vars "cloud=aws network_name=candy-test indy_node_channel=rc indy_node_pkg=indy-node indy_node_pkg_version=1.13.2~rc2 network_configuration=true install_packages=true indy_node_configuration=false" indy_node/deploy.yml
+      ansible-playbook --user ubuntu -i aws-inventory.yml --extra-vars "cloud=aws network_name=candy-test indy_node_channel=rc indy_node_pkg=indy-node indy_node_pkg_version=1.13.2~rc3 indy_plenum_pkg_version=1.13.1~rc2 network_configuration=true install_packages=true mount_data_volume=true indy_node_configuration=false" indy_node/deploy.yml
       ```
     - When establishing the initial ssh connection to the servers you can disable all task groups:
       ```
-      ansible-playbook --user ubuntu -i aws-inventory.yml --extra-vars "cloud=aws network_name=candy-test indy_node_channel=rc indy_node_pkg=indy-node indy_node_pkg_version=1.13.2~rc2 network_configuration=false install_packages=false indy_node_configuration=false" indy_node/deploy.yml
+      ansible-playbook --user ubuntu -i aws-inventory.yml --extra-vars "cloud=aws network_name=candy-test indy_node_channel=rc indy_node_pkg=indy-node indy_node_pkg_version=1.13.2~rc3 indy_plenum_pkg_version=1.13.1~rc2 network_configuration=false install_packages=false mount_data_volume=false indy_node_configuration=false" indy_node/deploy.yml
       ```
 1. Generate Genesis files using tools in [von-network](https://github.com/bcgov/von-network)
 , for example:
@@ -130,7 +130,7 @@ The following variables can be used to control various settings and behaviours o
   - Defines the name of the indy-node package to install.
   - Options include `indy-node` (for generic `indy-node` installations), `sovrin` (for `sovrin` installations).
 
-`indy_node_pkg_version` - **_required_** (default=`1.13.2~rc2`)
+`indy_node_pkg_version` - **_required_** (default=`1.13.2~rc3`)
   - Defines the version of `indy-node` to be installed.
   - **_Note_**:
     - `indy-node` and `sovrin` versions <=1.12.x only support Ubuntu 16.04.
@@ -160,6 +160,9 @@ The following variables can be used to control various settings and behaviours o
 
 `install_packages` - **_optional_** (default=`true`)
   - Boolean value indicating whether or not the package installation tasks should be run.
+
+`mount_data_volume` - **_optional_** (default=`true`)
+  - Boolean value indicating whether or not to configure and mount the node's data volume.
 
 `indy_node_configuration` - **_optional_** (default=`true`)
   - Boolean value indicating whether or not the node configuration tasks should be run.
