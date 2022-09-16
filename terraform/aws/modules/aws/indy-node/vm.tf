@@ -42,7 +42,7 @@ resource "aws_instance" "indy_node" {
   }
 
   root_block_device {
-    volume_size = var.ebs_volume_size
+    volume_size = var.root_volume_size
     volume_type = var.ebs_volume_type
     encrypted   = var.ebs_encrypted
     # ===============================================================
@@ -59,7 +59,7 @@ resource "aws_instance" "indy_node" {
 
     tags = {
       # Default tags don't reach this level.
-      Name        = "${var.instance_name} Volume"
+      Name        = "${var.instance_name} - Root Volume"
       Application = var.application_name
       Environment = var.environment
       Instance    = var.instance_name

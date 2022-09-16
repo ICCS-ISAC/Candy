@@ -94,10 +94,16 @@ resource "tfe_variable" "alpha_ec2_instance_type" {
 
 # ===================================================
 # EBS
-#   - 20G should be fine for dev.
 # ---------------------------------------------------
-resource "tfe_variable" "alpha_ebs_volume_size" {
-  key          = "candy_ebs_volume_size"
+resource "tfe_variable" "alpha_root_volume_size" {
+  key          = "candy_root_volume_size"
+  value        = "20"
+  category     = "terraform"
+  workspace_id = data.tfe_workspace.alpha.id
+}
+
+resource "tfe_variable" "alpha_data_volume_size" {
+  key          = "candy_data_volume_size"
   value        = "20"
   category     = "terraform"
   workspace_id = data.tfe_workspace.alpha.id

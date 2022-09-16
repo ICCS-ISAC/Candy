@@ -3,7 +3,7 @@
 # ---------------------------------------------------
 resource "tfe_variable" "prod_aws_instance_count" {
   key          = "candy_instance_count"
-  value        = 2
+  value        = 4
   category     = "terraform"
   workspace_id = data.tfe_workspace.prod-aws.id
 }
@@ -39,6 +39,13 @@ resource "tfe_variable" "prod_aws_environment" {
 resource "tfe_variable" "prod_aws_instance_name" {
   key          = "candy_instance_name"
   value        = "prod-bc-aws"
+  category     = "terraform"
+  workspace_id = data.tfe_workspace.prod-aws.id
+}
+
+resource "tfe_variable" "prod_aws_iam_role" {
+  key          = "iam_role"
+  value        = "AmazonSSMRoleForInstancesQuickSetup"
   category     = "terraform"
   workspace_id = data.tfe_workspace.prod-aws.id
 }
@@ -94,11 +101,17 @@ resource "tfe_variable" "prod_aws_ec2_instance_type" {
 
 # ===================================================
 # EBS
-#   - 20G should be fine for dev.
 # ---------------------------------------------------
-resource "tfe_variable" "prod_aws_ebs_volume_size" {
-  key          = "candy_ebs_volume_size"
+resource "tfe_variable" "prod_aws_root_volume_size" {
+  key          = "candy_root_volume_size"
   value        = "20"
+  category     = "terraform"
+  workspace_id = data.tfe_workspace.prod-aws.id
+}
+
+resource "tfe_variable" "prod_aws_data_volume_size" {
+  key          = "candy_data_volume_size"
+  value        = "250"
   category     = "terraform"
   workspace_id = data.tfe_workspace.prod-aws.id
 }
@@ -133,8 +146,15 @@ resource "tfe_variable" "prod_aws_ebs_delete_on_termination" {
 # ===================================================
 
 # ===================================================
-# Subnet
+# Network
 # ---------------------------------------------------
+resource "tfe_variable" "prod_aws_vpc_node_cidr_block" {
+  key          = "candy_vpc_node_cidr_block"
+  value        = "172.31.0.0/16"
+  category     = "terraform"
+  workspace_id = data.tfe_workspace.prod-aws.id
+}
+
 resource "tfe_variable" "prod_aws_subnet_cidr_block_prefix" {
   key          = "candy_subnet_cidr_block_prefix"
   value        = "172.31."

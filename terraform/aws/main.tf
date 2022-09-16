@@ -12,13 +12,14 @@ module "indy-node" {
   ami_id            = data.aws_ami.ubuntu.id
   ec2_instance_type = var.candy_ec2_instance_type
 
-  ebs_volume_size           = var.candy_ebs_volume_size
+  root_volume_size          = var.candy_root_volume_size
+  data_volume_size          = var.candy_data_volume_size
   ebs_volume_type           = var.candy_ebs_volume_type
   ebs_encrypted             = var.candy_ebs_encrypted
   ebs_kms_key_id            = var.candy_ebs_kms_key_id
   ebs_delete_on_termination = var.candy_ebs_delete_on_termination
 
-  iam_profile       = data.aws_iam_role.ssm_role.id
+  iam_profile = data.aws_iam_role.ssm_role.id
 
   ssh_source_address = var.candy_ssh_source_address
 

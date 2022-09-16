@@ -53,8 +53,12 @@ variable "candy_ec2_instance_type" {
   description = "Type of instance ec2"
 }
 
-variable "candy_ebs_volume_size" {
-  description = "EBS volume size"
+variable "candy_root_volume_size" {
+  description = "Root EBS volume size"
+}
+
+variable "candy_data_volume_size" {
+  description = "Data EBS volume size"
 }
 
 variable "candy_ebs_volume_type" {
