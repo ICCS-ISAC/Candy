@@ -24,8 +24,12 @@ variable "iam_profile" {
   default     = null
 }
 
-variable "ebs_volume_size" {
-  description = "EBS volume size"
+variable "root_volume_size" {
+  description = "Root EBS volume size"
+}
+
+variable "data_volume_size" {
+  description = "Data EBS volume size"
 }
 
 variable "ebs_volume_type" {
