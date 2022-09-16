@@ -39,11 +39,19 @@
 
 - name: Install Indy Node
   include_tasks: install.yml
-  when: install_packages | bool
+  # The indy user and group gets created during the install and is required for mounting the data volume.
+  when: install_packages | bool or mount_data_volume | bool
   tags:
     - install
     - package
     - repo
+
+- name: Mount data volume
+  include_tasks: "{{ cloud }}/mount-data-volume.yml"
+  when: mount_data_volume | bool
+  tags:
+    - configure
+    - storage
 
 - name: Configure Indy Node
   include_tasks: configure.yml
