@@ -1,6 +1,6 @@
 terraform {
   backend "remote" {
-    organization = "YourOrg"
+    organization = "bcgov"
     workspaces {
       prefix = "candy-"
     }

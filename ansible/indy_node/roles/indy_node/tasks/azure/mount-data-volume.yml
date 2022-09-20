@@ -1,0 +1,3 @@
+- name: Mount data volume support
+  debug:
+    msg:  "An explicit data volume has not been added to the Azure Terraform configuration yet."

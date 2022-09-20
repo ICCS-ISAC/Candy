@@ -1,0 +1,37 @@
+- name: Get the volume serial number
+  set_fact:
+    ebs_volume_id: "{{ data_volume_id | replace('-', '') }}"
+
+- name: Find volume name
+  ansible.builtin.shell:
+    cmd: "lsblk -o PATH,SERIAL | grep {{ ebs_volume_id }} | cut -d' ' -f1"
+  register: lsblk
+
+- name: Store volume name
+  ansible.builtin.set_fact:
+    ebs_volume_device_name: "{{ lsblk.stdout }}"
+
+- name: Format volume
+  community.general.filesystem:
+    fstype: ext4
+    dev: "{{ ebs_volume_device_name }}"
+    force: no
+
+- name: Mount volume
+  ansible.posix.mount:
+    path: "{{ data_volume_mount }}"
+    src: "{{ ebs_volume_device_name }}"
+    fstype: ext4
+    boot: yes
+    state: mounted
+
+- name: Ensure mount path exists with the correct permissions
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: indy
+    group: indy
+    mode: ug+rw
+  become: true
+  with_items:
+    - "{{ data_volume_mount }}"

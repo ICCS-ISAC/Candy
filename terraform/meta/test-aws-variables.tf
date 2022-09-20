@@ -3,7 +3,7 @@
 # ---------------------------------------------------
 resource "tfe_variable" "test_aws_instance_count" {
   key          = "candy_instance_count"
-  value        = 2
+  value        = 4
   category     = "terraform"
   workspace_id = data.tfe_workspace.test-aws.id
 }
@@ -39,6 +39,13 @@ resource "tfe_variable" "test_aws_environment" {
 resource "tfe_variable" "test_aws_instance_name" {
   key          = "candy_instance_name"
   value        = "test-bc-aws"
+  category     = "terraform"
+  workspace_id = data.tfe_workspace.test-aws.id
+}
+
+resource "tfe_variable" "test_aws_iam_role" {
+  key          = "iam_role"
+  value        = "AmazonSSMRoleForInstancesQuickSetup"
   category     = "terraform"
   workspace_id = data.tfe_workspace.test-aws.id
 }
@@ -82,7 +89,7 @@ resource "tfe_variable" "test_aws_ami_filter_virtualization_type" {
 
 # ===================================================
 # EC2
-#   - t3.large (for dev and test): 2CPU, 8GiB Memory
+#   - t3.large: 2CPU, 8GiB Memory
 # ---------------------------------------------------
 resource "tfe_variable" "test_aws_ec2_instance_type" {
   key          = "candy_ec2_instance_type"
@@ -94,11 +101,17 @@ resource "tfe_variable" "test_aws_ec2_instance_type" {
 
 # ===================================================
 # EBS
-#   - 20G should be fine for dev.
 # ---------------------------------------------------
-resource "tfe_variable" "test_aws_ebs_volume_size" {
-  key          = "candy_ebs_volume_size"
-  value        = "20"
+resource "tfe_variable" "test_aws_root_volume_size" {
+  key          = "candy_root_volume_size"
+  value        = "10"
+  category     = "terraform"
+  workspace_id = data.tfe_workspace.test-aws.id
+}
+
+resource "tfe_variable" "test_aws_data_volume_size" {
+  key          = "candy_data_volume_size"
+  value        = "250"
   category     = "terraform"
   workspace_id = data.tfe_workspace.test-aws.id
 }
@@ -133,8 +146,15 @@ resource "tfe_variable" "test_aws_ebs_delete_on_termination" {
 # ===================================================
 
 # ===================================================
-# Subnet
+# Network
 # ---------------------------------------------------
+resource "tfe_variable" "test_aws_vpc_node_cidr_block" {
+  key          = "candy_vpc_node_cidr_block"
+  value        = "172.31.0.0/16"
+  category     = "terraform"
+  workspace_id = data.tfe_workspace.test-aws.id
+}
+
 resource "tfe_variable" "test_aws_subnet_cidr_block_prefix" {
   key          = "candy_subnet_cidr_block_prefix"
   value        = "172.31."
@@ -145,17 +165,6 @@ resource "tfe_variable" "test_aws_subnet_cidr_block_prefix" {
 resource "tfe_variable" "test_aws_subnet_cidr_starting_address" {
   key          = "candy_subnet_cidr_starting_address"
   value        = 100
-  category     = "terraform"
-  workspace_id = data.tfe_workspace.test-aws.id
-}
-# ===================================================
-
-# ===================================================
-# SG
-# ---------------------------------------------------
-resource "tfe_variable" "test_aws_sg_description" {
-  key          = "candy_sg_description"
-  value        = "Validator Node Security Group"
   category     = "terraform"
   workspace_id = data.tfe_workspace.test-aws.id
 }
