@@ -1,16 +1,18 @@
 ---
 indy_node_channel: rc
 indy_node_pkg: indy-node
-indy_node_pkg_version: 1.13.1~rc2
+indy_node_pkg_version: 1.13.2~rc3
 
 # Configuration Parameters
 cloud: azure
+data_volume_mount: /var/lib/indy/
 network_name: candy-dev
 node_port: 9701
 client_port: 9702
 domain_transactions_genesis_url: null
 pool_transactions_genesis_url: null
 
+mount_data_volume: true
 network_configuration: true
 install_packages: true
 indy_node_configuration: true
