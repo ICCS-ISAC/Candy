@@ -1,5 +1,3 @@
 # AWS Indy-Node Module
 
-A Terraform module for managing the resources needed for an Indy-Node node in Azure.
-
-Supports the generation of one or more nodes.
+Please note that this module was moved to it's own repo here: https://github.com/CQEN-QDCE/terrafrom-azurerm-indy-node
