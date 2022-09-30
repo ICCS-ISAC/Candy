@@ -168,5 +168,8 @@ The following variables can be used to control various settings and behaviours o
   - Boolean value indicating whether or not the node configuration tasks should be run.
   - The node configuration tasks depend on the network configuration tasks.  If the node configuration tasks are selected the network configuration tasks will also be run.
 
+`start_indy_node` - **_optional_** (default=`true`)
+  - Boolean value indicating whether or not to enable and start the indy-node service.
+
 ## ToDo:
 - Automate the collection of the information needed to fill out the Steward Genesis spreadsheet.
