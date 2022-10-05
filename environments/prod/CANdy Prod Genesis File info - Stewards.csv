@@ -1,0 +1,5 @@
+Steward name,Validator alias,Node IP address,Node port,Client IP address,Client port,Validator verkey,Validator BLS key,Validator BLS POP,Steward DID,Steward verkey
+Province of BC,prod-bc-aws-1,,9701,,9702,,,,79C8rWBXz1KeSRDpR7aHH2,4M8vzqvQzuzr16AQg9gCHiQss5o6FsBooE8KeRJRGCB2
+Province of BC,prod-bc-aws-2,,9701,,9702,,,,MF8Y6etnBrc8yyRnJdauo1,C2wZb9AVyRyk2thm68CrHHZpcMpwzBR5uLeTUuiB4Uxw
+Province of BC,prod-bc-aws-3,,9701,,9702,,,,J5S3ZQKXD8HJHcSUMfkVqb,AJpW6GeGbeGmaUFUhhyvKGoVVNSx1vyCMxpoiVPcRyfc
+Province of BC,prod-bc-aws-4,,9701,,9702,,,,FmZVB7wHUuLoPxaLdGkBgL,93rZ6V1PhSuoyAbru4iCgV3zrrxefeJoghiML2kiy59o
