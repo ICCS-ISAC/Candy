@@ -2,7 +2,7 @@
 #   - When using elastic IP addresses, the limit is 5 per region
 #     so, you are limited to 2 nodes using elastic IP addresses.
 module "indy-node" {
-  source = "github.com/CQEN-QDCE/terraform-aws-indy-node?ref=1.0.0"
+  source = "github.com/CQEN-QDCE/terraform-aws-indy-node?ref=1.1.0"
 
 
   count             = var.candy_instance_count
