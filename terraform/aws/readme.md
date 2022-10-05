@@ -1,10 +1,8 @@
 # Terraform AWS
 
-This example takes into account that you are using Terraform Cloud.  If not, simply modify the provider.tf file to reflect your setup.
+> **_NOTE:_** Variables for use with this project are managed in Terraform Cloud (TF Cloud) workspaces via the [`meta`](../meta/readme.md) project.  This example takes into account that you are using Terraform Cloud.  If not, simply modify the provider.tf file to reflect your setup.
 
 Terraform scripts for managing the resources associated with an indy node within a given AWS account.
-
-Variables for use with this project are managed in Terraform Cloud (TF Cloud) workspaces via the [`meta`](../meta/readme.md) project.
 
 # Cheat Sheet
 
