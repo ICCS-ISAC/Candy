@@ -43,9 +43,25 @@
     - configure
     - network
 
+- name: Get meta-data token
+  shell: "curl -X PUT \"http://169.254.169.254/latest/api/token\" -H \"X-aws-ec2-metadata-token-ttl-seconds: 300\""
+  register: meta_data_token_cmd
+  tags:
+     - configure
+     - network
+
+- name: Set meta-data-token variable
+  set_fact:
+     meta_data_token: "{{ meta_data_token_cmd.stdout_lines[0] }}"
+  tags:
+    - configure
+    - network
+
 - name: Find eth0 ip address
-  shell: curl http://169.254.169.254/latest/meta-data/network/interfaces/macs/{{ eth0_mac }}/local-ipv4s
+  shell: "curl -H \"X-aws-ec2-metadata-token: $TOKEN\" http://169.254.169.254/latest/meta-data/network/interfaces/macs/{{ eth0_mac }}/local-ipv4s"
   register: eth0_ip_cmd
+  environment:
+    TOKEN: "{{ meta_data_token }}"
   tags:
      - configure
      - network
@@ -99,8 +115,10 @@
     - network
 
 - name: Find eth1 ip address
-  shell: curl http://169.254.169.254/latest/meta-data/network/interfaces/macs/{{ eth1_mac }}/local-ipv4s
+  shell: "curl -H \"X-aws-ec2-metadata-token: $TOKEN\" http://169.254.169.254/latest/meta-data/network/interfaces/macs/{{ eth1_mac }}/local-ipv4s"
   register: eth1_ip_cmd
+  environment:
+    TOKEN: "{{ meta_data_token }}"
   tags:
      - configure
      - network

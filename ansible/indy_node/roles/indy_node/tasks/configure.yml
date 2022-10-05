@@ -160,19 +160,18 @@
     path: "{{ data_volume_mount }}{{ network_name }}/pool_transactions_genesis"
   register: pool_transactions_genesis
 
-- name: Enable indy-node service
-  service:
-    name: indy-node
-    enabled: true
-  become: true
-  when: domain_transactions_genesis.stat.exists and pool_transactions_genesis.stat.exists
-
 - name: Start indy-node service
-  service:
-    name: indy-node
-    state: started
+  block:
+  - name: Enable service
+    service:
+      name: indy-node
+      enabled: true
+  - name: Start service
+    service:
+      name: indy-node
+      state: started
   become: true
-  when: domain_transactions_genesis.stat.exists and pool_transactions_genesis.stat.exists
+  when: domain_transactions_genesis.stat.exists and pool_transactions_genesis.stat.exists and start_indy_node | bool
 # =================================================================================================
 
 # ===============================================
