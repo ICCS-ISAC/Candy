@@ -32,7 +32,7 @@
   # Indy Node configuration depends on detected network configuration settings,
   # so run the network configuration tasks when the node configuration tasks
   # will be run.
-  when: network_configuration | bool or indy_node_configuration | bool
+  when: network_configuration | bool or indy_node_configuration | bool or start_indy_node | bool
   tags:
     - configure
     - network
@@ -55,6 +55,6 @@
 
 - name: Configure Indy Node
   include_tasks: configure.yml
-  when: indy_node_configuration | bool
+  when: indy_node_configuration | bool or start_indy_node | bool
   tags:
     - configure
