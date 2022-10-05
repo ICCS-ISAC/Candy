@@ -3,14 +3,14 @@
 # ---------------------------------------------------
 resource "tfe_variable" "beta_instance_count" {
   key          = "candy_instance_count"
-  value        = 4
+  value        = 1
   category     = "terraform"
   workspace_id = data.tfe_workspace.beta.id
 }
 
 resource "tfe_variable" "beta_use_elastic_ips" {
   key          = "candy_use_elastic_ips"
-  value        = false
+  value        = true
   category     = "terraform"
   workspace_id = data.tfe_workspace.beta.id
 }
@@ -42,6 +42,13 @@ resource "tfe_variable" "beta_instance_name" {
   category     = "terraform"
   workspace_id = data.tfe_workspace.beta.id
 }
+
+resource "tfe_variable" "beta_iam_role" {
+  key          = "iam_role"
+  value        = "AmazonSSMRoleForInstancesQuickSetup"
+  category     = "terraform"
+  workspace_id = data.tfe_workspace.beta.id
+}
 # ===================================================
 
 # ===================================================
@@ -57,7 +64,7 @@ resource "tfe_variable" "beta_ami_owners" {
 
 resource "tfe_variable" "beta_ami_filter_name" {
   key          = "candy_ami_filter_name"
-  value        = "[\"*ubuntu-xenial-16.04-amd64-server-*\"]"
+  value        = "[\"ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*\"]"
   hcl          = true
   category     = "terraform"
   workspace_id = data.tfe_workspace.beta.id
@@ -139,8 +146,15 @@ resource "tfe_variable" "beta_ebs_delete_on_termination" {
 # ===================================================
 
 # ===================================================
-# Subnet
+# Network
 # ---------------------------------------------------
+resource "tfe_variable" "beta_vpc_node_cidr_block" {
+  key          = "candy_vpc_node_cidr_block"
+  value        = "172.31.0.0/16"
+  category     = "terraform"
+  workspace_id = data.tfe_workspace.beta.id
+}
+
 resource "tfe_variable" "beta_subnet_cidr_block_prefix" {
   key          = "candy_subnet_cidr_block_prefix"
   value        = "172.31."
@@ -157,11 +171,18 @@ resource "tfe_variable" "beta_subnet_cidr_starting_address" {
 # ===================================================
 
 # ===================================================
-# SG
+# Networking
 # ---------------------------------------------------
-resource "tfe_variable" "beta_sg_description" {
-  key          = "candy_sg_description"
-  value        = "Validator Node Security Group"
+resource "tfe_variable" "beta_client_port" {
+  key          = "candy_client_port"
+  value        = "9702"
+  category     = "terraform"
+  workspace_id = data.tfe_workspace.beta.id
+}
+
+resource "tfe_variable" "beta_node_port" {
+  key          = "candy_node_port"
+  value        = "9701"
   category     = "terraform"
   workspace_id = data.tfe_workspace.beta.id
 }
