@@ -1,5 +1,3 @@
-English version below
-
 <!-- ENTETE -->
 English version below
 
