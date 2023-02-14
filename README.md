@@ -24,6 +24,7 @@ Que peut-on trouver dans ce dépôt :
 - Informations nécessaires pour connecter les différents utilisateurs pancanadiens
 - Test
 
+.
 ___
 
 ## Candy : Pan Canadian Hyperledger Indy Blockchain Initiative
