@@ -22,13 +22,42 @@ Que peut-on trouver dans ce dépôt :
 - Code pour provisionner le nœud indy IaaS avec [terraform](terraform/)
 - Code pour installer et configurer le nœud indy avec [ansible](ansible/indy_node)
 - Informations nécessaires pour connecter les différents utilisateurs pancanadiens
-- Test
 
+## Candy : Initiative pan-canadienne Hyperledger Indy 
+
+Ce que l'on peut trouver dans ce repo :
+
+- Code pour provisionner le nœud indy IaaS avec [terraform](terraform/).
+- Code pour installer et configurer le nœud indy via [ansible](ansible/)
+- Documents supplémentaires sur la façon d'installer un nœud indy - [Steward Validator](doc/node-installation/)
+- Informations nécessaires pour connecter les différents utilisateurs pan-canadiens
+  
+## Utilisation des scripts Terraform et Ansible
+
+La méthode privilégiée pour travailler avec les scripts Terraform et Ansible contenus dans ce dépôt est de lancer le code situé dans le projet Visual Studio "devContainer". Terraform et Ansible sont installés et prêts à l'emploi dans ce conteneur. Il n'estdonc pas nécessaire d'installer l'un ou l'autre sur votre machine locale.
+
+### Ce dont vous avez besoin
+
+- Git
+- Visual Studio Code avec l'extension [Remote - Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) installée.
+- Ce projet cloné sur votre machine locale.
+- Vous devez également avoir un compte Terraform Cloud configuré pour gérer vos informations d'identification et les variables nécessaires pour vos environnements donnés. Ce projet contient un projet [terraform/meta](terraform/meta/)  pour vous aider à peupler vos espaces de travail Terraform Cloud.
+  
+### Comment commencer
+
+- Clonez le projet.
+- Ouvrez le projet dans Visual Studio Code. Vous serez invité à rouvrir le projet dans un conteneur.
+- Sélectionnez Reopen in Container lorsque vous y êtes invité.
+- Ouvrez une fenêtre de terminal intégrée et naviguez vers le répertoire Terraform ou Ansible souhaité pour commencer à utiliser les scripts.
+- Commencez par approvisionner vos ressources à l'aide des scripts Terraform. Reportez-vous à la [Documentation Terraform](./terraform/readme.md) pour plus de détails.
+- Exportez l'inventaire Ansible résultant et configurez vos nœuds à l'aide des scripts Ansible. Pour plus d'informations, consultez la [Documentation Ansible](./ansible/README.md).
+  
 ___
 
 ## Candy : Pan Canadian Hyperledger Indy Blockchain Initiative
 
 What can be found in this repo:
+
 - Code to provision IaaS indy node with [terraform](terraform/)
 - Code to install and configure the indy node with [ansible](ansible/)
 - Additional documents on how to install an indy node - [Steward Validator](doc/node-installation/)
