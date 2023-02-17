@@ -2,7 +2,7 @@
 #   - When using elastic IP addresses, the limit is 5 per region
 #     so, you are limited to 2 nodes using elastic IP addresses.
 module "indy-node" {
-  source = "github.com/ICCS-ISAC/terraform-aws-indy-node?ref=1.1.0"
+  source = "github.com/ICCS-ISAC/terraform-aws-indy-node?ref=1.1.1"
 
 
   count             = var.candy_instance_count
@@ -12,6 +12,7 @@ module "indy-node" {
   zone              = data.aws_availability_zones.available.names[count.index % length(data.aws_availability_zones.available.names)]
   ami_id            = data.aws_ami.ubuntu.id
   ec2_instance_type = var.candy_ec2_instance_type
+  opt_ec2_tags      = var.optional_ec2_tags
 
   root_volume_size          = var.candy_root_volume_size
   data_volume_size          = var.candy_data_volume_size
@@ -33,4 +34,5 @@ module "indy-node" {
   client_port  = var.candy_client_port
   node_port    = var.candy_node_port
   ssh_key_name = aws_key_pair.ansible.key_name
+
 }
