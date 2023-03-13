@@ -1,0 +1,59 @@
+# ============================================================
+# Auto detect the hostname
+# ------------------------------------------------------------
+- name: Get hostname
+  shell: hostname
+  register: hostname
+
+- name: Set node_name variable
+  set_fact:
+     node_name: "{{ hostname.stdout }}"
+# ============================================================
+
+- name: Copy the archive to the server
+  copy:
+    src: "{{ playbook_dir }}/../{{ node_name }}_{{ network_name }}.gz"
+    dest: "{{ data_volume_mount }}{{ node_name }}_{{ network_name }}.gz"
+
+- name: Populate service facts
+  service_facts:
+
+# Stop the indy-node service if it is running.
+- name: Stop the indy-node service
+  service:
+    name: indy-node
+    state: stopped
+  when: ansible_facts.services['indy-node.service'].state == 'running'
+
+- name: Delete the existing network directory
+  file:
+    path: "{{ data_volume_mount }}{{ network_name }}"
+    state: absent
+
+- name: Extract the archive to the network directory
+  unarchive:
+    src: "{{ data_volume_mount }}{{ node_name }}_{{ network_name }}.gz"
+    dest: "{{ data_volume_mount }}"
+    copy: false
+
+- name: Ensure network directory has the correct ownership
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: indy
+    group: indy
+  become: true
+  with_items:
+    - "{{ data_volume_mount }}{{ network_name }}"
+
+# Start the indy-node service if it was originally running
+- name: Start indy-node service
+  service:
+    name: indy-node
+    state: started
+  when: ansible_facts.services['indy-node.service'].state == 'running'
+
+- name: Remove the archive from the server
+  file:
+    path: "{{ data_volume_mount }}{{ node_name }}_{{ network_name }}.gz"
+    state: absent
