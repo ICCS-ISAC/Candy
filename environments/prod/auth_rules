@@ -75,7 +75,7 @@ did use ${useDid}
 
 # Add Trustee DID
 #  - Require 2 Trustee signatures
-#  - Source: Draft Governance; Governed Role Policies: Trustee - On-boarding Policies (https://github.com/bcgov/bc-vcpedia/wiki/(Layer-1)-CANdy-Utility-Provisional-Governance-Framework#governed-role-policies-trustee)
+#  - Source: Draft Governance; Governed Role Policies: Trustee - On-boarding Policies (https://github.com/ICCS-ISAC/Groupes-de-travail-CANdy-Working-Groups/blob/main/Provisional-GF-provisoire/(Layer%201)-CANdy-Utility-Provisional-Governance-Framework#governed-role-policies-trustee)
 ledger auth-rule txn_type=NYM action=ADD field=role old_value=* new_value=0 constraint="{"sig_count":2,"role":"0","constraint_id":"ROLE","need_to_be_owner":false}"
 
 # Add Steward DID
@@ -85,17 +85,17 @@ ledger auth-rule txn_type=NYM action=ADD field=role old_value=* new_value=2 cons
 
 # Add Endorser DID
 #  - Require 2 Trustee signatures
-#  - Source: Draft Governance; Governed Role Policies: Endorser - On-boarding Policies (https://github.com/bcgov/bc-vcpedia/wiki/(Layer-1)-CANdy-Utility-Provisional-Governance-Framework#governed-role-policies-endorser)
+#  - Source: Draft Governance; Governed Role Policies: Endorser - On-boarding Policies (https://github.com/ICCS-ISAC/Groupes-de-travail-CANdy-Working-Groups/blob/main/Provisional-GF-provisoire/(Layer%201)-CANdy-Utility-Provisional-Governance-Framework#governed-role-policies-endorser)
 ledger auth-rule txn_type=NYM action=ADD field=role old_value=* new_value=101 constraint="{"sig_count":2,"role":"0","constraint_id":"ROLE","need_to_be_owner":false}"
 
 # Add Network_Monitor DID
-#  - Require 1 Trustee signature || 1 Steward signature || 1 Network_Monitor signature
-#  - Source: Draft Governance
-ledger auth-rule txn_type=NYM action=ADD field=role old_value=* new_value=201 constraint="{"constraint_id":"OR","auth_constraints":[{"sig_count":1,"role":"0","constraint_id":"ROLE","need_to_be_owner":false},{"sig_count":1,"role":"2","constraint_id":"ROLE","need_to_be_owner":false},{"sig_count":1,"role":"201","constraint_id":"ROLE","need_to_be_owner":false}]}"
+#  - Require 1 Trustee signature (from same jurisdiction - not enforceable)
+#  - Source: Draft Governance; Governed Role Policies: Network Monitor - Onboarding Policies (https://github.com/ICCS-ISAC/Groupes-de-travail-CANdy-Working-Groups/blob/main/Provisional-GF-provisoire/(Layer%201)-CANdy-Utility-Provisional-Governance-Framework.md#governed-role-policies-network-monitor)
+ledger auth-rule txn_type=NYM action=ADD field=role old_value=* new_value=201 constraint="{"sig_count":1,"role":"0","constraint_id":"ROLE","need_to_be_owner":false}"
 
 # Add non-privileged DID
 #  - Require 1 Trustee signature || 1 Endorser signature
-#  - Source: Draft Governance; Governed Role Policies: Registered Entity (Governed Role Policies: Registered Entity (https://github.com/bcgov/bc-vcpedia/wiki/(Layer-1)-CANdy-Utility-Provisional-Governance-Framework#governed-role-policies-registered-entity)
+#  - Source: Draft Governance; Governed Role Policies: Registered Entity (https://github.com/ICCS-ISAC/Groupes-de-travail-CANdy-Working-Groups/blob/main/Provisional-GF-provisoire/(Layer%201)-CANdy-Utility-Provisional-Governance-Framework#governed-role-policies-registered-entity)
 ledger auth-rule txn_type=NYM action=ADD field=role old_value=* constraint="{"constraint_id":"OR","auth_constraints":[{"sig_count":1,"role":"0","constraint_id":"ROLE","need_to_be_owner":false},{"sig_count":1,"role":"101","constraint_id":"ROLE","need_to_be_owner":false}]}"
 
 # Edit DID - Change Role from Trustee to Steward
@@ -105,7 +105,7 @@ ledger auth-rule txn_type=NYM action=EDIT field=role old_value=0 new_value=2 con
 
 # Edit DID - Change Role from Trustee to Endorser
 #  - Require 2 Trustee signatures
-#  - Source: Draft Governance; Governed Role Policies: Endorser - On-boarding Policies (https://github.com/bcgov/bc-vcpedia/wiki/(Layer-1)-CANdy-Utility-Provisional-Governance-Framework#governed-role-policies-endorser)
+#  - Source: Draft Governance; Governed Role Policies: Endorser - On-boarding Policies (https://github.com/ICCS-ISAC/Groupes-de-travail-CANdy-Working-Groups/blob/main/Provisional-GF-provisoire/(Layer%201)-CANdy-Utility-Provisional-Governance-Framework#governed-role-policies-endorser)
 ledger auth-rule txn_type=NYM action=EDIT field=role old_value=0 new_value=101 constraint="{"sig_count":2,"role":"0","constraint_id":"ROLE","need_to_be_owner":false}"
 
 # Edit DID - Change Role from Trustee to Network_Monitor
@@ -115,17 +115,17 @@ ledger auth-rule txn_type=NYM action=EDIT field=role old_value=0 new_value=201 c
 
 # Edit DID - Change Role from Trustee to non-privileged
 #  - Require 2 Trustee signatures
-#  - Source: Draft Governance; Governed Role Policies: Trustee - Off-boarding Policies (https://github.com/bcgov/bc-vcpedia/wiki/(Layer-1)-CANdy-Utility-Provisional-Governance-Framework#governed-role-policies-trustee)
+#  - Source: Draft Governance; Governed Role Policies: Trustee - Off-boarding Policies (https://github.com/ICCS-ISAC/Groupes-de-travail-CANdy-Working-Groups/blob/main/Provisional-GF-provisoire/(Layer%201)-CANdy-Utility-Provisional-Governance-Framework#governed-role-policies-trustee)
 ledger auth-rule txn_type=NYM action=EDIT field=role old_value=0 constraint="{"sig_count":2,"role":"0","constraint_id":"ROLE","need_to_be_owner":false}"
 
 # Edit DID - Change Role from Steward to Trustee
 #  - Require 2 Trustee signatures
-#  - Source: Draft Governance; Governed Role Policies: Trustee - On-boarding Policies (https://github.com/bcgov/bc-vcpedia/wiki/(Layer-1)-CANdy-Utility-Provisional-Governance-Framework#governed-role-policies-trustee)
+#  - Source: Draft Governance; Governed Role Policies: Trustee - On-boarding Policies (https://github.com/ICCS-ISAC/Groupes-de-travail-CANdy-Working-Groups/blob/main/Provisional-GF-provisoire/(Layer%201)-CANdy-Utility-Provisional-Governance-Framework#governed-role-policies-trustee)
 ledger auth-rule txn_type=NYM action=EDIT field=role old_value=2 new_value=0 constraint="{"sig_count":2,"role":"0","constraint_id":"ROLE","need_to_be_owner":false}"
 
 # Edit DID - Change Role from Steward to Endorser
 #  - Require 2 Trustee signatures
-#  - Source: Draft Governance; Governed Role Policies: Endorser - On-boarding Policies (https://github.com/bcgov/bc-vcpedia/wiki/(Layer-1)-CANdy-Utility-Provisional-Governance-Framework#governed-role-policies-endorser)
+#  - Source: Draft Governance; Governed Role Policies: Endorser - On-boarding Policies (https://github.com/ICCS-ISAC/Groupes-de-travail-CANdy-Working-Groups/blob/main/Provisional-GF-provisoire/(Layer%201)-CANdy-Utility-Provisional-Governance-Framework#governed-role-policies-endorser)
 ledger auth-rule txn_type=NYM action=EDIT field=role old_value=2 new_value=101 constraint="{"sig_count":2,"role":"0","constraint_id":"ROLE","need_to_be_owner":false}"
 
 # Edit DID - Change Role from Steward to Network_Monitor
@@ -140,7 +140,7 @@ ledger auth-rule txn_type=NYM action=EDIT field=role old_value=2 constraint="{"s
 
 # Edit DID - Change Role from Endorser to Trustee
 #  - Require 2 Trustee signatures
-#  - Source: Draft Governance; Governed Role Policies: Trustee - On-boarding Policies (https://github.com/bcgov/bc-vcpedia/wiki/(Layer-1)-CANdy-Utility-Provisional-Governance-Framework#governed-role-policies-trustee)
+#  - Source: Draft Governance; Governed Role Policies: Trustee - On-boarding Policies (https://github.com/ICCS-ISAC/Groupes-de-travail-CANdy-Working-Groups/blob/main/Provisional-GF-provisoire/(Layer%201)-CANdy-Utility-Provisional-Governance-Framework#governed-role-policies-trustee)
 ledger auth-rule txn_type=NYM action=EDIT field=role old_value=101 new_value=0 constraint="{"sig_count":2,"role":"0","constraint_id":"ROLE","need_to_be_owner":false}"
 
 # Edit DID - Change Role from Endorser to Steward
@@ -155,12 +155,12 @@ ledger auth-rule txn_type=NYM action=EDIT field=role old_value=101 new_value=201
 
 # Edit DID - Change Role from Endorser to non-privileged
 #  - Require 2 Trustee signatures
-#  - Source: Draft Governance; Governed Role Policies: Endorser - Off-boarding Policies (https://github.com/bcgov/bc-vcpedia/wiki/(Layer-1)-CANdy-Utility-Provisional-Governance-Framework#governed-role-policies-endorser)
+#  - Source: Draft Governance; Governed Role Policies: Endorser - Off-boarding Policies (https://github.com/ICCS-ISAC/Groupes-de-travail-CANdy-Working-Groups/blob/main/Provisional-GF-provisoire/(Layer%201)-CANdy-Utility-Provisional-Governance-Framework#governed-role-policies-endorser)
 ledger auth-rule txn_type=NYM action=EDIT field=role old_value=101 constraint="{"sig_count":2,"role":"0","constraint_id":"ROLE","need_to_be_owner":false}"
 
 # Edit DID - Change Role from Network_Monitor to Trustee
 #  - Require 2 Trustee signatures
-#  - Source: Draft Governance; Governed Role Policies: Trustee - On-boarding Policies (https://github.com/bcgov/bc-vcpedia/wiki/(Layer-1)-CANdy-Utility-Provisional-Governance-Framework#governed-role-policies-trustee)
+#  - Source: Draft Governance; Governed Role Policies: Trustee - On-boarding Policies (https://github.com/ICCS-ISAC/Groupes-de-travail-CANdy-Working-Groups/blob/main/Provisional-GF-provisoire/(Layer%201)-CANdy-Utility-Provisional-Governance-Framework#governed-role-policies-trustee)
 ledger auth-rule txn_type=NYM action=EDIT field=role old_value=201 new_value=0 constraint="{"sig_count":2,"role":"0","constraint_id":"ROLE","need_to_be_owner":false}"
 
 # Edit DID - Change Role from Network_Monitor to Steward
@@ -170,7 +170,7 @@ ledger auth-rule txn_type=NYM action=EDIT field=role old_value=201 new_value=2 c
 
 # Edit DID - Change Role from Network_Monitor to Endorser
 #  - Require 2 Trustee signatures
-#  - Source: Draft Governance; Governed Role Policies: Endorser - On-boarding Policies (https://github.com/bcgov/bc-vcpedia/wiki/(Layer-1)-CANdy-Utility-Provisional-Governance-Framework#governed-role-policies-endorser)
+#  - Source: Draft Governance; Governed Role Policies: Endorser - On-boarding Policies (https://github.com/ICCS-ISAC/Groupes-de-travail-CANdy-Working-Groups/blob/main/Provisional-GF-provisoire/(Layer%201)-CANdy-Utility-Provisional-Governance-Framework#governed-role-policies-endorser)
 ledger auth-rule txn_type=NYM action=EDIT field=role old_value=201 new_value=101 constraint="{"sig_count":2,"role":"0","constraint_id":"ROLE","need_to_be_owner":false}"
 
 # Edit DID - Change Role from Network_Monitor to non-privileged
@@ -179,7 +179,7 @@ ledger auth-rule txn_type=NYM action=EDIT field=role old_value=201 constraint="{
 
 # Edit DID - Change Role from non-privileged to Trustee
 #  - Require 2 Trustee signatures
-#  - Source: Draft Governance; Governed Role Policies: Trustee - On-boarding Policies (https://github.com/bcgov/bc-vcpedia/wiki/(Layer-1)-CANdy-Utility-Provisional-Governance-Framework#governed-role-policies-trustee)
+#  - Source: Draft Governance; Governed Role Policies: Trustee - On-boarding Policies (https://github.com/ICCS-ISAC/Groupes-de-travail-CANdy-Working-Groups/blob/main/Provisional-GF-provisoire/(Layer%201)-CANdy-Utility-Provisional-Governance-Framework#governed-role-policies-trustee)
 ledger auth-rule txn_type=NYM action=EDIT field=role new_value=0 constraint="{"sig_count":2,"role":"0","constraint_id":"ROLE","need_to_be_owner":false}"
 
 # Edit DID - Change Role from non-privileged to Steward
@@ -189,7 +189,7 @@ ledger auth-rule txn_type=NYM action=EDIT field=role new_value=2 constraint="{"s
 
 # Edit DID - Change Role from non-privileged to Endorser
 #  - Require 2 Trustee signatures
-#  - Source: Draft Governance; Governed Role Policies: Endorser - On-boarding Policies (https://github.com/bcgov/bc-vcpedia/wiki/(Layer-1)-CANdy-Utility-Provisional-Governance-Framework#governed-role-policies-endorser)
+#  - Source: Draft Governance; Governed Role Policies: Endorser - On-boarding Policies (https://github.com/ICCS-ISAC/Groupes-de-travail-CANdy-Working-Groups/blob/main/Provisional-GF-provisoire/(Layer%201)-CANdy-Utility-Provisional-Governance-Framework#governed-role-policies-endorser)
 ledger auth-rule txn_type=NYM action=EDIT field=role new_value=101 constraint="{"sig_count":2,"role":"0","constraint_id":"ROLE","need_to_be_owner":false}"
 
 # Edit DID - Change Role from non-privileged to Network_Monitor
@@ -220,7 +220,7 @@ ledger auth-rule txn_type=ATTRIB action=EDIT field=* old_value=* new_value=* con
 
 # Add Schema
 #  - Require 1 Endorser signature
-#  - Source: Draft Governance; Governed Role Policies: Registered Entity (Governed Role Policies: Registered Entity (https://github.com/bcgov/bc-vcpedia/wiki/(Layer-1)-CANdy-Utility-Provisional-Governance-Framework#governed-role-policies-registered-entity)
+#  - Source: Draft Governance; Governed Role Policies: Registered Entity (https://github.com/ICCS-ISAC/Groupes-de-travail-CANdy-Working-Groups/blob/main/Provisional-GF-provisoire/(Layer%201)-CANdy-Utility-Provisional-Governance-Framework#governed-role-policies-registered-entity)
 ledger auth-rule txn_type=SCHEMA action=ADD field=* old_value=* new_value=* constraint="{"sig_count":1,"role":"101","constraint_id":"ROLE","need_to_be_owner":false}"
 
 # Edit Schema
@@ -247,7 +247,7 @@ ledger auth-rule txn_type=200 action=EDIT field=* old_value=* new_value=* constr
 
 # Add Claim Def
 #  - Require 1 Endorser signature
-#  - Source: Draft Governance; Governed Role Policies: Registered Entity (Governed Role Policies: Registered Entity (https://github.com/bcgov/bc-vcpedia/wiki/(Layer-1)-CANdy-Utility-Provisional-Governance-Framework#governed-role-policies-registered-entity)
+#  - Source: Draft Governance; Governed Role Policies: Registered Entity (https://github.com/ICCS-ISAC/Groupes-de-travail-CANdy-Working-Groups/blob/main/Provisional-GF-provisoire/(Layer%201)-CANdy-Utility-Provisional-Governance-Framework#governed-role-policies-registered-entity)
 ledger auth-rule txn_type=CLAIM_DEF action=ADD field=* old_value=* new_value=* constraint="{"sig_count":1,"role":"101","constraint_id":"ROLE","need_to_be_owner":false}"
 # =================================================================================================================================================================
 
@@ -256,48 +256,48 @@ ledger auth-rule txn_type=CLAIM_DEF action=ADD field=* old_value=* new_value=* c
 # -----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 # Add Node - Set active
-#  - Require 1 Steward signature 
-#  - Source: Draft Governance; Governed Role Policies: Steward (https://github.com/bcgov/bc-vcpedia/wiki/(Layer-1)-CANdy-Utility-Provisional-Governance-Framework#governed-role-policies-steward)
+#  - Require 1 Steward signature
+#  - Source: Draft Governance; Governed Role Policies: Steward (https://github.com/ICCS-ISAC/Groupes-de-travail-CANdy-Working-Groups/blob/main/Provisional-GF-provisoire/(Layer%201)-CANdy-Utility-Provisional-Governance-Framework#governed-role-policies-steward)
 ledger auth-rule txn_type=NODE action=ADD field=services old_value=* new_value=['VALIDATOR'] constraint="{"sig_count":1,"role":"2","constraint_id":"ROLE","need_to_be_owner":false}"
 
 # Add Node - Set inactive
-#  - Require 1 Steward signature 
-#  - Source: Draft Governance; Governed Role Policies: Steward (https://github.com/bcgov/bc-vcpedia/wiki/(Layer-1)-CANdy-Utility-Provisional-Governance-Framework#governed-role-policies-steward)
+#  - Require 1 Steward signature
+#  - Source: Draft Governance; Governed Role Policies: Steward (https://github.com/ICCS-ISAC/Groupes-de-travail-CANdy-Working-Groups/blob/main/Provisional-GF-provisoire/(Layer%201)-CANdy-Utility-Provisional-Governance-Framework#governed-role-policies-steward)
 ledger auth-rule txn_type=NODE action=ADD field=services  old_value=* new_value=[] constraint="{"sig_count":1,"role":"2","constraint_id":"ROLE","need_to_be_owner":false}"
 
 # Edit Node - Set inactive
 #  - Require 2 Trustee signatures || 1 Steward (owner) signature
-#  - Source: Draft Governance; Governed Role Policies: Steward (https://github.com/bcgov/bc-vcpedia/wiki/(Layer-1)-CANdy-Utility-Provisional-Governance-Framework#governed-role-policies-steward)
+#  - Source: Draft Governance; Governed Role Policies: Steward (https://github.com/ICCS-ISAC/Groupes-de-travail-CANdy-Working-Groups/blob/main/Provisional-GF-provisoire/(Layer%201)-CANdy-Utility-Provisional-Governance-Framework#governed-role-policies-steward)
 ledger auth-rule txn_type=NODE action=EDIT field=services  old_value=['VALIDATOR'] new_value=[] constraint="{"constraint_id":"OR","auth_constraints":[{"sig_count":2,"role":"0","constraint_id":"ROLE","need_to_be_owner":false},{"sig_count":1,"role":"2","constraint_id":"ROLE","need_to_be_owner":true}]}"
 
 # Edit Node - Set active
 #  - Require 2 Trustee signatures || 1 Steward (owner) signature
-#  - Source: Draft Governance; Governed Role Policies: Steward (https://github.com/bcgov/bc-vcpedia/wiki/(Layer-1)-CANdy-Utility-Provisional-Governance-Framework#governed-role-policies-steward)
+#  - Source: Draft Governance; Governed Role Policies: Steward (https://github.com/ICCS-ISAC/Groupes-de-travail-CANdy-Working-Groups/blob/main/Provisional-GF-provisoire/(Layer%201)-CANdy-Utility-Provisional-Governance-Framework#governed-role-policies-steward)
 ledger auth-rule txn_type=NODE action=EDIT field=services  old_value=[] new_value=['VALIDATOR'] constraint="{"constraint_id":"OR","auth_constraints":[{"sig_count":2,"role":"0","constraint_id":"ROLE","need_to_be_owner":false},{"sig_count":1,"role":"2","constraint_id":"ROLE","need_to_be_owner":true}]}"
 
 # Edit Node - update registered node ip address
 #  - Require 1 Steward (owner) signature
-#  - Source: Draft Governance; Governed Role Policies: Steward (https://github.com/bcgov/bc-vcpedia/wiki/(Layer-1)-CANdy-Utility-Provisional-Governance-Framework#governed-role-policies-steward)
+#  - Source: Draft Governance; Governed Role Policies: Steward (https://github.com/ICCS-ISAC/Groupes-de-travail-CANdy-Working-Groups/blob/main/Provisional-GF-provisoire/(Layer%201)-CANdy-Utility-Provisional-Governance-Framework#governed-role-policies-steward)
 ledger auth-rule txn_type=NODE action=EDIT field=node_ip  old_value=* new_value=* constraint="{"sig_count":1,"role":"2","constraint_id":"ROLE","need_to_be_owner":true}"
 
 # Edit Node - update registered node port
 #  - Require 1 Steward (owner) signature
-#  - Source: Draft Governance; Governed Role Policies: Steward (https://github.com/bcgov/bc-vcpedia/wiki/(Layer-1)-CANdy-Utility-Provisional-Governance-Framework#governed-role-policies-steward)
+#  - Source: Draft Governance; Governed Role Policies: Steward (https://github.com/ICCS-ISAC/Groupes-de-travail-CANdy-Working-Groups/blob/main/Provisional-GF-provisoire/(Layer%201)-CANdy-Utility-Provisional-Governance-Framework#governed-role-policies-steward)
 ledger auth-rule txn_type=NODE action=EDIT field=node_port  old_value=* new_value=* constraint="{"sig_count":1,"role":"2","constraint_id":"ROLE","need_to_be_owner":true}"
 
 # Edit Node - update registered client ip address
 #  - Require 1 Steward (owner) signature
-#  - Source: Draft Governance; Governed Role Policies: Steward (https://github.com/bcgov/bc-vcpedia/wiki/(Layer-1)-CANdy-Utility-Provisional-Governance-Framework#governed-role-policies-steward)
+#  - Source: Draft Governance; Governed Role Policies: Steward (https://github.com/ICCS-ISAC/Groupes-de-travail-CANdy-Working-Groups/blob/main/Provisional-GF-provisoire/(Layer%201)-CANdy-Utility-Provisional-Governance-Framework#governed-role-policies-steward)
 ledger auth-rule txn_type=NODE action=EDIT field=client_ip  old_value=* new_value=* constraint="{"sig_count":1,"role":"2","constraint_id":"ROLE","need_to_be_owner":true}"
 
 # Edit Node - update registered client port
 #  - Require 1 Steward (owner) signature
-#  - Source: Draft Governance; Governed Role Policies: Steward (https://github.com/bcgov/bc-vcpedia/wiki/(Layer-1)-CANdy-Utility-Provisional-Governance-Framework#governed-role-policies-steward)
+#  - Source: Draft Governance; Governed Role Policies: Steward (https://github.com/ICCS-ISAC/Groupes-de-travail-CANdy-Working-Groups/blob/main/Provisional-GF-provisoire/(Layer%201)-CANdy-Utility-Provisional-Governance-Framework#governed-role-policies-steward)
 ledger auth-rule txn_type=NODE action=EDIT field=client_port  old_value=* new_value=* constraint="{"sig_count":1,"role":"2","constraint_id":"ROLE","need_to_be_owner":true}"
 
 # Edit Node - update registered blskey
 #  - Require 1 Steward (owner) signature
-#  - Source: Draft Governance; Governed Role Policies: Steward (https://github.com/bcgov/bc-vcpedia/wiki/(Layer-1)-CANdy-Utility-Provisional-Governance-Framework#governed-role-policies-steward)
+#  - Source: Draft Governance; Governed Role Policies: Steward (https://github.com/ICCS-ISAC/Groupes-de-travail-CANdy-Working-Groups/blob/main/Provisional-GF-provisoire/(Layer%201)-CANdy-Utility-Provisional-Governance-Framework#governed-role-policies-steward)
 ledger auth-rule txn_type=NODE action=EDIT field=blskey  old_value=* new_value=* constraint="{"sig_count":1,"role":"2","constraint_id":"ROLE","need_to_be_owner":true}"
 # =================================================================================================================================================================
 
@@ -332,7 +332,7 @@ ledger auth-rule txn_type=GET_VALIDATOR_INFO action=ADD field=* old_value=* new_
 
 # Add Revocation Registry Definition
 #  - Require 1 Endorser signature
-#  - Source: Draft Governance; Governed Role Policies: Registered Entity (Governed Role Policies: Registered Entity (https://github.com/bcgov/bc-vcpedia/wiki/(Layer-1)-CANdy-Utility-Provisional-Governance-Framework#governed-role-policies-registered-entity)
+#  - Source: Draft Governance; Governed Role Policies: Registered Entity (https://github.com/ICCS-ISAC/Groupes-de-travail-CANdy-Working-Groups/blob/main/Provisional-GF-provisoire/(Layer%201)-CANdy-Utility-Provisional-Governance-Framework#governed-role-policies-registered-entity)
 #  - The desire is to define the rule for this as
 #    {"sig_count":1,"role":"*","constraint_id":"ROLE","need_to_be_owner":true}
 #    where the context of owner is the associated CLAIM_DEF.
