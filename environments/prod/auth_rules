@@ -89,9 +89,9 @@ ledger auth-rule txn_type=NYM action=ADD field=role old_value=* new_value=2 cons
 ledger auth-rule txn_type=NYM action=ADD field=role old_value=* new_value=101 constraint="{"sig_count":2,"role":"0","constraint_id":"ROLE","need_to_be_owner":false}"
 
 # Add Network_Monitor DID
-#  - Require 1 Trustee signature || 1 Steward signature || 1 Network_Monitor signature
-#  - Source: Draft Governance
-ledger auth-rule txn_type=NYM action=ADD field=role old_value=* new_value=201 constraint="{"constraint_id":"OR","auth_constraints":[{"sig_count":1,"role":"0","constraint_id":"ROLE","need_to_be_owner":false},{"sig_count":1,"role":"2","constraint_id":"ROLE","need_to_be_owner":false},{"sig_count":1,"role":"201","constraint_id":"ROLE","need_to_be_owner":false}]}"
+#  - Require 1 Trustee signature (from same jurisdiction - not enforceable)
+#  - Source: Draft Governance; Governed Role Policies: Network Monitor - Onboarding Policies (https://github.com/ICCS-ISAC/Groupes-de-travail-CANdy-Working-Groups/blob/main/Provisional-GF-provisoire/(Layer%201)-CANdy-Utility-Provisional-Governance-Framework.md#governed-role-policies-network-monitor)
+ledger auth-rule txn_type=NYM action=ADD field=role old_value=* new_value=201 constraint="{"sig_count":1,"role":"0","constraint_id":"ROLE","need_to_be_owner":false}"
 
 # Add non-privileged DID
 #  - Require 1 Trustee signature || 1 Endorser signature
