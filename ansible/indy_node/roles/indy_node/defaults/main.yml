@@ -1,7 +1,7 @@
 ---
 indy_node_channel: rc
 indy_node_pkg: indy-node
-indy_node_pkg_version: 1.13.2
+indy_node_pkg_version: 1.13.2~rc6
 indy_plenum_pkg_version: 1.13.1~rc4
 
 # Configuration Parameters
