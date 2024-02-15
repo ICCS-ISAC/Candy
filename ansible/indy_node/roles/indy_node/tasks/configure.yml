@@ -185,11 +185,7 @@
   file:
     path: init_output.json
     state: touch
-
-- name: Find  init_output.json
-  find:
-    paths: .
-    patterns: "*.json"
+  delegate_to: localhost
 
 - name: Append Init JSON output to file using blockinfile
   blockinfile:
@@ -199,6 +195,7 @@
       {% raw %}
       {{ lookup('template', 'init_output.j2') }}
       {% endraw %}
+  delegate_to: localhost
 
 - name: Print init_indy_node result
   debug:
