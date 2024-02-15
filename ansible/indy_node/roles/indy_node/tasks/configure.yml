@@ -183,12 +183,12 @@
 
 - name: Ensure json output file exists
   file:
-    path: indy_node_init_output.json
+    path: /builds/inc/ingrd/terraform-candy-ingrid/indy_node_init_output.json
     state: touch
 
 - name: Append Init JSON output to file using blockinfile
   blockinfile:
-    path: indy_node_init_output.json
+    path: /builds/inc/ingrd/terraform-candy-ingrid/indy_node_init_output.json
     marker: "# {mark} ANSIBLE MANAGED INIT OUTPUT"
     block: |
       {% raw %}
