@@ -186,6 +186,11 @@
     path: init_output.json
     state: touch
 
+- name: Find  init_output.json
+  find:
+    paths: .
+    patterns: "*.json"
+
 - name: Append Init JSON output to file using blockinfile
   blockinfile:
     path: init_output.json
