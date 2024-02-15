@@ -196,9 +196,9 @@
     path: init_output.json
     marker: "# {mark} ANSIBLE MANAGED INIT OUTPUT"
     block: |
-      {% raw %}
+
       {{ lookup('template', 'init_output.j2') }}
-      {% endraw %}
+
   delegate_to: localhost
 
 - name: Print init_indy_node result
