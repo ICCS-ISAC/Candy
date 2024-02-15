@@ -181,10 +181,19 @@
   debug:
     msg: "ENSUE YOU RECORD THE FOLLOWING INITIALIZATION OUTPUT IN A SAFE LOCATION!"
 
-- name: Generate JSON output from initialization results
-  template:
-    src: init_output.j2 # Your Jinja2 template file
-    dest: /tmp/indy_node_init_output.json
+- name: Ensure json output file exists
+  file:
+    path: /tmp/indy_node_init_output.json
+    state: touch
+
+- name: Append Init JSON output to file using blockinfile
+  blockinfile:
+    path: /tmp/indy_node_init_output.json
+    marker: "# {mark} ANSIBLE MANAGED INIT OUTPUT"
+    block: |
+      {% raw %}
+      {{ lookup('template', 'init_output.j2') }}
+      {% endraw %}
 
 - name: Print init_indy_node result
   debug:
