@@ -187,6 +187,10 @@
     state: touch
   delegate_to: localhost
 
+- name: DEBUG - Show template content
+  debug:
+    msg: "{{ lookup('template', 'init_output.j2') }}"
+
 - name: Append Init JSON output to file using blockinfile
   blockinfile:
     path: init_output.json
