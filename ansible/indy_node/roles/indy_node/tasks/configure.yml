@@ -205,6 +205,7 @@
       {% for host in ansible_play_hosts %}
       {{ lookup('file', '/tmp/init_output_{{ host }}.json') }}
       {% endfor %}
+  delegate_to: localhost
 
 - name: Print init_indy_node result
   debug:
