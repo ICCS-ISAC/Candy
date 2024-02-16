@@ -200,7 +200,7 @@
 - name: Append all outputs to init_output.json
   blockinfile:
     path: init_output.json
-    #marker: "# {mark} ANSIBLE MANAGED INIT OUTPUT"
+    marker: "# {mark} ANSIBLE MANAGED INIT OUTPUT"
     block: |
       {% for host in ansible_play_hosts %}
       {{ lookup('file', '/tmp/init_output_{{ inventory_hostname }}.json') }}
