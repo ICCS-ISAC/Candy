@@ -194,7 +194,7 @@
 - name: Render init_output template and write to file
   template:
     src: init_output.j2
-    dest: init_output_{{ inventory_hostname }}.json
+    dest: /tmp/init_output_{{ inventory_hostname }}.json
   delegate_to: localhost
 
 - name: Append all outputs to init_output.json
