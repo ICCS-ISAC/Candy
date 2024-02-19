@@ -197,21 +197,18 @@
     dest: /tmp/init_output_{{ inventory_hostname }}.json
   delegate_to: localhost
 
-- name: Fetch temporary output files
-  fetch:
-    src: /tmp/init_output_{{ inventory_hostname }}.json
-    dest: /tmp/ # Temporary location on controller
-  delegate_to: localhost
+- name: Get list of JSON files to combine
+  find:
+    paths: /tmp/
+    patterns: "init_output_*.json"
+  register: json_file_results
 
-- name: Assemble combined output JSON
-  set_fact:
-    combined_outputs: "{{ combined_outputs | default([]) +  ansible_facts['fetched'] [item]['file'] }}"
-  loop: "{{ groups['all'] }}" # Assuming you want output across all hosts
-
-- name: Create init_output.json with combined data
-  copy:
-    content: "{{ combined_outputs | to_nice_json(indent=2) }}"
-    dest: init_output.json # Choose the desired path
+- name: Create combined JSON using Jinja2 template
+  template:
+    src: combine_json.j2
+    dest: init_output.json
+  vars:
+    file_list: "{{ json_file_results.files | map(attribute='path') | list }}"
 
 # - name: Append all outputs to init_output.json
 #   blockinfile:
