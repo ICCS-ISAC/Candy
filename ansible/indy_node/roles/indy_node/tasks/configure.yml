@@ -199,16 +199,18 @@
 
 - name: Get list of JSON files to combine
   find:
-    paths: /tmp
+    paths: /tmp/
     patterns: "init_output_*.json"
   register: json_file_results
+  delegate_to: localhost
 
-- name: Create combined JSON
-  assemble:
-    src: /tmp/*.json
+- name: Create combined JSON using Jinja2 template
+  template:
+    src: combine_outputs.j2
     dest: init_output.json
   vars:
     file_list: "{{ json_file_results.files | map(attribute='path') | list }}"
+  delegate_to: localhost
 
 # - name: Append all outputs to init_output.json
 #   blockinfile:
