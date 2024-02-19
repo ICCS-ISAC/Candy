@@ -197,20 +197,10 @@
     dest: /tmp/init_output_{{ inventory_hostname }}.json
   delegate_to: localhost
 
-- name: Get list of JSON files to combine
-  find:
-    paths: /tmp
-    patterns: "init_output_*.json"
-  register: json_file_results
-  delegate_to: localhost
-
-- name: Create combined JSON using Jinja2 template
-  template:
-    src: combine_outputs.j2
+- name: Assemble JSON files into one
+  assemble:
+    src: /tmp/
     dest: init_output.json
-  vars:
-    file_list: "{{ json_file_results.files | map(attribute='path') | list }}"
-  delegate_to: localhost
 
 # - name: Append all outputs to init_output.json
 #   blockinfile:
