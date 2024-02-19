@@ -4,7 +4,7 @@
 {% set combined_data = [] %}
 {% for file in json_files %}
   {% with open(file) as f %}
-    {% set file_data = f.read() | from_json %} 
+    {% set file_data = f.read() %} 
     {% do combined_data.append(file_data) %}
   {% endwith %}
 {% endfor %}
