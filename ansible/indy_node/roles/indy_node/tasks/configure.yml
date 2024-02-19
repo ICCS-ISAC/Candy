@@ -204,7 +204,7 @@
 
 - name: Assemble JSON files into one
   assemble:
-    src: /tmp/
+    src: /tmp/candy
     dest: init_output.json
   delegate_to: localhost
 
