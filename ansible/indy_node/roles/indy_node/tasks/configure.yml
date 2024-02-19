@@ -201,7 +201,6 @@
   blockinfile:
     path: init_output.json
     marker: "# {mark} ANSIBLE MANAGED INIT OUTPUT"
-    create: yes # Ensure file exists before the first run
     block: |
       {% if lookup('file', '/tmp/init_output_{{ inventory_hostname }}.json') != "" %}  
       {{ lookup('file', '/tmp/init_output_{{ inventory_hostname }}.json') }}
