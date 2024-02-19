@@ -202,9 +202,9 @@
     path: init_output.json
     marker: "# {mark} ANSIBLE MANAGED INIT OUTPUT"
     block: |
-      {% if lookup('file', '/tmp/init_output_{{ inventory_hostname }}.json') != "" %}  
       {{ lookup('file', '/tmp/init_output_{{ inventory_hostname }}.json') }}
-      {% endif %}
+    create: true
+    state: present
   delegate_to: localhost
 
 - name: Print init_indy_node result
