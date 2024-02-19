@@ -195,6 +195,7 @@
   file:
     path: "/tmp/candy"
     state: directory
+  delegate_to: localhost
 
 - name: Render init_output template and write to file
   template:
