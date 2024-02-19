@@ -191,6 +191,11 @@
   debug:
     msg: "{{ lookup('template', 'init_output.j2') }}"
 
+- name: ensures /tmp/candy dir exists
+  file:
+    path: "/tmp/candy"
+    state: directory
+
 - name: Render init_output template and write to file
   template:
     src: init_output.j2
