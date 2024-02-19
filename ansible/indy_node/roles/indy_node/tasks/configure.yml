@@ -205,7 +205,7 @@
 
 - name: Create combined JSON using Jinja2 template
   template:
-    src: combine_json.j2
+    src: combine_outputs.j2
     dest: init_output.json
   vars:
     file_list: "{{ json_file_results.files | map(attribute='path') | list }}"
