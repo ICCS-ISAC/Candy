@@ -197,15 +197,31 @@
     dest: /tmp/init_output_{{ inventory_hostname }}.json
   delegate_to: localhost
 
-- name: Append all outputs to init_output.json
-  blockinfile:
-    path: init_output.json
-    marker: "# {mark} ANSIBLE MANAGED INIT OUTPUT"
-    block: |
-      {{ lookup('file', '/tmp/init_output_{{ inventory_hostname }}.json') }}
-    create: true
-    state: present
+- name: Fetch temporary output files
+  fetch:
+    src: /tmp/init_output_{{ inventory_hostname }}.json
+    dest: /tmp/ # Temporary location on controller
   delegate_to: localhost
+
+- name: Assemble combined output JSON
+  set_fact:
+    combined_outputs: "{{ combined_outputs | default([]) +  ansible_facts['fetched'] [item]['file'] }}"
+  loop: "{{ groups['all'] }}" # Assuming you want output across all hosts
+
+- name: Create init_output.json with combined data
+  copy:
+    content: "{{ combined_outputs | to_nice_json(indent=2) }}"
+    dest: init_output.json # Choose the desired path
+
+# - name: Append all outputs to init_output.json
+#   blockinfile:
+#     path: init_output.json
+#     marker: "# {mark} ANSIBLE MANAGED INIT OUTPUT"
+#     block: |
+#       {{ lookup('file', '/tmp/init_output_{{ inventory_hostname }}.json') }}
+#     create: true
+#     state: present
+#   delegate_to: localhost
 
 - name: Print init_indy_node result
   debug:
