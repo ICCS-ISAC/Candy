@@ -181,11 +181,11 @@
   debug:
     msg: "ENSUE YOU RECORD THE FOLLOWING INITIALIZATION OUTPUT IN A SAFE LOCATION!"
 
-# - name: Ensure json output file exists
-#   file:
-#     path: init_output.json
-#     state: touch
-#   delegate_to: localhost
+- name: Ensure json output file exists
+  file:
+    path: init_output.json
+    state: touch
+  delegate_to: localhost
 
 - name: DEBUG - Show template content
   debug:
