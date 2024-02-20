@@ -1,6 +1,6 @@
 {
     "hostname": {{ inventory_hostname }} 
     "initialization_output": {{ init_indy_node_result.stdout_lines }}
-    "node_ip": {{ hostvars[inventory_hostname].node_ip }}
-    "client_ip" {{ hostvars[inventory_hostname].client_ip }}
+    "node_ip": {{ inventory_hostname.node_ip }}
+    "client_ip" {{ inventory_hostname.client_ip }}
 }
