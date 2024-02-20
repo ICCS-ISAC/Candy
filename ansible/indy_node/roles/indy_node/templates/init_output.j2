@@ -1,7 +1,9 @@
 {
+"{{ inventory_hostname }}":{
     "hostname": "{{ inventory_hostname }}"
-    "initialization_output": "{{ init_indy_node_result.stdout_lines }}"
+    "initialization_output": "{{ init_indy_node_result | to_json }}"
     "node_ip": "{{ hostvars[inventory_hostname]['tf_node_ip'] }}"
     "client_ip": "{{ hostvars[inventory_hostname]['tf_client_ip'] }}"
+    }
 }
 
