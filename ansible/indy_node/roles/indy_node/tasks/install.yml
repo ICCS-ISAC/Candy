@@ -148,7 +148,7 @@
         - install
         - package
   when:
-    - indy_node_channel == "rc"
+    # - indy_node_channel == "rc"   # removing this temporarely as to explicitly install the dependencies with the correct version.
     - distribution_codename == "focal"
 
 - name: Install indy-node package
