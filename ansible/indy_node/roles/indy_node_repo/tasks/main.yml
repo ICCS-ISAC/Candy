@@ -62,4 +62,10 @@
   when:
     - distribution_codename == "focal"
     - indy_repo_node_channels|d(False, True)
+
+- name: Set Hyperledger repository priority
+  template:
+    src: hyperledger.pref.j2
+    dest: /etc/apt/preferences.d/hyperledger.pref
 # ==============================================================================================================
+
