@@ -147,9 +147,9 @@
       tags:
         - install
         - package
-  # when:
-  #   - indy_node_channel == "rc"
-  #   - distribution_codename == "focal"
+  when:
+    - indy_node_channel == "rc"
+    - distribution_codename == "focal"
 
 - name: Install indy-node package
   apt:
