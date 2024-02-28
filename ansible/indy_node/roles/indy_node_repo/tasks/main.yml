@@ -65,7 +65,7 @@
 
 - name: Set Hyperledger repository priority
   template:
-    src: hyperledger.pref.j2
+    src: repository/hyperledger.pref.j2
     dest: /etc/apt/preferences.d/hyperledger.pref
 # ==============================================================================================================
 
