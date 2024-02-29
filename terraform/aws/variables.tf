@@ -111,3 +111,10 @@ variable "iam_role" {
 variable "candy_vpc_node_cidr_block" {
   description = "VPC IP CIDR"
 }
+
+variable "optional_ec2_tags" {
+  description = "Allows to add optional tags to EC2 vm's"
+  type        = map(string)
+  default = {
+  }
+}
