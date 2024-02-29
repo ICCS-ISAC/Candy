@@ -97,15 +97,6 @@
         - install
         - package
 
-    - name: Move libursa.so to parent dirirectory
-      shell: >
-        if [ -d /usr/lib/ursa ]; then
-          mv /usr/lib/ursa/* /usr/lib && rm -rf /usr/lib/ursa
-        fi
-      become: true
-      tags:
-        - install
-        - package
     # =============================
 
     - name: python3-libnacl
@@ -156,6 +147,16 @@
     name:
       - "{{ indy_node_pkg }}={{ indy_node_pkg_version }}"
     update_cache: true
+  become: true
+  tags:
+    - install
+    - package
+
+- name: Move libursa.so to parent dirirectory
+  shell: >
+    if [ -d /usr/lib/ursa ]; then
+      mv /usr/lib/ursa/* /usr/lib && rm -rf /usr/lib/ursa
+    fi
   become: true
   tags:
     - install
