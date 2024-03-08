@@ -141,6 +141,22 @@
     creates: "{{ data_volume_mount }}{{ network_name }}/keys"
   register: init_indy_node_result
 
+- name: Write Node Secrets to File (on Ansible Playbook runner)
+  delegate_to: 127.0.0.1
+  shell: echo "{{ init_indy_node_result.stdout_lines }}" >> "/tmp/indy_node_init_results.txt" 2>&1
+  when: write_node_secrets is defined
+
+- name: Cat Node Secrets File
+  delegate_to: 127.0.0.1
+  shell: cat "/tmp/indy_node_init_results.txt"
+  register: indy_node_init_results_txt
+  when: write_node_secrets is defined
+
+- name: View Node Secrets File
+  debug:
+    var: indy_node_init_results_txt.stdout_lines
+  when: write_node_secrets is defined
+
 - name: Get /etc/indy/indy.env
   shell: cat /etc/indy/indy.env
   register: indy_env
