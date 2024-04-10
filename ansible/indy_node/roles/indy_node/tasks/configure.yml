@@ -221,7 +221,7 @@
     path: init_output.json
     insertafter: EOF
     line: "]"
-    delegate_to: localhost
+  delegate_to: localhost
 
 # - name: Append all outputs to init_output.json
 #   blockinfile:
