@@ -209,6 +209,18 @@
     dest: init_output.json
   delegate_to: localhost
 
+- name: Add [ at the beginning of the file
+  lineinfile:
+    path: init_output.json
+    insertbefore: BOF
+    line: "["
+
+- name: Add ] at the end of the file
+  lineinfile:
+    path: init_output.json
+    insertafter: EOF
+    line: "]"
+
 # - name: Append all outputs to init_output.json
 #   blockinfile:
 #     path: init_output.json
