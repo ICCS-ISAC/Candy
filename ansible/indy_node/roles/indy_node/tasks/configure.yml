@@ -214,12 +214,14 @@
     path: init_output.json
     insertbefore: BOF
     line: "["
+  delegate_to: localhost
 
 - name: Add ] at the end of the file
   lineinfile:
     path: init_output.json
     insertafter: EOF
     line: "]"
+    delegate_to: localhost
 
 # - name: Append all outputs to init_output.json
 #   blockinfile:
