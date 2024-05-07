@@ -1,0 +1,44 @@
+# ============================================================
+# Auto detect the hostname
+# ------------------------------------------------------------
+- name: Get hostname
+  shell: hostname
+  register: hostname
+
+- name: Set node_name variable
+  set_fact:
+     node_name: "{{ hostname.stdout }}"
+# ============================================================
+
+- name: Populate service facts
+  service_facts:
+
+# Stop the indy-node service if it is running.
+- name: Stop the indy-node service
+  service:
+    name: indy-node
+    state: stopped
+  when: ansible_facts.services['indy-node.service'].state == 'running'
+
+- name: Generate Archive
+  community.general.archive:
+    path: "{{ data_volume_mount }}{{ network_name }}"
+    dest: "{{ data_volume_mount }}{{ node_name }}_{{ network_name }}.gz"
+
+# Start the indy-node service if it was originally running
+- name: Start the indy-node service
+  service:
+    name: indy-node
+    state: started
+  when: ansible_facts.services['indy-node.service'].state == 'running'
+
+- name: Fetch the archive
+  fetch:
+    src: "{{ data_volume_mount }}{{ node_name }}_{{ network_name }}.gz"
+    dest: "../{{ node_name }}_{{ network_name }}.gz"
+    flat: true
+
+- name: Remove the archive from the server
+  file:
+    path: "{{ data_volume_mount }}{{ node_name }}_{{ network_name }}.gz"
+    state: absent

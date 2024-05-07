@@ -1,0 +1,5 @@
+---
+- name: Restore
+  include_tasks: restore.yml
+  tags:
+    - restore

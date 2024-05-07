@@ -92,7 +92,7 @@ The cloud provider is defined by setting the `cloud` variable in `--extra-vars` 
 Following network configuration the packages are installed and configured.  The playbook is capable of configuring the node(s) as a genesis node, or as a new node connecting to an existing network.  Node initialization occurs only once, subsequent runs of the script will detect the existing configuration and skip over any steps that have already been completed to ensure the node's configuration is not inadvertently modified.
 
 > Node Initialization:
-> 
+>
 > Node initialization depends on a few things:
 >  - **Network name** - You **MUST** supply a network name via the `network_name` variable.  The name should be consistent across all nodes within the same network.  The network name defines the name of the directory on the node where all of the files, keys, and data will be stored.
 >  - **Node Alias** - The node alias is a human readable name for the node.  The configuration tasks read the hostname from the node and use the value as the node alias.
@@ -110,6 +110,45 @@ Following network configuration the packages are installed and configured.  The 
 >  - The node will be left in a running state; the genesis files will be downloaded, and the `indy-node` service will be enabled and started.
 
 There are several playbook variables that can be used to control the behaviour of the scripts.  Refer to the [Playbook options](./README.md#playbook-options) section below for details.
+
+
+## Archive / Restore
+
+The archive and restore playbooks allow you to archive and restore the network data volumes on one or more of your nodes.  The playbooks automatically stop and start the indy-node service if it is running and leave it in the state it was found once complete.
+
+You should explicitly define `network_name` when running the scripts to ensure it is clear which network is being archived or restored.
+
+:warning: _**Ensure you generate a recent archive before performing a restore operation as the files on the node will be completely replaced with the content from the specified archive set during a restore operation.**_
+
+Archive files are named using the following format: `<node-name>_<network-name>.gz`
+
+### Archive
+
+Generates an archive containing the content of a given network contained on a node's data volume, which typically includes the genesis files, keys, and ledger data for the given network.
+
+The archive is generated remotely on the node and then downloaded locally before finally being removed from the node.
+
+Example use:
+```
+ansible-playbook --user ubuntu -i beta-aws-inventory.yml --extra-vars "network_name=candy-beta" indy_node/archive.yml
+```
+
+### Restore
+
+Restores the content of an archive containing the content of a given network to a node's data volume.
+
+Place the archive files to be restored in the root folder (e.g. `./ansible`) where the scripts will be run.
+
+The archive is uploaded to the node before being extracted and finally removed from the node.
+
+The existing network data on the node is completely replaced by the content of the archive.  In order words, the existing network data on the node is deleted before the uploaded archive is extracted.
+
+:warning: _**Ensure you have a recent archive before performing a restore operation as the files on the node will be completely replaced with the content from the specified archive set during a restore operation.**_
+
+Example use:
+```
+ansible-playbook --user ubuntu -i beta-aws-inventory.yml --extra-vars "network_name=candy-beta" indy_node/restore.yml
+```
 
 ## Playbook options
 
@@ -154,7 +193,7 @@ The following variables can be used to control various settings and behaviours o
 
 `client_port` - **_optional_** (default=`9702`)
   - Defines the port on which the node(s) will communicate with clients.
- 
+
 `network_configuration` - **_optional_** (default=`true`)
   - Boolean value indicating whether or not the network configuration tasks should be run.
 

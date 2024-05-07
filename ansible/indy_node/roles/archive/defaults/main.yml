@@ -1,0 +1,4 @@
+---
+# Configuration Parameters
+data_volume_mount: /var/lib/indy/
+network_name: candy-dev

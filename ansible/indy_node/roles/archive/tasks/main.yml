@@ -1,0 +1,5 @@
+---
+- name: Archive
+  include_tasks: archive.yml
+  tags:
+    - archive
