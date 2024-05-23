@@ -223,16 +223,6 @@
     line: "]"
   delegate_to: localhost
 
-# - name: Append all outputs to init_output.json
-#   blockinfile:
-#     path: init_output.json
-#     marker: "# {mark} ANSIBLE MANAGED INIT OUTPUT"
-#     block: |
-#       {{ lookup('file', '/tmp/init_output_{{ inventory_hostname }}.json') }}
-#     create: true
-#     state: present
-#   delegate_to: localhost
-
 - name: Print init_indy_node result
   debug:
     var: init_indy_node_result.stdout_lines
