@@ -1,0 +1,8 @@
+---
+- name: Generate Network Archive
+  hosts: "{{ host | default('nodes') }}"
+  become: yes
+  become_method: sudo  
+  gather_facts: false
+  roles:
+    - archive

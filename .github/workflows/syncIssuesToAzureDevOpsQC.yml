@@ -15,7 +15,7 @@ jobs:
         env:
           ado_token: "${{ secrets.ADO_PERSONAL_ACCESS_TOKEN }}"
           github_token: "${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}"
-          ado_organization: "CSPQ"
+          ado_organization: "GouvQC"
           ado_project: "SQIN"
           ado_area_path: "SQIN\\ING - Identité numérique gouvernementale\\PINQ - Plateforme INQ"
           ado_iteration_path: "SQIN"
