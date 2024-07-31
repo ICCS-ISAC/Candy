@@ -8,11 +8,11 @@
 
 - name: Set node_alias variable
   set_fact:
-     node_alias: "{{ hostname.stdout }}"
+    node_alias: "{{ hostname.stdout }}"
 
 - name: Print node_alias
   debug:
-    var:  node_alias
+    var: node_alias
 # ============================================================
 
 - name: Check that required variables are specified
@@ -122,17 +122,17 @@
 # ----------------------------------------------------------------------------------------------------------------------------------------------------------
 - name: Generate init_indy_node command
   set_fact:
-    init_indy_node_cmd:  "sudo -i -u indy init_indy_node {{ node_alias }} {{ node_ip }} {{ node_port }} {{ client_ip }} {{ client_port }}"
+    init_indy_node_cmd: "sudo -i -u indy init_indy_node {{ node_alias }} {{ node_ip }} {{ node_port }} {{ client_ip }} {{ client_port }}"
   when: node_seed is undefined
 
 - name: Generate init_indy_node command with provided seed
   set_fact:
-    init_indy_node_cmd:  "sudo -i -u indy init_indy_node {{ node_alias }} {{ node_ip }} {{ node_port }} {{ client_ip }} {{ client_port }} {{ node_seed }}"
+    init_indy_node_cmd: "sudo -i -u indy init_indy_node {{ node_alias }} {{ node_ip }} {{ node_port }} {{ client_ip }} {{ client_port }} {{ node_seed }}"
   when: node_seed is defined
 
 - name: Print init_indy_node command
   debug:
-    var:  init_indy_node_cmd
+    var: init_indy_node_cmd
 
 - name: Initialize Indy Node
   shell: "{{ init_indy_node_cmd }}"
@@ -162,14 +162,14 @@
 
 - name: Start indy-node service
   block:
-  - name: Enable service
-    service:
-      name: indy-node
-      enabled: true
-  - name: Start service
-    service:
-      name: indy-node
-      state: started
+    - name: Enable service
+      service:
+        name: indy-node
+        enabled: true
+    - name: Start service
+      service:
+        name: indy-node
+        state: started
   become: true
   when: domain_transactions_genesis.stat.exists and pool_transactions_genesis.stat.exists and start_indy_node | bool
 # =================================================================================================
@@ -180,6 +180,48 @@
 - name: A note about the initialization results
   debug:
     msg: "ENSUE YOU RECORD THE FOLLOWING INITIALIZATION OUTPUT IN A SAFE LOCATION!"
+
+- name: Ensure json output file exists
+  file:
+    path: init_output.json
+    state: touch
+  delegate_to: localhost
+
+- name: DEBUG - Show template content
+  debug:
+    msg: "{{ lookup('template', 'init_output.j2') }}"
+
+- name: ensures /tmp/candy dir exists
+  file:
+    path: "/tmp/candy"
+    state: directory
+  delegate_to: localhost
+
+- name: Render init_output template and write to file
+  template:
+    src: init_output.j2
+    dest: /tmp/candy/init_output_{{ inventory_hostname }}.json
+  delegate_to: localhost
+
+- name: Assemble JSON files into one
+  assemble:
+    src: /tmp/candy
+    dest: init_output.json
+  delegate_to: localhost
+
+- name: Add [ at the beginning of the file
+  lineinfile:
+    path: init_output.json
+    insertbefore: BOF
+    line: "["
+  delegate_to: localhost
+
+- name: Add ] at the end of the file
+  lineinfile:
+    path: init_output.json
+    insertafter: EOF
+    line: "]"
+  delegate_to: localhost
 
 - name: Print init_indy_node result
   debug:
