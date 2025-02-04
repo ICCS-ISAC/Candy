@@ -37,7 +37,13 @@
 # Node Configuration
 # -----------------------------------------------------------------------------------------
 - name: Configure indy_config.py
-  shell: sudo sed -i -re "s/(^NETWORK_NAME =).*$/\1 '{{ network_name }}'/" /etc/indy/indy_config.py
+  lineinfile:
+    path: /etc/indy/indy_config.py
+    regexp: '^NETWORK_NAME ='
+    line: "NETWORK_NAME = '{{ network_name }}'"
+    owner: indy
+    group: indy
+  become: true
 
 # Note: The '/var/log/indy/{{ network_name }}' folder gets created automatically when indy is started
 - name: Ensure network folder exists
